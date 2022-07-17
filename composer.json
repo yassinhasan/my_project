@@ -1,0 +1,23 @@
+{
+    "name": "yassinhasan/myproject",
+    "description": "this is simple project of mvc",
+    "type": "project",
+    "license " : "v1.02" , 
+    "authors": [
+        {
+            "name": "hasanmeady",
+            "email": "figo781@gmail.com"
+        } 
+    ],
+    "autoload": {
+        "psr-4": 
+        {
+            "core\\" : "core/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.4" , 
+        "phpmailer/phpmailer" : "^6.5"
+    }
+}
+

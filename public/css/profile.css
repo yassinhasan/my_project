@@ -1,0 +1,81 @@
+.card 
+{
+
+    margin: 50px auto;
+    width: auto !important;
+    max-width: 600px;
+}
+.card-head form .image_div
+{
+    margin-top: 20px;
+    width: 150px;
+    height: 150px;
+}
+
+
+.card-head form > div > img 
+{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #888;
+}
+.card-head .display_name 
+{
+    display: inline-block;
+    font-size: 17px;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-family: sans-serif;
+    width: 100%;
+}
+.div_buttons button:nth-child(1)
+{
+    color: #fff;
+    border: none;
+}
+.div_buttons > button 
+{
+    margin-right: 10px;
+    font-size: .5rem;
+    
+    padding: 5px 16px;
+}
+.edit_profile
+{
+    position: absolute;
+    right: 23px;
+    top: 50%;
+    z-index: 6;
+    transform: translateY(-50%);
+}
+.main-list
+{
+    position: relative;
+}
+.list_edit.hide , .input_profile.hide
+{
+    display: none !important;
+}
+.input_profile
+{
+    margin-top: 10px;
+}
+.profile_iamge
+{
+    cursor: pointer;
+}
+.profile_image_input
+{
+    display: none;
+}
+
+.update_profile_image.hide
+{
+    display: none;
+}
+.cancel_profile_image.hide
+{
+    display: none;
+}
