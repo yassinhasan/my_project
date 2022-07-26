@@ -1,0 +1,29 @@
+
+.overlay_spinner
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 0;
+}
+.load_spinner
+{
+    z-index: 2;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner-grow
+{
+    width: 1rem;
+    height: 1rem;
+}
+.navbar-brand 
+{
+    color: red !important;
+}
