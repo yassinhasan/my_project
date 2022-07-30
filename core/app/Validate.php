@@ -19,11 +19,11 @@ class Validate extends abstractValidate
         foreach($allRules as $field=>$rules)
         {
             $filed_name = $field;
-            $filed_value =  $data[$filed_name];
+        
+            $filed_value =  trim( htmlentities($data[$filed_name]));
            $model->{$filed_name} = $filed_value;
             foreach($rules as $rule)
             {
-               
                 if(is_array($rule))
                 {
                    

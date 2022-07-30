@@ -1,0 +1,22 @@
+make new function in home to recieve postshare function
+
+after click on post share 
+
+send json file contain data contain
+
+post userid from session or login user 
+post tetx 
+post date curent date 
+post view 0 
+post comment 0 
+post  images 0 
+
+
+then in function add all to posts database 
+
+then if success 
+
+return all posts of this users with join posts and profile 
+based on userid 
+and show post text and profile image and date of this post 
+

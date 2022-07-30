@@ -14,6 +14,7 @@ class abstractValidate
     const FIELD__UNIQUE_IN_OHER = "unique_in_other";
     const FIELD__EQUAL = "equal";
     const FIELD__INT = "isInt";
+    const CUSTOME_MSG = null;
    public function __construct()
    {
        
@@ -21,12 +22,11 @@ class abstractValidate
    }
    
 
-   public function required($field , $value , $message = null)
+   public function required($field , $value )
    {
+       
       if($value == "")
-
-      
-          $this->error[$field][] = "sorry ".ucfirst($field)." is required"; 
+        $this->error[$field][] = "Sorry This ".ucfirst($field)." Can Not Be Empty";
 
      
    }
@@ -39,13 +39,13 @@ class abstractValidate
         }
 
    }
-   public function string($field , $value)
+   public function string($field , $value , $message =null)
    {
         if($value != null or $value != "") 
         {
-            $pattern = "/^([a-zA-Z][a-zA-Z\\d]*)$/";
+            $pattern = "/[a-zA-ZA-Z?#!~0-9]+%_-+@$^&()//";
             if(preg_match($pattern , $value) == false)
-            $this->error[$field][] = "sorry ".ucfirst($field)." is must be string";
+            $this->error[$field][] =  "sorry ".ucfirst($field)." is must be string";
         };
 
    }

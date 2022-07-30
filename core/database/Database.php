@@ -12,6 +12,7 @@ class Database
     public $select = null;
     public $where = null;
     public $stmt = null;
+    public $join = null;
     public function __construct(array $config)
     {
         
@@ -89,6 +90,15 @@ class Database
         return $this;
 
     }
+    
+    // join 
+    public function join($join)
+    {
+
+        $this->join = $join;
+        return $this;
+
+    }
     public function query($sql, $bindings)
     {
         // pre($bindings);die;
@@ -148,6 +158,10 @@ class Database
 
             $sql .= " FROM $this->tableName ";
         }
+        if($this->join)
+        {
+            $sql .= $this->join;
+        }
         if($this->where)
         {
             $sql .= $this->where;
@@ -168,8 +182,9 @@ class Database
     }
     public function fetchAll()
     {
-        $this->reset();
-        return $this->stmt->fetchAll(PDO::FETCH_CLASS);
+      $results = $this->stmt->fetchAll(PDO::FETCH_CLASS);
+      $this->reset();
+      return $results;
     }
 
 
@@ -247,6 +262,7 @@ class Database
         $this->where =null ;
         $this->select = null;
         $this->sql = null;
+        $this->join = null;
     }
 
 

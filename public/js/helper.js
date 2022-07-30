@@ -185,7 +185,7 @@ function makeInvalidInput(inputName , otherInput = null ,msg )
 
 function makevalidInput(inputName , msg)
 {
-    let input = document.querySelector("input[name='"+inputName+"']");
+    let input = document.querySelector("[name='"+inputName+"']");
     input.classList.add("is-valid");
     let div_success_msg = `<div class="valid-feedback">${msg}</div>`;
     input.insertAdjacentHTML("afterend" , div_success_msg);

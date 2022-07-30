@@ -8,7 +8,8 @@ class p0001_profile
     {
 
         $stmt = Application::$app->db->pdo->prepare( "
-                CREATE TABLE IF NOT EXISTS app_users_profile (
+                CREATE TABLE IF NOT EXISTS app_users_profile
+                (
                     id INT (11) AUTO_INCREMENT PRIMARY KEY  , 
                     gender ENUM('male','female')  ,
                     mobile  INT(11) DEFAULT NULL ,

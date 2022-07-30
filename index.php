@@ -39,6 +39,7 @@ $app = new Application($config['db']);
 $app->router->get("/",[ homecontroller::class , "home"]);
 $app->router->get("/notfound",[ notfoundController::class , "notfound"]);
 $app->router->get("/home",[ homecontroller::class , "home"]);
+$app->router->post("/sharePosts",[ homecontroller::class , "sharePosts"]);
 $app->router->get("/register",[ registerController::class , "register"]);
 $app->router->post("/register",[ registerController::class , "register"]);
 $app->router->get("/login",[ loginController::class , "login"]);

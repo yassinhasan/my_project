@@ -112,4 +112,9 @@ class Rrequest
     {
         return $this->publicUrl()."uploades/images/home/$file";
     }
+        public function toProfileImages($file)
+    {
+        return $this->publicUrl()."uploades/images/profile/$file";
+    }
+
 } 
