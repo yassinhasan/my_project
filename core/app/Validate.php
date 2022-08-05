@@ -20,7 +20,7 @@ class Validate extends abstractValidate
         {
             $filed_name = $field;
         
-            $filed_value =  trim( htmlentities($data[$filed_name]));
+            $filed_value =  trim(strip_tags($data[$filed_name]));
            $model->{$filed_name} = $filed_value;
             foreach($rules as $rule)
             {

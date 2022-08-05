@@ -27,3 +27,27 @@
 {
     color: red !important;
 }
+
+.custom_load_spinner
+{
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custome_overlay_spinner
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100;
+    width: 100%;
+    height: 100%;
+    background: white;
+}

@@ -54,8 +54,39 @@ class homecontroller extends abstractController
         {
                 $this->response->renderView("home",$this->data );
         }
-    
 
+    }
+        public function fetchPosts()
+    {
+        
+        $userId = Application::$app->session->userId;
+        if($this->request->method() == "POST")
+        {
+
+             $this->jData['posts'] = $this->model->fetchPosts($userId);
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
+    
+    // users
+    
+    public function fetchUsers()
+    {
+        
+        $userId = Application::$app->session->userId;
+        if($this->request->method() == "POST")
+        {
+
+             $this->jData['posts'] = $this->model->fetchUsers($userId);
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
 
     }
 }

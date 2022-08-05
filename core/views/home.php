@@ -16,7 +16,7 @@ use core\app\user;
                   <div class="card-header bg bg-info text-light">
                     Share Your Post
                   </div>
-                  <div class="card-body">
+                  <div class="card-body shar_post_box">
                       <form class="share_post_form" action="/sharePosts">
                         <div class="mb-3">
                             <label for="Write_Post" class="form-label">Write your Post</label>
@@ -34,30 +34,36 @@ use core\app\user;
                 </div>
                 
                 <!-- posts-->
-           <div class="card" mt="20" style="margin-top: 20px">
-                  <div class="card-header bg bg-info text-light">
-                    my name is
-                  </div>
-                  <div class="card-body">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="<?= User::displayImage();?>" class="img-fluid rounded-start  post_user_image" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                          </div>
-                        </div>
-                   </div>
-                </div>
+           <div class="card post_box" mt="20" style="margin: 20px 0 ">
           </div>
                 <!--end posts-->
         </div>
         <!-- users info -->
-        <div class="col col-4">
-            iam users
-        </div>
+        <div class="col col-4 users_box">
+                <!-- start users info details-->
+            <div class="card-body users_box_details">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="../../public/uploades/images/profile/smsmhasan/avatar.jpg"  class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                              <div class="card-header users_box_name">
+                                smsm hasan
+                              </div>
+                              <div class="users_box_follow">
+                                  <button class="btn  follow_btn " type="submit" name="follow">
+                                      follow
+                                  </button>
+                                   <span class="card-text follower_num">0 <span class="follower_text">Followers </span></span>
+                              </div>
+                        </div>
+                   </div>
+                </div>
+            </div>
+        <!-- end start users info details -->
+
     </div>
+     <!-- end main users info -->
 </div>
 

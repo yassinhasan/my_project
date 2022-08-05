@@ -15,7 +15,7 @@ class resetPasswordModel extends abstractModel
     public function rules()
     {
         return [
-            'password'=> [Validate::FIELD__REQUIRED , [Validate::FIELD__MIN => 4 ] , [Validate::FIELD__MAX => 12 ]],
+            'password'=> [Validate::FIELD__REQUIRED , Validate::FIELD__PASSWORD ,[Validate::FIELD__MIN => 4 ] , [Validate::FIELD__MAX => 12 ]],
             'confirmPassword'=> [Validate::FIELD__REQUIRED , [Validate::FIELD__MATCHED => "password"]]
 
         ];

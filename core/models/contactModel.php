@@ -13,8 +13,8 @@ class contactModel extends abstractModel
     public function rules()
     {
         return $this->rules = [
-            'firstname'=>[ self::FIELD__REQUIRED],
-            'lastname' => [self::FIELD__REQUIRED],
+            'firstname'=>[ self::FIELD__REQUIRED , Validate::FIELD__NAME],
+            'lastname' => [self::FIELD__REQUIRED , Validate::FIELD__NAME],
             'email'=> [self::FIELD__REQUIRED , self::FIELD__EMAIL  , [self::FIELD__UNIQUE => [self::$tableName, "email"]] , ]
 
         ];

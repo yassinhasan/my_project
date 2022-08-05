@@ -11,7 +11,7 @@ class postsModel extends abstractModel
     public function rules()
     {
         return  [
-            'post'=>[ Validate::FIELD__REQUIRED , Validate::FIELD__STRING]
+            'post'=>[ Validate::FIELD__REQUIRED]
 
         ];
 
@@ -27,9 +27,28 @@ class postsModel extends abstractModel
     }
     public function fetchPosts($userId)
     {
-        $posts = $this->from(self::$tableName)->where("app_posts.userId = ? " , $userId)->join(" INNER JOIN app_users ON 
-            app_users.id = app_posts.userId")->select("
-             *")->fetchAll();
+        $posts = $this->from(" app_posts " )->join(" 
+            INNER JOIN app_users  ON 
+            app_users.id = app_posts.userId
+            INNER JOIN app_users_profile  ON 
+            app_users_profile.userId = app_posts.userId
+            ")->where("app_posts.userId = ? " , $userId)->select("
+             app_posts.*  , app_users.firstName , app_users.lastName , app_users_profile.image ")->fetchAll();
+
+        return $posts;
+        
+
+    }
+    public function fetchUsers($userId)
+    {
+        $posts = $this->from(" app_users " )->join(" 
+            INNER JOIN app_follow  ON 
+            app_users.id = app_posts.userId
+            INNER JOIN app_users_profile  ON 
+            app_users_profile.userId = app_posts.userId
+            ")->where("app_posts.userId = ? " , $userId)->select("
+             app_posts.*  , app_users.firstName , app_users.lastName , app_users_profile.image ")->fetchAll();
+
         return $posts;
         
 

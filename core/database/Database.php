@@ -13,6 +13,7 @@ class Database
     public $where = null;
     public $stmt = null;
     public $join = null;
+    public static $lastId = null;
     public function __construct(array $config)
     {
         
@@ -104,17 +105,24 @@ class Database
         // pre($bindings);die;
         $stmt = $this->pdo->prepare($sql);
     
-        foreach($bindings as $key => $value)
+        if(!empty($bindings))
         {
+             foreach($bindings as $key => $value)
+             {
             $stmt->bindValue($key + 1 , $value);
+             }  
+            
         }
+
         try {
             $stmt->execute();
+            self::$lastId = $this->pdo->lastInsertId();
         } catch (\Exception $e) {
             echo $e->getMessage();
             pre($bindings);
             pre($sql);
         }
+        
         return $stmt;
     }
 
@@ -133,6 +141,11 @@ class Database
         $this->reset();
         return true;
 
+    }
+    
+    public static function lastId()
+    {
+        return self::$lastId;
     }
 
 

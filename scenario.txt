@@ -20,3 +20,4 @@ return all posts of this users with join posts and profile
 based on userid 
 and show post text and profile image and date of this post 
 
+mysql -h database-1.cbqla4qtyvok.us-east-1.rds.amazonaws.com -P 3306 -u admin -p

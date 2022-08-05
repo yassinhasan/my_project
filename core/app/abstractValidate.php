@@ -5,7 +5,8 @@ class abstractValidate
     public $request;
     protected $error = [];
     const FIELD__REQUIRED = "required"; 
-    const FIELD__STRING = "string"; 
+    const FIELD__NAME = "name"; 
+    const FIELD__PASSWORD= "password";
     const FIELD__EMAIL = "email";
     const FIELD__MIN = "min";
     const FIELD__MAX = "max";
@@ -39,16 +40,34 @@ class abstractValidate
         }
 
    }
-   public function string($field , $value , $message =null)
+   
+  public function name($field , $value , $message =null)
+  {
+        if($value != null or $value != "") 
+        {
+           $rexSafety = "/[\^<,\"@\/\{\}\(\)\*\$%\?=>:\|;#0-9_-]+/i";
+            if(preg_match($rexSafety , $value) == true)
+            $this->error[$field][] =  "Sorry This ".ucfirst($field)." Is Must be String";
+        };
+
+  }
+public function password($field , $value , $message =null)
    {
         if($value != null or $value != "") 
         {
-            $pattern = "/[a-zA-ZA-Z?#!~0-9]+%_-+@$^&()//";
-            if(preg_match($pattern , $value) == false)
-            $this->error[$field][] =  "sorry ".ucfirst($field)." is must be string";
-        };
+            $uppercase  = preg_match("@[A-Z]@" , $value);
+            $lowercase = preg_match("@[a-z]@" , $value);
+            $number = preg_match("@[0-9]@" , $value);
+            if(!$uppercase || !$lowercase || !$number ) 
+            {
+                 $this->error[$field][] =  "Sorry This ".ucfirst($field)." Not Matched";
+            };
+        }
+
+
 
    }
+
    public function isInt($field , $value)
    {
        

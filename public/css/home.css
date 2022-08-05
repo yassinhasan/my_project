@@ -1,7 +1,46 @@
+.post_image_box
+{
+    display: flex;
+    justify-content: center;
+    align-items : center;
+}
 .post_user_image
 {
     width: 150px;
     height: 150;
     height: 150px;
     border-radius: 50%;
+}
+.shar_post_box
+{
+    position: relative;
+}
+
+.users_box_details
+{
+    background: rgb(13 110 253 / 25%);
+        margin: 20px 0;
+}
+.users_box_name
+{
+   background: white;
+   border-radius: 9px;
+}
+.users_box_follow
+{
+    margin-top: 10px;
+}
+.follow_btn
+{
+    margin-right: 8px ;
+    background-color: #198754;
+    color: #fff;
+}
+.follower_num
+{
+    color: #fff;
+}
+.follower_text
+{
+    color: #53687c;
 }
