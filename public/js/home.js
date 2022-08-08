@@ -3,6 +3,7 @@ let form = getElm("share_post_form");
 let textarea_text = getElm("textarea_text");
 let shar_post_box = getElm("shar_post_box");
 let post_box  = getElm("post_box");
+let users_box = getElm("users_box");
 share_post_btn.addEventListener("click",(e)=>
 {
     e.preventDefault();
@@ -74,30 +75,34 @@ fetchPostsUrl()
 
 function preparePostBox(data)
 {
+      showCustomeSpinner(post_box);
       if(data.posts)
           {
+              removeCustomSpinner();
               let allPosts = data.posts ;
               if(allPosts.length > 0)
               {
                   post_box .innerHTML = "";
                   for (var i = allPosts.length; i--; ) {
-                
+                     let image = allPosts[i].image == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].image}`; 
                         post_box.innerHTML += `
-                  <div class="card-header bg bg-info text-light">
-                    ${allPosts[i].firstName} ${allPosts[i].lastName}
-                  </div>
-                  <div class="card-body">
-                    <div class="row g-0">
-                        <div class="col-md-4 post_image_box">
-                            <img src="../../public/uploades/images/profile/${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].image}"  class="img-fluid rounded-start  post_user_image" alt="...">
+                        <div class="post_box_details">
+                              <div class="card-header bg bg-info text-light">
+                                ${allPosts[i].firstName} ${allPosts[i].lastName}
+                              </div>
+                              <div class="card-body">
+                                <div class="row g-0">
+                                    <div class="col-md-4 post_image_box">
+                                        <img src="../../public/uploades/images/profile/${image}"  class="img-fluid rounded-start  post_user_image" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                      <div class="card-body">
+                                        <p class="card-text">${allPosts[i].postText}</p>
+                                        <p class="card-text"><small class="text-muted">Post Date : ${allPosts[i].postDate}</small></p>
+                                    </div>
+                               </div>
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                            <p class="card-text">${allPosts[i].postText}</p>
-                            <p class="card-text"><small class="text-muted">Post Date : ${allPosts[i].postDate}</small></p>
-                        </div>
-                   </div>
-                </div>
                         `;
                     }
                   
@@ -110,3 +115,70 @@ function preparePostBox(data)
           }
 }
 
+function fetchUsers()
+{
+    let url = "/fetchUsers";
+    fetch(url,{
+        method: "POST"
+    })
+        .then(resp => resp.json())
+        .then(data => {prepareUsersBox(data)})
+
+}
+fetchUsers();
+function prepareUsersBox(data)
+{  
+         showCustomeSpinner(post_box);
+          if(data.users)
+          {
+              removeCustomSpinner();
+              let allUsers = data.users ;
+           //   console.log(data.users)
+              if(allUsers.length > 0)
+              {
+                  users_box .innerHTML = "";
+                  for (var i = allUsers.length; i--; ) {
+                        let image = allUsers[i].image == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].image}`;
+                        let follow ;
+                        if( allUsers[i].status == null)
+                        {
+                            follow = 'follow'
+                        }else if (allUsers[i].status == 'pending')
+                        {
+                             follow = 'pending'
+                        }else
+                        {
+                            follow = 'unfollow' 
+                        }
+                        users_box.innerHTML += `
+            <div class="card-body users_box_details">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="../../public/uploades/images/profile/${image}"  class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                              <div class="card-header users_box_name">
+                               ${allUsers[i].firstName} ${allUsers[i].lastName}
+                              </div>
+                              <div class="users_box_follow">
+                                  <button class="btn  follow_btn " type="submit" name="follow">
+                                      ${follow}
+                                  </button>
+                                   <span class="card-text follower_num">${allUsers[i].followers} <span class="follower_text">Followers </span></span>
+                              </div>
+                        </div>
+                   </div>
+                </div>
+            </div>
+                        `;
+                    }
+                  
+              }else
+              
+              {
+                  post_box.innerHTML = "No Users";
+              }
+              
+          }
+}

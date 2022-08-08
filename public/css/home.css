@@ -1,3 +1,7 @@
+.main_page
+{
+    margin-top:  50px; 
+}
 .post_image_box
 {
     display: flex;
@@ -11,9 +15,18 @@
     height: 150px;
     border-radius: 50%;
 }
-.shar_post_box
+.shar_post_box , .post_box , .users_box
 {
     position: relative;
+}
+.post_box
+{
+    border: none !important;
+}
+.post_box_details
+{
+    margin: 15px 0;
+    box-shadow: -4px 6px 16px rgb(0 0 0 / 20%);
 }
 
 .users_box_details
@@ -38,7 +51,7 @@
 }
 .follower_num
 {
-    color: #fff;
+    color: #f00;
 }
 .follower_text
 {

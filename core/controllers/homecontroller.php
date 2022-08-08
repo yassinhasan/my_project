@@ -81,7 +81,7 @@ class homecontroller extends abstractController
         if($this->request->method() == "POST")
         {
 
-             $this->jData['posts'] = $this->model->fetchUsers($userId);
+             $this->jData['users'] = $this->model->fetchUsers($userId);
              $this->json();
         }else
         {

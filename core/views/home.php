@@ -41,29 +41,9 @@ use core\app\user;
         <!-- users info -->
         <div class="col col-4 users_box">
                 <!-- start users info details-->
-            <div class="card-body users_box_details">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="../../public/uploades/images/profile/smsmhasan/avatar.jpg"  class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                              <div class="card-header users_box_name">
-                                smsm hasan
-                              </div>
-                              <div class="users_box_follow">
-                                  <button class="btn  follow_btn " type="submit" name="follow">
-                                      follow
-                                  </button>
-                                   <span class="card-text follower_num">0 <span class="follower_text">Followers </span></span>
-                              </div>
-                        </div>
-                   </div>
-                </div>
-            </div>
-        <!-- end start users info details -->
+               <!-- end start users info details -->
 
-    </div>
+        </div>
      <!-- end main users info -->
 </div>
 

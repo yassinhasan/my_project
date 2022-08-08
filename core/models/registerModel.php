@@ -40,8 +40,9 @@ class registerModel extends abstractModel
         ])->insert(self::$tableName) ) 
         {
             $this->data([
-                    "userId" => Application::$app->db::lastId() 
-
+                    "userId" => Application::$app->db::lastId()  , 
+                    "image"  => "avatar.jpg"
+ 
             ])->table("app_users_profile")->insert(); 
         }
         
