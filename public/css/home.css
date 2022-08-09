@@ -2,18 +2,22 @@
 {
     margin-top:  50px; 
 }
-.post_image_box
+.post_image_box , .user_image_box
 {
     display: flex;
     justify-content: center;
-    align-items : center;
+    align-items: center;
+    width: 150px;
+    position: relative;
+    height: 150px;
 }
-.post_user_image
+.post_user_image , .ifno_user_image
 {
     width: 150px;
-    height: 150;
     height: 150px;
-    border-radius: 50%;
+    object-fit: cover;;
+    position: absolute;
+
 }
 .shar_post_box , .post_box , .users_box
 {
@@ -42,6 +46,7 @@
 .users_box_follow
 {
     margin-top: 10px;
+    justify-content: space-around;
 }
 .follow_btn
 {

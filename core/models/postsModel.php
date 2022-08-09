@@ -37,7 +37,7 @@ class postsModel extends abstractModel
             )" 
             
             , $userId)->select("
-             app_posts.*  , app_users.firstName , app_users.lastName , app_users_profile.image ")->fetchAll();
+             app_posts.*  ,app_users.id , app_users.firstName , app_users.lastName , app_users_profile.image ")->fetchAll();
 
         return $posts;
         
@@ -57,5 +57,27 @@ class postsModel extends abstractModel
         return $posts;
         
 
+    }
+   public function fetchUpdateUserFollowSystem($userId ,  $followerId , $status)
+    {
+
+        $alreadyFollowered = 
+        $this->from(" app_follow " )->where(" sender = ? AND receiver = ? " , [$userId , $followerId])->select(" * ")->fetchAll();
+        if($alreadyFollowered == null)
+        {
+           $this->data([
+            "sender" => $userId ,
+            "receiver" => $followerId ,
+            "status" => $status , 
+            ])->insert(" app_follow "); 
+        }else
+        {
+         $this->data([
+        "status" => $status , 
+        
+        ])->where(" sender = ? AND receiver = ? " , [$userId , $followerId])->update(" app_follow ");
+        }
+        
+        return true;
     }
 }

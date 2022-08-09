@@ -89,4 +89,25 @@ class homecontroller extends abstractController
         }
 
     }
+    public function fetchUpdateUserFollowSystem()
+    {
+        $data = $this->request->getBody();
+        $userId = Application::$app->session->userId;
+        $status = $data['status'];
+        $followerId = $data['followerId'];
+        if($this->request->method() == "POST")
+        {
+
+
+             if($this->model->fetchUpdateUserFollowSystem($userId , $followerId , $status))
+             {
+                $this->jData['update_user'] = "true";
+             }
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
 }
