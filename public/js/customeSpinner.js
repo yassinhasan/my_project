@@ -1,5 +1,6 @@
 function showCustomeSpinner(div)
 {
+    div.style.position ="relative";
     let elm =  
     `
     <div class="custome_overlay_spinner"></div>
@@ -32,8 +33,16 @@ function showCustomeSpinner(div)
 }
 
 
-function removeCustomSpinner()
+function removeCustomSpinner(div)
 {
-    document.querySelector(".custome_overlay_spinner").remove();
-    document.querySelector(".custom_load_spinner").remove();
-}
+    
+    let custome_overlay_spinner =  div.querySelector(".custome_overlay_spinner");
+    if(custome_overlay_spinner)
+    { custome_overlay_spinner.remove();}
+   
+    let custom_load_spinner = div.querySelector(".custom_load_spinner");
+    if(custom_load_spinner)
+    {  custom_load_spinner.remove();}
+  
+   
+} 

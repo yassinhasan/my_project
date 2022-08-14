@@ -110,4 +110,40 @@ class homecontroller extends abstractController
         }
 
     }
+    
+    public function addComment()
+    {
+        $data = $this->request->getBody();
+        $userId = Application::$app->session->userId;
+        $postId = $data['postId'];
+        $comment = $data['comment'];
+        if($this->request->method() == "POST")
+        {
+             if($this->model->addComment($userId , $postId , $comment) )
+             {
+               $this->jData["comment"] = $this->model->fetchComments( $postId);
+             }
+      
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
+     public function fetchComments()
+    {
+        $data = $this->request->getBody();
+        $userId = Application::$app->session->userId;
+        $postId = $data['postId'];
+        if($this->request->method() == "POST")
+        {
+             $this->jData["comment"] = $this->model->fetchComments( $postId);
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
 }

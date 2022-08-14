@@ -13,12 +13,13 @@
     <script src="<?= $this->request->jsUrl("helper")?>?10"></script>
     <script src="<?= $this->request->jsUrl("alert")?>?10"></script>
     <script src="<?= $this->request->jsUrl("main")?>?10"></script>
+       
     <?php 
 
         if(!empty($links["js"])) :
             foreach ($links["js"] as $link) :
                 $file =  $this->request->jsUrl($link);
-               echo  "<script src='".$file."?10' > </script>" ;
+               echo  "<script src='".$file."?10'  type='module'> </script>" ;
             endforeach;
         endif;
     ?>

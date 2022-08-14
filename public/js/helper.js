@@ -168,16 +168,11 @@ function removeLoadSpinner()
 
 
 // validation 
-function makeInvalidInput(inputName , otherInput = null ,msg )
+function makeInvalidInput(inputName ,msg )
 {
     let input;
-    if(otherInput != null)
-    {
-         input = document.querySelector("[name='"+inputName+"']");
-    }else
-    {
-        input = document.querySelector("input[name='"+inputName+"']");  
-    }
+
+    input = document.querySelector("[name='"+inputName+"']");
     input.classList.add("is-invalid");
     let div_error_msg = `<div class="invalid-feedback">${msg}</div>`;
      input.insertAdjacentHTML("afterend" , div_error_msg);
@@ -219,5 +214,4 @@ function removeAnyValidation()
        });
    }
 }
-
 

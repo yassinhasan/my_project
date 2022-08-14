@@ -32,12 +32,15 @@ class postsModel extends abstractModel
             app_users.id = app_posts.userId
             INNER JOIN app_users_profile  ON 
             app_users_profile.userId = app_posts.userId
+            
             ")->where(" app_posts.userId = ?  or app_posts.userId = ( select app_follow.receiver from app_follow
             where app_follow.sender = $userId and app_follow.receiver = app_users.id and status = 'approve'
             )" 
             
             , $userId)->select("
-             app_posts.*  ,app_users.id , app_users.firstName , app_users.lastName , app_users_profile.image ")->fetchAll();
+             app_posts.*  ,app_users.id as userId , app_users.firstName , app_users.lastName , app_users_profile.image  ,
+             (SELECT  COUNT(app_users_comments.postId) from app_users_comments where app_users_comments.postId = app_posts.id) as comments
+             ")->fetchAll();
 
         return $posts;
         
@@ -79,5 +82,34 @@ class postsModel extends abstractModel
         }
         
         return true;
+    }
+    
+    public function addComment($userId , $postId , $comment)
+    {
+        if ($this->data([
+            "postId" => $postId , 
+            "userId"  => $userId , 
+            "comment" => $comment , 
+            
+            ])->insert("app_users_comments"))
+            {
+                return true;
+            }
+
+    }
+        
+    public function fetchComments( $postId )
+    {
+              return  $this->from("app_users_comments")->join("
+                
+                INNER JOIN app_users_profile on 
+                app_users_profile.userId = app_users_comments.userId
+                INNER JOIN app_users on
+                app_users.id  = app_users_comments.userId
+                 INNER JOIN app_posts on
+                app_posts.id  = app_users_comments.postId
+                ")->where("app_posts.id = ? " , $postId)->select(" app_users_comments.* , app_users_profile.image ,app_users.firstName ,app_users.lastName , 
+                 (SELECT  COUNT(app_users_comments.postId) from app_users_comments where app_users_comments.postId = $postId) as comments
+                ")->fetchAll();
     }
 }

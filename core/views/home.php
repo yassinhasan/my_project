@@ -13,7 +13,7 @@ use core\app\user;
         <div class="col col-8">
             <!--share posts-->
            <div class="card">
-                  <div class="card-header bg bg-info text-light">
+                  <div class="card-header share_post_">
                     Share Your Post
                   </div>
                   <div class="card-body shar_post_box">
