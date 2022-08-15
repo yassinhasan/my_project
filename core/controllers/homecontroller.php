@@ -146,4 +146,42 @@ class homecontroller extends abstractController
         }
 
     }
+    
+    // likes
+        public function addLike()
+    {
+        $data = $this->request->getBody();
+        $userId = Application::$app->session->userId;
+        $postId = $data['postId'];
+        $type = $data['type'];
+        if($this->request->method() == "POST")
+        {
+             if($this->model->addLike($userId , $postId , $type) )
+             {
+               $this->jData["likes"] = $this->model->fetchLikes( $postId);
+             }
+      
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
+    
+    public function fetchLikes()
+    {
+        $data = $this->request->getBody();
+        $userId = Application::$app->session->userId;
+        $postId = $data['postId'];
+        if($this->request->method() == "POST")
+        {
+             $this->jData["likes"] = $this->model->fetchLikes($postId);
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
 }

@@ -49,17 +49,19 @@ share_post_btn.addEventListener("click", (e) => {
     if (data.posts) {
         
         let allPosts = data.posts;
+       
+        
         if (allPosts.length > 0) {
             post_box.innerHTML = "";
             for (var i = allPosts.length; i--;) {
-                let postId = allPosts[i].id;
+                let  postId = allPosts[i].id;
                 let image = allPosts[i].image == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].image}`;
                 post_box.innerHTML += `
-                        <div class="post_box_details">
+                        <div class="post_box_details"  id="post_box_details_${postId}">
                               <div class="card-header">
                                 ${allPosts[i].firstName} ${allPosts[i].lastName}
                               </div>
-                              <div class="card-body">
+                              <div class="card-body big_card_body">
                                 <div class="row g-0">
                                     <div class="col-md-4 post_image_box">
                                         <img src="../../public/uploades/images/profile/${image}"  class="img-fluid rounded-start  post_user_image" alt="...">
@@ -78,10 +80,6 @@ share_post_btn.addEventListener("click", (e) => {
                                              <span class="comments_num">${allPosts[i].comments}</span>
                                              <span> comments</span>
                                         </div>
-                                    <div class="likes">
-                                        <span class="likes_num">5</span>
-                                        <span> like </span>
-                                    </div>
                                </div>
                                 <!-- here form of comments -->
                                  <div class="comments_form_box hidden" id="comments_form_box_${postId}">
@@ -89,10 +87,25 @@ share_post_btn.addEventListener("click", (e) => {
                                 <!-- end form of comments -->
                                 <!-- end here comments -->
                             </div>
+                            
+                            <!-- likes -->
+                                    <div class="likes_box">
+                                        <div data-postId="${postId}" id="likes_box_${postId}">
+                                            <div class="is_like">
+                                                 <span class="likes_num no_of_likes">          ${allPosts[i].liked} </span>
+                                                 <i class="fas fa-thumbs-up like_btn" data-type="like"></i>
+                                            </div>
+                                             <div class="i_dislike">
+                                                 <span class="dislikes_num no_of_likes">      ${allPosts[i].disliked} </span>                                 
+                                                 <i class="fas fa-thumbs-down dislike_btn"        data-type="unlike"></i> 
+                                             </div>
+                                        </div>
+
+                                </div>
+                            <!-- end likes -->
                         </div>
                         `;
             }
-            
 
         }
         else
@@ -100,6 +113,7 @@ share_post_btn.addEventListener("click", (e) => {
         {
             post_box.innerHTML = "No Posts";
         }
+        
         removeCustomSpinner(post_box);
 
     }

@@ -23,3 +23,9 @@ import { clickedOnCommentsDiv , clickedOnCommentTextarea , clickedOnAddCommentBt
  clickedOnCommentsDiv();
 clickedOnCommentTextarea();
 clickedOnAddCommentBtn();
+
+
+// likes
+
+import { clickedOnAddLiketBtn } from "./home/likes.js"
+ clickedOnAddLiketBtn();

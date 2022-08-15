@@ -39,7 +39,9 @@ class postsModel extends abstractModel
             
             , $userId)->select("
              app_posts.*  ,app_users.id as userId , app_users.firstName , app_users.lastName , app_users_profile.image  ,
-             (SELECT  COUNT(app_users_comments.postId) from app_users_comments where app_users_comments.postId = app_posts.id) as comments
+             (SELECT  COUNT(app_users_comments.postId) from app_users_comments where app_users_comments.postId = app_posts.id) as comments ,
+             (SELECT  COUNT(app_posts_likes.id) from app_posts_likes where (app_posts_likes.type = 'like' AND app_posts_likes.postId = app_posts.id )) as liked , 
+             (SELECT  COUNT(app_posts_likes.id) from app_posts_likes where ( app_posts_likes.type = 'unlike' AND app_posts_likes.postId = app_posts.id ) )as disliked 
              ")->fetchAll();
 
         return $posts;
@@ -111,5 +113,52 @@ class postsModel extends abstractModel
                 ")->where("app_posts.id = ? " , $postId)->select(" app_users_comments.* , app_users_profile.image ,app_users.firstName ,app_users.lastName , 
                  (SELECT  COUNT(app_users_comments.postId) from app_users_comments where app_users_comments.postId = $postId) as comments
                 ")->fetchAll();
+    }
+    
+    // likes
+    
+    // select from likes if user make like if true
+    //  if user->type of like = type so return already liked 
+    //  if not equal to type make update where user and post 
+    // so every user has only on like or not like
+    public function addLike($userId , $postId ,$type)
+    {
+        
+        
+        $alreadyLiked = 
+        $this->from(" app_posts_likes " )->where(" postId = ? AND userId = ?  " , [ $postId , $userId ])->select(" * ")->fetch();
+        if($alreadyLiked == null)
+        {
+        
+            $this->data([
+            "postId" => $postId , 
+            "userId"  => $userId , 
+            "type" => $type , 
+            
+            ])->insert("app_posts_likes"); 
+        }else if($alreadyLiked->type =="like" AND $type == "unlike")
+        {
+          
+         $this->data([
+        "type" => "unlike" , 
+        ])->where("  postId = ?  AND userId = ? " , [$postId , $userId])->update(" app_posts_likes ");
+        }else if($alreadyLiked->type =="unlike" AND $type == "like")
+        {
+         $this->data([
+        "type" => "like" , 
+        ])->where("  postId = ?  AND userId = ? " , [$postId , $userId])->update(" app_posts_likes ");
+        }
+        
+        return true;
+
+    }
+        
+        // select count likes and dislikes where post id 
+    public function fetchLikes( $postId )
+    {
+              return  $this->from("app_posts_likes")->where("app_posts_likes.postId = ? " , $postId)->select(" 
+             (SELECT  COUNT(app_posts_likes.id) from app_posts_likes where (app_posts_likes.type = 'like' AND app_posts_likes.postId = $postId) )as liked , 
+             (SELECT  COUNT(app_posts_likes.id) from app_posts_likes where ( app_posts_likes.type = 'unlike' AND app_posts_likes.postId = $postId) ) as disliked
+                ")->fetch();
     }
 }

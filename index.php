@@ -43,6 +43,8 @@ $app->router->post("/sharePosts",[ homecontroller::class , "sharePosts"]);
 $app->router->post("/fetchPosts",[ homecontroller::class , "fetchPosts"]);
 $app->router->post("/fetchUsers",[ homecontroller::class , "fetchUsers"]);
 $app->router->post("/addComment",[ homecontroller::class , "addComment"]);
+$app->router->post("/addLike",[ homecontroller::class , "addLike"]);
+$app->router->post("/fetchLikes",[ homecontroller::class , "fetchLikes"]);
 $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
 $app->router->get("/register",[ registerController::class , "register"]);
