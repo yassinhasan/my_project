@@ -6,7 +6,7 @@ CONTROOLERS_PATH=$ROOT_PATH"/core/controllers/"
 MODELS_PATH=$ROOT_PATH"/core/models/"
 CSS_PATH=$ROOT_PATH"/public/css/"
 JS_PATH=$ROOT_PATH"/public/js/"
-VIEW_PATH="/core/views/"
+VIEW_PATH="/core/app/views/"
 
 Model_text='
 <?php
@@ -27,29 +27,28 @@ class changeModel extends abstractModel
 '
 
 Controller_text='
+
 <?php
 namespace core\controllers;
-
 use core\app\Application;
-
-class changecontroller extends abstractController
+use core\models\changeModel;
+class changeController extends abstractController
 {
+      public function __construct()
+    {
+        parent::__construct();
+        $this->model = new changeModel();
+        $this->data["model"] = $this->model;
+        $this->data["title"] = "change";
+        $this->data["links"] = [
+            "css" => ["change"] ,
+            "js" => ["change"] ,
+        ];
 
-
+    }
     public function change()
     {
-
-        $data = [
-            "title" => "change"
-        ];
-        $data['links'] = [
-            "css" => ["change"] ,
-            "js" => [
-                "change" ,
-
-            ]
-        ];
-        $this->response->renderView("/change" ,$data );
+        $this->response->renderView("/change", $this->data);
     }
 }
 '

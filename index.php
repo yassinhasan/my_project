@@ -3,6 +3,7 @@ ini_set("display_errors" , 1);
 use core\app\Application;
 use core\controllers\accessController;
 use core\controllers\homecontroller;
+use core\controllers\userPostsController;
 use core\controllers\registerController;
 use core\controllers\loginController;
 use core\controllers\logoutController;
@@ -47,6 +48,8 @@ $app->router->post("/addLike",[ homecontroller::class , "addLike"]);
 $app->router->post("/fetchLikes",[ homecontroller::class , "fetchLikes"]);
 $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
+//  userPotsts
+$app->router->get("/userPosts",[ userPostsController::class , "userPosts"]);
 $app->router->get("/register",[ registerController::class , "register"]);
 $app->router->post("/register",[ registerController::class , "register"]);
 $app->router->get("/login",[ loginController::class , "login"]);

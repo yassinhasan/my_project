@@ -5,7 +5,7 @@ $this->view->getFlashMsg("success_profile" , "success" );
 ?>
 <div class="card" style="width: 18rem;margin-top: 50px">
     <!-- card head contain profile image -->
-    <div class="card-head d-flex justify-content-center align-items-center">
+    <div class="card-head d-flex justify-content-center align-items-center profile_iamge_box">
         <?php $this->view->startFileForm($model , "/profile/updateProfileImage" ,"file_form"); ?> 
         <div class="error_image image_div">
             <img src="<?= user::displayImage() ?>" class="card-img-top profile_iamge" alt="image">
@@ -21,7 +21,7 @@ $this->view->getFlashMsg("success_profile" , "success" );
         <?php $this->view->endForm(); ?>
     </div>
     <!-- card body -->
-    <div class="card-body">
+    <div class="card-body profile_info_box">
     <?php $this->view->startPostForm($model ,"/profile/saveProfile"); ?>
         <ul class="list-group">
 

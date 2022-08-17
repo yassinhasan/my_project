@@ -65,7 +65,7 @@ class View
         {
            
            $msg = Application::$app->session->pull($key);
-            echo  "<div class='alert alert-$type alert-dismissible fade show' role='alert'>
+            echo  "<div class='alert alert-$type alert-dismissible fade show custom_alert' role='alert'>
             <strong>$type</strong> $msg
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div> ";

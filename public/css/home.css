@@ -61,6 +61,11 @@
    background: white;
    border-radius: 9px;
 }
+.userPosts_link
+{
+    color: #fff !important
+    ;
+}
 .users_box_follow
 {
     margin-top: 10px;

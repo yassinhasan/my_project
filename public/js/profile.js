@@ -30,7 +30,8 @@ cancel_profile.addEventListener("click",()=>
 save_profile.addEventListener("click",(e)=>
 {
     e.preventDefault();
-    showLoadSpinner();
+    let profile_info_box = getElm("profile_info_box");
+    showCustomeSpinner(profile_info_box);
     removeAnyValidation()
     let formdata = new FormData(form);
     fetch(formURL ,
@@ -43,7 +44,7 @@ save_profile.addEventListener("click",(e)=>
        
         if(data.errors)
         {
-            removeLoadSpinner();
+            removeCustomSpinner(profile_info_box);
             for(let err in data.errors)
             {
             
@@ -104,6 +105,8 @@ function showImagePorfile(file , imagesrc)
     {
         let file_form = getElm("file_form");
         let file_form_url = file_form.action;
+        let profile_iamge_box = getElm("profile_iamge_box");
+         showCustomeSpinner(profile_iamge_box);
         fetchUpdateImage(file_form , file_form_url)
     })
 }
@@ -133,6 +136,8 @@ function fetchUpdateImage(form,url)
             hide(cancel_profile_image);
            
             hideAlert();
+            let profile_iamge_box = getElm("profile_iamge_box");
+            removeCustomSpinner(profile_iamge_box);
             showAlert("success" ,"Success !" , " you have updated your profile");
         }
     

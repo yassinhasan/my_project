@@ -49,17 +49,16 @@ share_post_btn.addEventListener("click", (e) => {
     if (data.posts) {
         
         let allPosts = data.posts;
-       
-        
         if (allPosts.length > 0) {
             post_box.innerHTML = "";
             for (var i = allPosts.length; i--;) {
+                let  type = allPosts[i].type;
                 let  postId = allPosts[i].id;
                 let image = allPosts[i].image == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].image}`;
                 post_box.innerHTML += `
                         <div class="post_box_details"  id="post_box_details_${postId}">
                               <div class="card-header">
-                                ${allPosts[i].firstName} ${allPosts[i].lastName}
+                                <a href="/userPosts?id=${allPosts[i].userId}" class="userPosts_link">${allPosts[i].firstName} ${allPosts[i].lastName}</a>
                               </div>
                               <div class="card-body big_card_body">
                                 <div class="row g-0">
@@ -93,11 +92,13 @@ share_post_btn.addEventListener("click", (e) => {
                                         <div data-postId="${postId}" id="likes_box_${postId}">
                                             <div class="is_like">
                                                  <span class="likes_num no_of_likes">          ${allPosts[i].liked} </span>
-                                                 <i class="fas fa-thumbs-up like_btn" data-type="like"></i>
+                                                 <i class="fas fa-thumbs-up like_btn
+                                                 ${type == 'like' ? 'active' : ''}" data-type="like"></i>
                                             </div>
                                              <div class="i_dislike">
                                                  <span class="dislikes_num no_of_likes">      ${allPosts[i].disliked} </span>                                 
-                                                 <i class="fas fa-thumbs-down dislike_btn"        data-type="unlike"></i> 
+                                                 <i class="fas fa-thumbs-down dislike_btn 
+                                                 ${type == 'unlike' ? 'active' : ''}"        data-type="unlike"></i> 
                                              </div>
                                         </div>
 
@@ -142,5 +143,6 @@ function prepareTextarea()
     textarea_text.classList.remove("is-valid");
 })
 }
+
 
 export {fetchPostsUrl , clickedShareBtn , preparePostBox  , prepareTextarea}

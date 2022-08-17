@@ -41,7 +41,8 @@ class postsModel extends abstractModel
              app_posts.*  ,app_users.id as userId , app_users.firstName , app_users.lastName , app_users_profile.image  ,
              (SELECT  COUNT(app_users_comments.postId) from app_users_comments where app_users_comments.postId = app_posts.id) as comments ,
              (SELECT  COUNT(app_posts_likes.id) from app_posts_likes where (app_posts_likes.type = 'like' AND app_posts_likes.postId = app_posts.id )) as liked , 
-             (SELECT  COUNT(app_posts_likes.id) from app_posts_likes where ( app_posts_likes.type = 'unlike' AND app_posts_likes.postId = app_posts.id ) )as disliked 
+             (SELECT  COUNT(app_posts_likes.id) from app_posts_likes where ( app_posts_likes.type = 'unlike' AND app_posts_likes.postId = app_posts.id ) )as disliked ,
+             (SELECT app_posts_likes.type from app_posts_likes where ( app_posts_likes.userId = $userId AND app_posts_likes.postId = app_posts.id ) )as type
              ")->fetchAll();
 
         return $posts;
