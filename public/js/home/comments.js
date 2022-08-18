@@ -87,7 +87,8 @@ function clickedOnAddCommentBtn()
     document.body.addEventListener("click", e =>{
     if(e.target.classList.contains("add_comment_btn"))
     {
-        
+
+
         let add_comment_btn = e.target;
         e.preventDefault();
         let comments_form_textarea = add_comment_btn.parentElement.querySelector(".comments_form_textarea");
@@ -104,12 +105,12 @@ function clickedOnAddCommentBtn()
                 })
                 .then(resp => resp.json())
                 .then(data => {
-                   comments_form_textarea.value = "";
+                  comments_form_textarea.value = "";
                   let comments_form_box = document.getElementById("comments_form_box_"+postId);
                   comments_form_box.innerHTML = "";
-                   showCustomeSpinner(comments_form_box);
-                   fetchComments(postId);
-                    loadCommentsForm(postId)
+                  showCustomeSpinner(comments_form_box);
+                  fetchComments(postId);
+                  loadCommentsForm(postId);
                 })
         
         }else
@@ -137,6 +138,7 @@ function clickedOnCommentTextarea()
 
 function fetchComments(postId)
 {
+
     let comments_form_box = document.getElementById("comments_form_box_"+postId);
     let formData = new FormData();
     formData.append('postId', postId);
@@ -151,16 +153,22 @@ function fetchComments(postId)
 
       let comments_num_parents = document.getElementById("comments_"+postId);
       let comments_num_span = comments_num_parents.querySelector(".comments_num");
-      if(data.comment.comment )
-      {
-         comments_num_span.innerHTML = data.comment[0].comments; 
-      }else
-      {
-          comments_num_span.innerHTML = 0;
-      }
+     comments_num_span.innerHTML = data.comment[0].comments; 
+
       
       loadComments(data ,postId)
       removeCustomSpinner(comments_form_box);
+      channel.bind('addComment', function(data) {
+        let returnData = JSON.stringify(data);
+        
+        if(data.userId == loggedUserId)
+        {
+            alert("you has added new comment");
+        }else
+        {
+            alert(`${data.userName} has added comment` )
+        }
+        });
      })
     
 }

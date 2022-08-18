@@ -1,4 +1,5 @@
 
+
 let users_box = getElm("users_box");
 function fetchUsers() {
     showCustomeSpinner(users_box);
@@ -63,6 +64,7 @@ function prepareUsersBox(data) {
         {
             post_box.innerHTML = "No Users";
         }
+
          removeCustomSpinner(users_box);
 
     }

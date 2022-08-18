@@ -3,12 +3,15 @@ namespace core\controllers;
 
 use core\app\Application;
 use core\models\postsModel;
+use core\app\user;
 class homecontroller extends abstractController
 {
 
-
+    
+    
   public function __construct()
     {
+        
         parent::__construct();
         $this->model = new postsModel();
         $this->data['model'] = $this->model;
@@ -21,7 +24,7 @@ class homecontroller extends abstractController
     }
     public function home()
     {
-
+        $this->data['loggedUserId'] = Application::$app->session->userId;
         $this->response->renderView("/home" ,$this->data );
     }
     
@@ -121,6 +124,9 @@ class homecontroller extends abstractController
         {
              if($this->model->addComment($userId , $postId , $comment) )
              {
+               $xdata['userId'] = $userId;
+               $xdata["userName"] = user::displayName();
+               $this->pusher->trigger( $_ENV['CHANNEL'], 'addComment',  $xdata);
                $this->jData["comment"] = $this->model->fetchComments( $postId);
              }
       

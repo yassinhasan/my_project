@@ -20,6 +20,21 @@ require_once "vendor/autoload.php";
 require_once "config/helper.php";
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ , '.env');
 $dotenv->load();
+// load pusher
+ $options = array(
+    'cluster' => $_ENV['APP_CLUSTER'],
+    'useTLS' => true
+  );
+//   $pusher = new Pusher\Pusher(
+//     $_ENV['APP_KEY'],
+//     $_ENV['APP_SECRET'],
+//     $_ENV['APP_ID'],
+//     $options
+//   );
+
+
+//end pusher 
+
 $config = [
     "db" => 
         [
@@ -31,12 +46,21 @@ $config = [
         [
             "email" => $_ENV['SMTP_EMAIL'] ,
             "password" => $_ENV['SMTP_PASSWORD'] ,
+        ] , 
+        "pusher" =>
+        [
+            new Pusher\Pusher(
+            $_ENV['APP_KEY'],
+            $_ENV['APP_SECRET'],
+            $_ENV['APP_ID'],
+            $options
+          )
         ]
         
     ];
   
-   
-$app = new Application($config['db']);
+
+$app = new Application($config);
 $app->router->get("/",[ homecontroller::class , "home"]);
 $app->router->get("/notfound",[ notfoundController::class , "notfound"]);
 $app->router->get("/home",[ homecontroller::class , "home"]);

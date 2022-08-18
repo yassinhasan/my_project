@@ -1,5 +1,4 @@
 
-
 import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea} from "./home/posts.js"
 clickedShareBtn()
 prepareTextarea();
@@ -29,3 +28,4 @@ clickedOnAddCommentBtn();
 
 import { clickedOnAddLiketBtn } from "./home/likes.js"
  clickedOnAddLiketBtn();
+

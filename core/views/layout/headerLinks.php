@@ -14,3 +14,8 @@
         endif;
         echo  "<link href='".$this->request->cssUrl("main")."?10' rel='stylesheet'> " ;
     ?>
+    <!--PUSHER-->
+    <?php 
+       echo  "<script src='https://js.pusher.com/7.2/pusher.min.js'></script> " ;
+
+   ?>

@@ -3,7 +3,6 @@ namespace core\app;
 use core\database\Database;
 use core\database\MigrationsClass;
 use core\controllers\accessController;
-
 class Application 
 {
 
@@ -18,6 +17,7 @@ class Application
     public  $db;
     public $customExceptions;
     public static $app;
+    public $Pusher;
     public function __construct(array $config)
     {   
         static::$app =$this;
@@ -29,9 +29,10 @@ class Application
         $this->router = new Router();
         $this->request = new Rrequest();
         $this->response = new Response();
-        $this->db      = new Database($config);
+        $this->db      = new Database($config["db"]);
         $this->migrations = new MigrationsClass();
         $this->customExceptions  = new customExceptions();
+        $this->pusher = $config["pusher"][0];
     }
 
     public function run()

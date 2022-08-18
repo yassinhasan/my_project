@@ -14,6 +14,7 @@ class abstractController
     protected $data = [];
     protected $model = null;
     protected $jData = [];
+    protected $pusher;
     public function __construct()
     {
         $this->response =   Application::$app->response;
@@ -22,6 +23,7 @@ class abstractController
         $this->session =   Application::$app->session;
         $this->cookie =   Application::$app->cookie;
         $this->customExceptions =   Application::$app->customExceptions;
+        $this->pusher = Application::$app->pusher;
     }
 
     public function json()

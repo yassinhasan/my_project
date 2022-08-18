@@ -90,4 +90,17 @@ class user
         $profile = self::getProfile();
         return !$profile ? null : $profile->gender ;
     }
+    
+    public static function getUserById($userId)
+    {
+        $stmt = Application::$app->db->pdo->prepare("
+        SELECT * FROM app_users WHERE id = :id
+        ");
+        $stmt->bindValue(":id" , $userId , PDO::PARAM_INT);
+        $stmt->execute();
+        $user = $stmt->fetchAll(PDO::FETCH_CLASS);
+        if($user) return array_shift($user);
+    }
+    
+    
 }
