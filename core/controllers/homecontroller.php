@@ -17,14 +17,14 @@ class homecontroller extends abstractController
         $this->data['model'] = $this->model;
         $this->data["title"] = "home";
         $this->data['links'] = [
-            "css" => ["home"] ,
+            "css" => [ "home/users","home/mediaquery" ,"home" ] ,
+            
             "js" => ["home"] ,
         ];
 
     }
     public function home()
     {
-        $this->data['loggedUserId'] = Application::$app->session->userId;
         $this->response->renderView("/home" ,$this->data );
     }
     

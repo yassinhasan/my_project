@@ -1,0 +1,37 @@
+.users_box_details
+{
+       box-shadow : 1px 0 10px #66666685;
+        margin: 20px 0;
+}
+.users_box_name
+{
+   background: white;
+   border-radius: 9px;
+}
+.userPosts_link
+{
+    color: #fff !important
+    ;
+}
+.users_box_follow
+{
+    margin-top: 10px;
+   align-items: center;
+}
+.follow_btn.follow
+{
+    margin-right: 8px ;
+    background-color: var(--follow-btn);
+    color: #fff;
+}
+.follow_btn.unfollow{
+     background-color: var(--unfollow_btn);
+}
+.follower_num
+{
+    color: #f00;
+}
+.follower_text
+{
+    color: #53687c;
+}

@@ -19,6 +19,7 @@ function prepareUsersBox(data) {
         //   console.log(data.users)
         if (allUsers.length > 0) {
             users_box.innerHTML = "";
+          
             for (var i = allUsers.length; i--;) 
             {
                 let image = allUsers[i].image == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].image}`;
@@ -36,6 +37,7 @@ function prepareUsersBox(data) {
                     follow = 'unfollow';
                     follow_class = "unfollow"
                 }
+        
                 users_box.innerHTML += `
                 <div class="card-body users_box_details">
                     <div class="row g-0">
@@ -53,12 +55,13 @@ function prepareUsersBox(data) {
                                   </button>
                                    <div class="card-text col-4"><span class="follower_num">${allUsers[i].followers}</span> <span class="follower_text">Followers </span></div>
                               </div>
-                             </div>
                           </div>
-                      </div>
-                 </div>
+                       </div>
+                    </div>
+                  </div>
                         `;
                }
+          
         }
         else
         {

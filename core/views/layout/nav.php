@@ -30,7 +30,7 @@ $user = user::findUser();
             <li class="nav-item dropdown">
             <?php
             if($user): ?>
-                <a class="nav-link dropdown-toggle logged_user_name" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-loggedUserId=<?= $loggedUserId?>>
+                <a class="nav-link dropdown-toggle logged_user_name" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-loggedUserId=<?= Application::$app->session->userId?>>
                     <?= $user->firstName." ".$user->lastName?>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

@@ -1,3 +1,8 @@
+
+let logged_user_name_link = getElm("logged_user_name");
+let loggedUserId = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim());
+let loggedUserName = (logged_user_name_link.innerHTML).trim()
+
 function clickedOnCommentsDiv()
 {
    document.body.addEventListener("click",e=>
@@ -153,22 +158,34 @@ function fetchComments(postId)
 
       let comments_num_parents = document.getElementById("comments_"+postId);
       let comments_num_span = comments_num_parents.querySelector(".comments_num");
-     comments_num_span.innerHTML = data.comment[0].comments; 
+      if(data.comment.length > 0)
+      {
+              comments_num_span.innerHTML = data.comment[0].comments;  
+      }else
+      {
+            comments_num_span.innerHTML = 0;
+      }
+
 
       
       loadComments(data ,postId)
       removeCustomSpinner(comments_form_box);
       channel.bind('addComment', function(data) {
-        let returnData = JSON.stringify(data);
-        
+
+        console.log(data)
+        let user_name  = "";
         if(data.userId == loggedUserId)
         {
-            alert("you has added new comment");
+           user_name = "You ";
         }else
         {
-            alert(`${data.userName} has added comment` )
-        }
+           user_name = data.userName ;
+        } 
+        console.log(user_name)
+        console.log(data.userId) 
+        realTimeNoti( data.userId ,user_name , " added comment ");
         });
+     
      })
     
 }

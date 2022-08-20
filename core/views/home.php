@@ -10,7 +10,7 @@ use core\app\user;
     <!-- main page consist of posts and usersinfo-->
     <div class="main_page row">
         <!--posts-->
-        <div class="col col-8">
+        <div class="col col-8 main_page_posts_box">
             <!--share posts-->
            <div class="card">
                   <div class="card-header share_post_">
@@ -19,7 +19,6 @@ use core\app\user;
                   <div class="card-body shar_post_box">
                       <form class="share_post_form" action="/sharePosts">
                         <div class="mb-3">
-                            <label for="Write_Post" class="form-label">Write your Post</label>
                             <textarea name="post" placeholder="Write your Post" 
                             class="form-control textarea_text" id="Write_Post" maxLength="200" rows="3"></textarea>
                         </div>
@@ -34,8 +33,7 @@ use core\app\user;
                 </div>
                 
                 <!-- posts-->
-           <div class="card post_box" mt="20" style="margin: 20px 0 ">
-          </div>
+               <div class="card post_box" mt="20" style="margin: 20px 0 "></div>
                 <!--end posts-->
         </div>
         <!-- users info -->
@@ -45,5 +43,6 @@ use core\app\user;
 
         </div>
      <!-- end main users info -->
+    </div>
 </div>
 

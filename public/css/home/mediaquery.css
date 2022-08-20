@@ -1,0 +1,66 @@
+@media only screen and (max-width: 768px) {
+    .main_page
+    {
+        /*display: block;*/
+       flex-direction: column-reverse;
+    }
+    .main_page_posts_box
+    {
+        width: 100%;
+        scroll-behavior: smooth;
+    }
+    .users_box::-webkit-scrollbar
+    {
+        width: 2px;
+    }
+    /* Track */
+    .users_box::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    /* Handle */
+    .users_box::-webkit-scrollbar-thumb {
+      background: #009688;
+    }
+    
+    /* Handle on hover */
+    .users_box::-webkit-scrollbar-thumb:hover {
+      background: #2196f3;
+    }
+    .users_box
+    {
+        width: 100%; 
+        position: relative;
+        display: flex;
+        overflow-x: scroll;
+        margin-bottom: 60px;
+    }
+
+    .users_box_name
+    {
+        text-align: center;
+    }
+    .users_box .users_box_details:nth-child(1)
+    {
+         margin-left: 0px;
+    }
+    .users_box .users_box_details
+    {
+        margin-right: 30px;
+        margin-left: 30px;
+    }
+    
+    .users_box_follow {
+    margin-top: 10px;
+    /* align-items: center; */
+    justify-content: center;
+    text-align: center;
+    }
+    .users_box_follow > div 
+    {
+        width: 100%;
+    }
+      
+
+    
+}
