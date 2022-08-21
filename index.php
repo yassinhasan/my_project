@@ -74,6 +74,8 @@ $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
 //  userPotsts
 $app->router->get("/userPosts",[ userPostsController::class , "userPosts"]);
+$app->router->post("/fetchPostsById",[ userPostsController::class , "fetchPostsById"]);
+
 $app->router->get("/register",[ registerController::class , "register"]);
 $app->router->post("/register",[ registerController::class , "register"]);
 $app->router->get("/login",[ loginController::class , "login"]);

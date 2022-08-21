@@ -59,10 +59,11 @@ class homecontroller extends abstractController
         }
 
     }
-        public function fetchPosts()
+    public function fetchPosts()
     {
-        
+    
         $userId = Application::$app->session->userId;
+        
         if($this->request->method() == "POST")
         {
 
@@ -100,7 +101,6 @@ class homecontroller extends abstractController
         $followerId = $data['followerId'];
         if($this->request->method() == "POST")
         {
-
 
              if($this->model->fetchUpdateUserFollowSystem($userId , $followerId , $status))
              {

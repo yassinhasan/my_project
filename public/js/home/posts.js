@@ -3,7 +3,8 @@ let form = getElm("share_post_form");
 let textarea_text = getElm("textarea_text");
 let shar_post_box = getElm("shar_post_box"); 
 let post_box = getElm("post_box");
-  function clickedShareBtn()
+
+function clickedShareBtn()
 {
    
 share_post_btn.addEventListener("click", (e) => {

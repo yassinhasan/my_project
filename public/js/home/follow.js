@@ -1,4 +1,8 @@
-import {fetchPostsUrl } from "./posts.js"
+import {fetchPostsUrl } from "./posts.js";
+
+let main_page = getElm("main_page");
+let singlePage = main_page.getAttribute("data-singlePage");
+
 function follow_unfollow_System(parent , follow_btn ,follower_num , followerId,status){
         let f_number = parseInt(follower_num.innerHTML);
         if(status == "approve")
@@ -25,7 +29,7 @@ function follow_unfollow_System(parent , follow_btn ,follower_num , followerId,s
             changedStatus = "approve";
         }
         
-        parent.setAttribute("data-status" , changedStatus)
+        parent.setAttribute("data-status" , changedStatus);
         fetchUpdateUserFollowSystem(followerId , changedStatus)
 }
 
@@ -40,7 +44,14 @@ function fetchUpdateUserFollowSystem(followerId , status)
             body  : formData
         })
         .then(resp => resp.json())
-        .then(data =>  {fetchPostsUrl()} )
+        .then(data =>  {
+            
+            if(singlePage == "false")
+            {
+                
+                fetchPostsUrl()
+            }
+        } )
 }
 
 function clickedOnFollowBtn()

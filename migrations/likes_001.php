@@ -12,7 +12,7 @@ class likes_001
             id INT (11) AUTO_INCREMENT PRIMARY KEY ,
             postId INT (11) ,
             userId INT (11) ,
-            type varchar (50) default 0
+            likeType varchar (50) default 0
         )");
         $stmt->execute();       
    }

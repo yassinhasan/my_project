@@ -10,11 +10,11 @@ class users_comments_0001
         CREATE TABLE IF NOT EXISTS app_users_comments
         (
             id INT (11) AUTO_INCREMENT PRIMARY KEY ,
-            postId INT (11) ,
+            commentpostId INT (11) ,
             userId INT (11) ,
             comment VARCHAR (255) , 
             commentDate DATETIME DEFAULT CURRENT_TIMESTAMP ,
-            status VARCHAR (50) DEFAULT NULL ,
+            commentStatus VARCHAR (50) DEFAULT NULL ,
             hasReplies INT DEFAULT 0
         )");
         $stmt->execute();       

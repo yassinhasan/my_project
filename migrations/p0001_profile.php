@@ -13,7 +13,7 @@ class p0001_profile
                     id INT (11) AUTO_INCREMENT PRIMARY KEY  , 
                     gender ENUM('male','female')  ,
                     mobile  INT(11) DEFAULT NULL ,
-                    image VARCHAR(255) DEFAULT NULL ,
+                    profileImage VARCHAR(255) DEFAULT NULL ,
                     bio VARCHAR(255) DEFAULT NULL ,
                     userId INT (11)    
                     )

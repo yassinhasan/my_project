@@ -1,13 +1,11 @@
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
 
-
 import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea} from "./home/posts.js"
 clickedShareBtn()
 prepareTextarea();
 // function fetch all posts 
 fetchPostsUrl()
-
 
 //fetch all users
 import {fetchUsers , prepareUsersBox} from "./home/users.js"

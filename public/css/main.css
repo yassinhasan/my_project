@@ -1,4 +1,12 @@
-
+:root
+{
+    --header-color: #198754 ;
+    --text-light : #fff;
+    --text-follow: #f44336;
+    --follow-btn: #ff5722 ;
+    --unfollow_btn :#2196f3;
+    --header-post : #2196f3;
+}
 .overlay_spinner
 {
     position: fixed;

@@ -47,7 +47,8 @@ function prepareUsersBox(data) {
                         <div class="col-md-8" style="width: 100%;">
                           <div class="card-body">
                               <div class="card-header users_box_name">
-                               ${allUsers[i].firstName} ${allUsers[i].lastName}
+                              
+                                <a href="/userPosts?id=${allUsers[i].id}" style="color: #795548 ; text-decoration: none"> ${allUsers[i].firstName} ${allUsers[i].lastName}</a>
                               </div>
                               <div class="users_box_follow row" data-id="${allUsers[i].id}" data-status="${allUsers[i].status}">
                                   <button class="btn  follow_btn ${follow_class} col-7" type="submit" name="follow">

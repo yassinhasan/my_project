@@ -46,12 +46,11 @@ class postsModel extends abstractModel
              ")->fetchAll();
 
         return $posts;
-        
-
+ 
     }
     public function fetchUsers($userId)
     {
-        $posts = $this->from(" app_users " )->join(" 
+        $Users = $this->from(" app_users " )->join(" 
             INNER JOIN app_users_profile  ON 
             app_users_profile.userId = app_users.id
             ")->where("app_users.id != ? " , $userId)->select("
@@ -60,7 +59,7 @@ class postsModel extends abstractModel
               ( select COUNT(app_follow.receiver) from app_follow where receiver = app_users.id AND status = 'approve') as followers   
             ")->fetchAll();
 
-        return $posts;
+        return $Users;
         
 
     }

@@ -1,7 +1,7 @@
 
 let logged_user_name_link = getElm("logged_user_name");
 let loggedUserId = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim());
-let loggedUserName = (logged_user_name_link.innerHTML).trim()
+let loggedUserName = (logged_user_name_link.innerHTML).trim();
 
 function clickedOnCommentsDiv()
 {
@@ -12,7 +12,7 @@ function clickedOnCommentsDiv()
         {   
             let parent = e.target.parentElement.parentElement;
              let postId = e.target.getAttribute("data-postId");
-      
+            e.target.parentElement.classList.toggle("show");
             parent.querySelector(".comments_form_box").classList.toggle("hidden");
             let comments_form_box = parent.querySelector(".comments_form_box")
             if(!parent.querySelector(".comments_form_box").classList.contains("hidden"))
@@ -52,6 +52,7 @@ function loadComments(data ,postId)
    let comments = `<div class="user_comments_box">`;
      if(commentsData.length > 0)
      {
+        
        for (var i = commentsData.length; i--;) {
         let image = commentsData[i].image == null ? 'avatar.jpg' : `${commentsData[i].firstName}${commentsData[i].lastName}/${commentsData[i].image}`;
         comments +=  `
@@ -63,7 +64,7 @@ function loadComments(data ,postId)
                          alt = "..." >
                 </div>
                 <div class="users_comments_comment_area col-10">
-                    <p class="user_comments_name">${commentsData[i].firstName}${commentsData[i].lastName}
+                    <p class="user_comments_name">  <a href="/userPosts?id=${commentsData[i].userId}" style="color: #795548 ; text-decoration: none"> ${commentsData[i].firstName} ${commentsData[i].lastName}</a>
                         <span class="users_comments_comment_area_date">${commentsData[i].commentDate}</span>
                     </p>
                     <p class="users_comments_comment_area_comment">${commentsData[i].comment}</p>

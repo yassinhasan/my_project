@@ -36,8 +36,6 @@ class Rrequest
         $path = null;
         if(isset($_SERVER["REQUEST_URI"]))
         {
-
-           
             $path = $_SERVER["REQUEST_URI"];
             $position = strpos($path , "?");
          
@@ -48,6 +46,7 @@ class Rrequest
             }
             
         }
+      
         $this->currentPath = $path;
         return $path;
     }

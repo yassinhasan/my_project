@@ -8,7 +8,7 @@ use core\app\user;
 
 <div class="container">
     <!-- main page consist of posts and usersinfo-->
-    <div class="main_page row">
+    <div class="main_page row" data-singlePage="false">
         <!--posts-->
         <div class="col col-8 main_page_posts_box">
             <!--share posts-->

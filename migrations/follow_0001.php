@@ -13,7 +13,7 @@ class follow_0001
             sender INT (11) ,
             receiver INT (11) ,
             followRequestTime DATETIME DEFAULT CURRENT_TIMESTAMP ,
-            status VARCHAR (50) DEFAULT NULL
+            followStatus VARCHAR (50) DEFAULT NULL
         )");
         $stmt->execute();       
    }

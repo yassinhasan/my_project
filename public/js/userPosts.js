@@ -1,0 +1,22 @@
+// Enable pusher logging - don't include this in production
+// Pusher.logToConsole = true;
+
+
+
+// follow un follow system 
+import {clickedOnFollowBtn} from "./home/follow.js"
+clickedOnFollowBtn();
+
+
+// comments area
+
+import { clickedOnCommentsDiv , clickedOnCommentTextarea , clickedOnAddCommentBtn} from "./home/comments.js"
+ clickedOnCommentsDiv();
+clickedOnCommentTextarea();
+clickedOnAddCommentBtn();
+
+
+// likes
+
+import { clickedOnAddLiketBtn } from "./home/likes.js"
+ clickedOnAddLiketBtn();

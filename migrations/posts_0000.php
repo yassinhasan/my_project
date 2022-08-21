@@ -10,13 +10,12 @@ class posts_0000
         CREATE TABLE IF NOT EXISTS app_posts
         (
             id INT (11) AUTO_INCREMENT PRIMARY KEY ,
-            users INT (11) ,
             postText VARCHAR(255) ,
             postDate DATETIME DEFAULT CURRENT_TIMESTAMP ,
             postDateModified DATETIME DEFAULT NULL,
             comments VARCHAR(255) DEFAULT NULL,
-            views INT(11) DEFAULT 0 ,
-            images VARCHAR(255) DEFAULT NULL 
+            postViews INT(11) DEFAULT 0 ,
+            postImages VARCHAR(255) DEFAULT NULL 
         )");
         $stmt->execute();       
    }
