@@ -1,7 +1,7 @@
 <?php
 
 use core\app\Application;
-class posts_0002 
+class b0_posts_0011 
 {
     public function up()
     {
@@ -9,7 +9,8 @@ class posts_0002
 
             ALTER TABLE app_posts
             ADD CONSTRAINT fk_app_posts_users
-            FOREIGN  KEY (userId) REFERENCES app_users(id)
+            FOREIGN  KEY (postUserId) REFERENCES app_users(id)
+            ON DELETE CASCADE ON UPDATE CASCADE
         ");
          $stmt->execute();
     }

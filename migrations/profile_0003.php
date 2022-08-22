@@ -2,13 +2,13 @@
 
 use core\app\Application;
 
-class p0004_profile_add_lastUpdated_on_update 
+class profile_0003 
 {
     public function up()
     {
 
         $stmt = Application::$app->db->pdo->prepare( "
-        ALTER TABLE app_users_profile ADD COLUMN lastUpdated  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ALTER TABLE app_user_profile ADD COLUMN createdAt  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         
         ");
         $stmt->execute();

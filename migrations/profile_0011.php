@@ -2,13 +2,17 @@
 
 use core\app\Application;
 
-class p0005_profile_add_zerofill 
+class profile_0011 
 {
     public function up()
     {
 
         $stmt = Application::$app->db->pdo->prepare( "
-        ALTER TABLE `app_users_profile` CHANGE `mobile` `mobile` INT UNSIGNED ZEROFILL NULL DEFAULT NULL;        
+             ALTER TABLE app_user_profile   
+            ADD CONSTRAINT dk_app_users_profile     
+             FOREIGN  KEY (userId) REFERENCES  app_users(id) 
+             ON DELETE CASCADE ON UPDATE CASCADE;
+        
         ");
         $stmt->execute();
     }

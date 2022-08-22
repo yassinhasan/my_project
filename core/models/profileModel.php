@@ -9,7 +9,7 @@ class profileModel extends abstractModel
 
     public $email ="";
     public $password = "";
-    static public $tableName = "app_users_profile";
+    static public $tableName = "app_user_profile";
     public function rules($id = null)
     {
         return  [
@@ -76,12 +76,12 @@ class profileModel extends abstractModel
             if($hasProfile)
             {
                 $this->data([
-                    "image" => $data ,
+                    "profileImage" => $data ,
                 ])->table(self::$tableName)->where(" userId =  ? " , $id)->update();
             }else
             {
                 $this->data([
-                    "image" =>$data ,
+                    "profileImage" =>$data ,
                     "userId" => $id
                     
                 ])->table(self::$tableName)->insert();

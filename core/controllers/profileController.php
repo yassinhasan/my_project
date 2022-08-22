@@ -52,7 +52,7 @@ class profileController extends abstractController
     public function updateProfileImage()
     {
         $id = (int)$this->session->userId;
-        $upload = new uploadImage("image");
+        $upload = new uploadImage("profileImage");
         $user = user::findUser();
         $userName = $user->firstName.$user->lastName;
         $dir = PROFILE_PATH.$userName.DS;
@@ -66,7 +66,7 @@ class profileController extends abstractController
         
             foreach($errors as $key=>$value)
             {
-                $this->validate->addCustomError("image" , $value);
+                $this->validate->addCustomError("profileImage" , $value);
             }
             $this->jData['errors'] =  $this->validate->getErrors();
             $this->json();

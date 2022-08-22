@@ -1,19 +1,17 @@
 <?php
 use core\app\Application;
-class follow_0001 
+class likes_0000 
 {
-
-    
+ 
    public function up()
    {
     $stmt = Application::$app->db->pdo->prepare( "
-        CREATE TABLE IF NOT EXISTS app_follow
+        CREATE TABLE IF NOT EXISTS app_post_likes
         (
             id INT (11) AUTO_INCREMENT PRIMARY KEY ,
-            sender INT (11) ,
-            receiver INT (11) ,
-            followRequestTime DATETIME DEFAULT CURRENT_TIMESTAMP ,
-            followStatus VARCHAR (50) DEFAULT NULL
+            postId INT (11) ,
+            userId INT (11) ,
+            likeType varchar (50) default 0
         )");
         $stmt->execute();       
    }
@@ -21,7 +19,7 @@ class follow_0001
    public function drop()
     {
         $stmt = Application::$app->db->pdo->prepare(
-            " DROP TABLE IF EXISTS app_follow"
+            " DROP TABLE IF EXISTS app_post_likes"
         );
         $stmt->execute();
     }

@@ -21,7 +21,7 @@ function clickedOnAddLiketBtn()
         showCustomeSpinner(likes_box);
         let type = liked_btn.getAttribute("data-type");
         let formData = new FormData();
-            formData.append('type', type);
+            formData.append('likeType', type);
             formData.append('postId', postId);
             let url = "/addLike";
             fetch(url, {

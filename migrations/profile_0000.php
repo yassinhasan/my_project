@@ -2,13 +2,13 @@
 
 use core\app\Application;
 
-class p0001_profile 
+class profile_0000 
 {
     public function up()
     {
 
         $stmt = Application::$app->db->pdo->prepare( "
-                CREATE TABLE IF NOT EXISTS app_users_profile
+                CREATE TABLE IF NOT EXISTS app_user_profile
                 (
                     id INT (11) AUTO_INCREMENT PRIMARY KEY  , 
                     gender ENUM('male','female')  ,

@@ -33,7 +33,7 @@
 }
 .navbar-brand 
 {
-    color: red !important;
+  color:   #2196f3 !important
 }
 
 .custom_load_spinner
@@ -62,14 +62,16 @@
 
 .custom_alert
 {
-    position: absolute;
-    width: 100%;
-    top: 0;
+     position: fixed;
+    z-index: 100;
+    top: 8px;
+    left: 5px;
+    width: fit-content;
 }
 
 
 .real_time_noti{
-    position: absolute !important;
+    position: fixed !important;
     /* margin: 50px auto; */
     left: 50% !important;
     width: 260px !important;

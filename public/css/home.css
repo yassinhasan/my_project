@@ -126,9 +126,9 @@
 }
 .users_comments_image
 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
 }
 .users_comments_image img
 {

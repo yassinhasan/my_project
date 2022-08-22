@@ -36,7 +36,7 @@ function follow_unfollow_System(parent , follow_btn ,follower_num , followerId,s
 function fetchUpdateUserFollowSystem(followerId , status)
 {
    let formData = new FormData();
-    formData.append('status', status);
+    formData.append('followStatus', status);
     formData.append('followerId', followerId);
     let url = "/fetchUpdateUserFollowSystem";
     fetch(url, {

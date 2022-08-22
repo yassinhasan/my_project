@@ -2,14 +2,13 @@
 
 use core\app\Application;
 
-class p0003_profile_add_created_at 
+class profile_0005 
 {
     public function up()
     {
 
         $stmt = Application::$app->db->pdo->prepare( "
-        ALTER TABLE app_users_profile ADD COLUMN createdAt  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        
+        ALTER TABLE `app_user_profile` CHANGE `mobile` `mobile` INT UNSIGNED ZEROFILL NULL DEFAULT NULL;        
         ");
         $stmt->execute();
     }

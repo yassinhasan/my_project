@@ -30,7 +30,7 @@ clickedOnAddCommentBtn();
 import { clickedOnAddLiketBtn } from "./home/likes.js"
  clickedOnAddLiketBtn();
 
-// realTimeNoti( 1 ,"hasn meady" , "is online now");
+ // realTimeNoti( 1 ,"hasn meady" , "is online now");
 
 
 function notifyMe() {

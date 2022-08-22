@@ -83,7 +83,7 @@ function showImagePorfile(file , imagesrc)
     {
         hide(update_profile_image);
         profile_iamge.src = "./public/uploades/images/error.png";
-        makeInvalidInput("image"  , null ,"sorry you suoud select only images " );
+        makeInvalidInput("profileImage"  ,"sorry you suoud select only images " );
         
 
     }else
@@ -128,7 +128,7 @@ function fetchUpdateImage(form,url)
         {
             for(err in data.errors)
             {
-                makeInvalidInput(err  , null ,data.errors[err] )
+                makeInvalidInput(err   ,data.errors[err] )
             }
         }else
         {

@@ -36,7 +36,7 @@ $dotenv->load();
 //end pusher 
 
 $config = [
-    "db" => 
+    "database" => 
         [
             "dsn"      => $_ENV['DB_DSN'] , 
             "username" => $_ENV['DB_USERNAME'] ,
@@ -95,3 +95,4 @@ $app->router->post("/resetPassword",[ resetPasswordController::class ,  "resetPa
 $app->router->get("/dashboard",[ dashBoardController::class ,  "dashboard"]);
 
 $app->run();
+ 

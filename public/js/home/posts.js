@@ -23,7 +23,7 @@ share_post_btn.addEventListener("click", (e) => {
             if (data.errors) {
                 for (let err in data.errors) {
 
-                    makeInvalidInput(err, "textarea", data.errors[err])
+                    makeInvalidInput(err, data.errors[err])
                     //  showAlert('danger' , 'Error' , data.errors[err])
                 }
 
@@ -50,12 +50,13 @@ share_post_btn.addEventListener("click", (e) => {
     if (data.posts) {
         
         let allPosts = data.posts;
+        console.log(allPosts)
         if (allPosts.length > 0) {
             post_box.innerHTML = "";
             for (var i = allPosts.length; i--;) {
-                let  type = allPosts[i].type;
+                let  type = allPosts[i].likeType;
                 let  postId = allPosts[i].id;
-                let image = allPosts[i].image == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].image}`;
+                let image = allPosts[i].profileImage == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].profileImage}`;
                 post_box.innerHTML += `
                         <div class="post_box_details"  id="post_box_details_${postId}">
                               <div class="card-header">
@@ -92,14 +93,14 @@ share_post_btn.addEventListener("click", (e) => {
                                     <div class="likes_box">
                                         <div data-postId="${postId}" id="likes_box_${postId}">
                                             <div class="is_like">
-                                                 <span class="likes_num no_of_likes">          ${allPosts[i].liked} </span>
+                                                 <span class="likes_num no_of_likes">${allPosts[i].liked} </span>
                                                  <i class="fas fa-thumbs-up like_btn
                                                  ${type == 'like' ? 'active' : ''}" data-type="like"></i>
                                             </div>
                                              <div class="i_dislike">
-                                                 <span class="dislikes_num no_of_likes">      ${allPosts[i].disliked} </span>                                 
+                                                 <span class="dislikes_num no_of_likes"> ${allPosts[i].disliked} </span>                                 
                                                  <i class="fas fa-thumbs-down dislike_btn 
-                                                 ${type == 'unlike' ? 'active' : ''}"        data-type="unlike"></i> 
+                                                 ${type == 'unlike' ? 'active' : ''}" data-type="unlike"></i> 
                                              </div>
                                         </div>
 
@@ -113,7 +114,7 @@ share_post_btn.addEventListener("click", (e) => {
         else
 
         {
-            post_box.innerHTML = "No Posts";
+            post_box.innerHTML = "";
         }
         
         removeCustomSpinner(post_box);

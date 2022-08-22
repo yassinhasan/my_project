@@ -2,15 +2,13 @@
 
 use core\app\Application;
 
-class p0002_profile_add_foreign_key 
+class profile_0004 
 {
     public function up()
     {
 
         $stmt = Application::$app->db->pdo->prepare( "
-             ALTER TABLE app_users_profile   
-            ADD CONSTRAINT dk_app_users_profile     
-             FOREIGN  KEY (userId) REFERENCES  app_users(id) ;
+        ALTER TABLE app_user_profile ADD COLUMN lastUpdated  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         
         ");
         $stmt->execute();

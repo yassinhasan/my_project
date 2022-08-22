@@ -20,6 +20,7 @@ class Application
     public $Pusher;
     public function __construct(array $config)
     {   
+      
         static::$app =$this;
         $this->session = new customSession();
         $this->cookie = new cookie();
@@ -29,7 +30,9 @@ class Application
         $this->router = new Router();
         $this->request = new Rrequest();
         $this->response = new Response();
-        $this->db      = new Database($config["db"]);
+        $databse = $config["database"];
+       
+        $this->db      = new Database($databse);
         $this->migrations = new MigrationsClass();
         $this->customExceptions  = new customExceptions();
         $this->pusher = $config["pusher"][0];

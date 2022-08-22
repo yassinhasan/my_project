@@ -97,11 +97,10 @@ class homecontroller extends abstractController
     {
         $data = $this->request->getBody();
         $userId = Application::$app->session->userId;
-        $status = $data['status'];
+        $status = $data['followStatus'];
         $followerId = $data['followerId'];
         if($this->request->method() == "POST")
         {
-
              if($this->model->fetchUpdateUserFollowSystem($userId , $followerId , $status))
              {
                 $this->jData['update_user'] = "true";
@@ -159,7 +158,8 @@ class homecontroller extends abstractController
         $data = $this->request->getBody();
         $userId = Application::$app->session->userId;
         $postId = $data['postId'];
-        $type = $data['type'];
+        $type = $data['likeType'];
+       
         if($this->request->method() == "POST")
         {
              if($this->model->addLike($userId , $postId , $type) )

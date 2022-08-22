@@ -31,7 +31,7 @@ use core\app\user;
             <div class="profile_user_image_box">
             <?php 
           
-             $image = $user->image == null ? 'avatar.jpg' : $user->firstName.$user->lastName."/".$user->image;
+             $image = $user->profileImage == null ? 'avatar.jpg' : $user->firstName.$user->lastName."/".$user->profileImage;
             ?>
               <img src="../../public/uploades/images/profile/<?=$image?>" class="card-img-top profile_user_image_box_img" alt="...">
          </div>
@@ -70,9 +70,9 @@ use core\app\user;
                     if(count($user_posts) > 0)
                     {
                         for($i =count($user_posts); $i--;) {
-                             $type = $user_posts[$i]->type;
+                             $type = $user_posts[$i]->likeType;
                              $postId = $user_posts[$i]->id;
-                             $image = $user_posts[$i]->image == null ? 'avatar.jpg' : $user_posts[$i]->firstName.$user_posts[$i]->lastName."/".$user_posts[$i]->image;
+                             $image = $user_posts[$i]->profileImage == null ? 'avatar.jpg' : $user_posts[$i]->firstName.$user_posts[$i]->lastName."/".$user_posts[$i]->profileImage;
                     ?>
                     
                          <div class="post_box_details"  id="post_box_details_<?=$postId?>">

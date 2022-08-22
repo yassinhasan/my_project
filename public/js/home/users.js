@@ -22,14 +22,14 @@ function prepareUsersBox(data) {
           
             for (var i = allUsers.length; i--;) 
             {
-                let image = allUsers[i].image == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].image}`;
+                let image = allUsers[i].profileImage == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].profileImage}`;
                 let follow;
                 let follow_class;
-                if (allUsers[i].status == null || allUsers[i].status == 'NULL' || allUsers[i].status == 'null') {
+                if (allUsers[i].followStatus == null || allUsers[i].followStatus == 'NULL' || allUsers[i].followStatus == 'null') {
                     follow = 'follow' ; 
                     follow_class = "follow"
                 }
-                else if (allUsers[i].status == 'pending') {
+                else if (allUsers[i].followStatus == 'pending') {
                     follow = 'pending';
                     follow_class = "follow"
                 }
@@ -50,7 +50,7 @@ function prepareUsersBox(data) {
                               
                                 <a href="/userPosts?id=${allUsers[i].id}" style="color: #795548 ; text-decoration: none"> ${allUsers[i].firstName} ${allUsers[i].lastName}</a>
                               </div>
-                              <div class="users_box_follow row" data-id="${allUsers[i].id}" data-status="${allUsers[i].status}">
+                              <div class="users_box_follow row" data-id="${allUsers[i].id}" data-status="${allUsers[i].followStatus}">
                                   <button class="btn  follow_btn ${follow_class} col-7" type="submit" name="follow">
                                       ${follow}
                                   </button>
@@ -66,7 +66,7 @@ function prepareUsersBox(data) {
         }
         else
         {
-            post_box.innerHTML = "No Users";
+            users_box.innerHTML = "";
         }
 
          removeCustomSpinner(users_box);

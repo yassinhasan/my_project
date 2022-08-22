@@ -18,6 +18,7 @@ class Database
     {
         
         try {
+           
             $dsn = $config['dsn'] ?? '';
             $username = $config['username'] ?? '';
             $password = $config['password'] ?? '';

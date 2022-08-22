@@ -7,10 +7,10 @@ $this->view->getFlashMsg("success_profile" , "success" );
     <!-- card head contain profile image -->
     <div class="card-head d-flex justify-content-center align-items-center profile_iamge_box">
         <?php $this->view->startFileForm($model , "/profile/updateProfileImage" ,"file_form"); ?> 
-        <div class="error_image image_div">
+        <div class="error_profileImage image_div">
             <img src="<?= user::displayImage() ?>" class="card-img-top profile_iamge" alt="image">
         </div>
-        <input type="file" class='profile_image_input' name='image'>
+        <input type="file" class='profile_image_input' name='profileImage'>
         <!-- name of profile -->
         <span class="text-center display_name"><?= user::displayName()  ?></span>
         <!--  after choose of image button show cancel or update -->

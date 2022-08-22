@@ -54,7 +54,7 @@ function loadComments(data ,postId)
      {
         
        for (var i = commentsData.length; i--;) {
-        let image = commentsData[i].image == null ? 'avatar.jpg' : `${commentsData[i].firstName}${commentsData[i].lastName}/${commentsData[i].image}`;
+        let image = commentsData[i].profileImage == null ? 'avatar.jpg' : `${commentsData[i].firstName}${commentsData[i].lastName}/${commentsData[i].profileImage}`;
         comments +=  `
         <!-- start comment -->
           <div class="users_comments row">
@@ -182,8 +182,6 @@ function fetchComments(postId)
         {
            user_name = data.userName ;
         } 
-        console.log(user_name)
-        console.log(data.userId) 
         realTimeNoti( data.userId ,user_name , " added comment ");
         });
      

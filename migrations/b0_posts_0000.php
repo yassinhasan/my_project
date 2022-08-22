@@ -1,6 +1,6 @@
 <?php
 use core\app\Application;
-class posts_0000 
+class b0_posts_0000 
 {
 
     
@@ -14,6 +14,7 @@ class posts_0000
             postDate DATETIME DEFAULT CURRENT_TIMESTAMP ,
             postDateModified DATETIME DEFAULT NULL,
             comments VARCHAR(255) DEFAULT NULL,
+            postUserId int (11) DEFAULT NULL ,
             postViews INT(11) DEFAULT 0 ,
             postImages VARCHAR(255) DEFAULT NULL 
         )");

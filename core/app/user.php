@@ -22,7 +22,7 @@ class user
     public static function getProfile()
     {
         $stmt = Application::$app->db->pdo->prepare("
-        SELECT * FROM app_users_profile aup INNER JOIN app_users au
+        SELECT * FROM app_user_profile aup INNER JOIN app_users au
         ON aup.userId = au.id
         where au.id = :id
         ");
@@ -60,14 +60,14 @@ class user
     public static function displayImage()
     {
         $profile = self::getProfile();
-        if($profile AND $profile->image != null)
+        if($profile AND $profile->profileImage != null)
         {
             $userName = $profile->firstName.$profile->lastName;
-            $file = PROFILE_PATH.$userName.DS.$profile->image;
+            $file = PROFILE_PATH.$userName.DS.$profile->profileImage;
             if(file_exists($file))
             {
                 
-               return  Application::$app->request->toUpladesaFile("images/profile/".$userName."/".$profile->image) ;  
+               return  Application::$app->request->toUpladesaFile("images/profile/".$userName."/".$profile->profileImage) ;  
             }else
             {
                 return Application::$app->request->toUpladesaFile("images/avatar.jpg");
