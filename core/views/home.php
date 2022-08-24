@@ -17,10 +17,20 @@ use core\app\user;
                     Share Your Post
                   </div>
                   <div class="card-body shar_post_box">
-                      <form class="share_post_form" action="/sharePosts">
-                        <div class="mb-3">
-                            <textarea name="post" placeholder="Write your Post" 
-                            class="form-control textarea_text" id="Write_Post" maxLength="200" rows="3"></textarea>
+                      <form class="share_post_form" action="/sharePosts" enctype="multipart/form-data">
+                        <div class="mb-3" style="margin-bottom: 5px">
+                            <div name="post" class="form-control textarea_text" id="Write_Post" contentEditable="true">
+                                <p class="post_text"></p>
+                                <img class="post_image" hidden/>
+                            </div>
+                        </div>
+                        <div class="share_post_attach row ">
+                             <div class="add_attach col-1">
+                             <i class="fa-solid fa-photo-film"></i>
+                            </div>
+                            <div class="add_audio col-1">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </div>
                         </div>
                         <div class="mt-10">
                             <button type="submit" name="sharePost" value="Share" class="btn btn-primary share_post_btn">

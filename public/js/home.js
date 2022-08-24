@@ -32,6 +32,9 @@ import { clickedOnAddLiketBtn } from "./home/likes.js"
 
  // realTimeNoti( 1 ,"hasn meady" , "is online now");
 
+import {uploadAttach} from "./home/uploadattach.js"
+uploadAttach()
+
 
 function notifyMe() {
  if (Notification.permission !== 'granted')

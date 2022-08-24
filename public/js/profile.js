@@ -1,3 +1,5 @@
+const ALLOWD_TYPE_IMAGE = "image/";
+const ALLOWD_SIZE = 2;
 let edit_profile = getElm("edit_profile");
 let cancel_profile = getElm("cancel_profile");
 let save_profile = getElm("save_profile");
@@ -72,28 +74,37 @@ profile_iamge.addEventListener("click",()=>
 })
 
 
-
-
-singleUpload(profile_image_input , ALLOWD_TYPE_IMAGE , ALLOWD_SIZE ,showImagePorfile);
 let oldsrc = profile_iamge.getAttribute("src");
-function showImagePorfile(file , imagesrc)
-{
-    
-    if(!file.type.includes(ALLOWD_TYPE_IMAGE))
-    {
-        hide(update_profile_image);
-        profile_iamge.src = "./public/uploades/images/error.png";
-        makeInvalidInput("profileImage"  ,"sorry you suoud select only images " );
-        
 
-    }else
-    {
-        removeAnyValidation();
-        profile_iamge.src =  imagesrc;  
-        show(update_profile_image);
-        show(cancel_profile_image);
-    }
- 
+profile_image_input.addEventListener("change",e=>
+{
+    show(update_profile_image);
+    show(cancel_profile_image);
+    let file = e.target.files[0];
+    let reader = new FileReader();
+     reader.addEventListener("load",()=>
+      {
+        let imagesrc = reader.result;
+        if(!file.type.includes(ALLOWD_TYPE_IMAGE))
+        {
+            hide(update_profile_image);
+            hide(cancel_profile_image);
+            profile_iamge.src = oldsrc;
+            showAlert('danger', 'Error', "sorry this file not valid")
+            
+    
+        }else
+        {
+            removeAnyValidation();
+            profile_iamge.src =  imagesrc;  
+
+        }      
+        })
+        reader.readAsDataURL(file);
+})
+
+function showImagePorfile()
+{
     cancel_profile_image.addEventListener("click",()=>
     {
         hide(update_profile_image);
@@ -110,7 +121,7 @@ function showImagePorfile(file , imagesrc)
         fetchUpdateImage(file_form , file_form_url)
     })
 }
-
+showImagePorfile();
 function fetchUpdateImage(form,url)
 {
    

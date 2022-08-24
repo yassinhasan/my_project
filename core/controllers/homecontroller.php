@@ -4,6 +4,7 @@ namespace core\controllers;
 use core\app\Application;
 use core\models\postsModel;
 use core\app\user;
+use core\app\uploadImage;
 class homecontroller extends abstractController
 {
 
@@ -35,23 +36,46 @@ class homecontroller extends abstractController
         if($this->request->method() == "POST")
         {
             $data = $this->request->getBody();
-            $rules = $this->model->rules();
-            if ($this->validate->isValid( $this->model , $rules , $data) )
+            // first if no image or attach
+            $postImages = null;
+            // here let imageName = NULL;
+            //here if attach found
+            $imageerrors = null;
+            $postText = null;
+            if(isset($_FILES["postImages"]) and $_FILES["postImages"]["error"] != 4)
             {
                 
-                if ($this->model->savePost( $userId)) 
+                $upload = new uploadImage("postImages");
+                $dir = POSTS_PATH;
+                if(!$upload->move( $dir))
                 {
-                   $this->jData['posts'] = $this->model->fetchPosts($userId);
-                   
-                    $this->jData['success'] = "your post is shared ";
+                    $imageerrors =  $upload->showErrors();
+                    foreach($imageerrors as $key=>$value)
+                    {
+                        $this->validate->addCustomError("postImages" , $value);
+                    }
+                    $this->jData['postImages'] =  " problem in uploading";
+                    
                 }else
                 {
-                    $this->jData['sql_error'] = "sorry there is somthing error please try in another time";
+                    $postImages = $upload->getFileSavedNameInDb();
                 }
-            }else
-            {
-                $this->jData['errors'] =  $this->validate->getErrors();
             }
+            // here if  attach found so no check required for post if empty or not
+            $rules = $this->model->rules();
+            if((!$this->validate->isValid( $this->model , $rules , $data)) and $postImages == NULL)
+            
+            $this->jData['errors'] =  $this->validate->getErrors();
+            elseif($this->model->savePost( $userId , $postImages)) 
+            {
+                $this->jData['posts'] = $this->model->fetchPosts($userId);
+                $this->jData['success'] = "your post is shared ";
+            }
+            else
+            {
+                    $this->jData['sql_error'] = "sorry there is somthing error please try in another time";
+            }
+            
             $this->json();
         }else
         {

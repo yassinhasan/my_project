@@ -21,6 +21,8 @@
 !defined("DASHBOARD_PATH") ? define("DASHBOARD_PATH" , ADMIN_PATH."dashboard".DS) : DASHBOARD_PATH;
 // PROFILE_PATH
 !defined("PROFILE_PATH") ? define("PROFILE_PATH" , IMAGES_PATH."profile".DS) : PROFILE_PATH;
+// POSTS_PATH
+!defined("POSTS_PATH") ? define("POSTS_PATH" , IMAGES_PATH."posts".DS) : POSTS_PATH;
 // CSS_PATH
 !defined("CSS_PATH") ? define("CSS_PATH" , "public/css".DS) : CSS_PATH;
 // JS_PATH

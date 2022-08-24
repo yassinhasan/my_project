@@ -17,11 +17,12 @@ class postsModel extends abstractModel
 
     }
         //create users
-    public function savePost($userId)
+    public function savePost($userId , $postImages = null)
     {
         $this->data([
             "postText" => $this->post ,
-            "postUserId"   => $userId
+            "postUserId"   => $userId , 
+            "postImages"   => $postImages
         ])->insert(self::$tableName);
         return true;
     }

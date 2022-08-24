@@ -16,7 +16,8 @@ class b0_posts_0000
             comments VARCHAR(255) DEFAULT NULL,
             postUserId int (11) DEFAULT NULL ,
             postViews INT(11) DEFAULT 0 ,
-            postImages VARCHAR(255) DEFAULT NULL 
+            postImages VARCHAR(255) DEFAULT NULL  
+             ,
         )");
         $stmt->execute();       
    }

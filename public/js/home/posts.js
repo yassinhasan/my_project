@@ -3,15 +3,24 @@ let form = getElm("share_post_form");
 let textarea_text = getElm("textarea_text");
 let shar_post_box = getElm("shar_post_box"); 
 let post_box = getElm("post_box");
-
+let post_text = getElm("post_text");
+let post_image = getElm("post_image");
+let attach_input = document.querySelector(".postImages");
 function clickedShareBtn()
 {
    
 share_post_btn.addEventListener("click", (e) => {
     e.preventDefault();
+  
     removeAnyValidation();
     showCustomeSpinner(shar_post_box);
     let data = new FormData(form);
+    let post = textarea_text.textContent.trim();
+    if(!attach_input)
+    {
+        data.append("postImages" , null); 
+    }
+    data.append("post" , post);
     let url = form.action;
     fetch(url, {
             method: "post",
@@ -19,22 +28,30 @@ share_post_btn.addEventListener("click", (e) => {
         })
         .then(resp => resp.json())
         .then(data => {
+            console.log(data);
             removeCustomSpinner(shar_post_box);
-            if (data.errors) {
+            if (data.errors && data.errors.postImages == null) {
                 for (let err in data.errors) {
 
                     makeInvalidInput(err, data.errors[err])
                     //  showAlert('danger' , 'Error' , data.errors[err])
                 }
 
+            }else if (data.errors && data.errors.postImages)
+            {
+                showAlert('danger', 'Error', data.errors.postImages);
+                
             }
             else if (data.success) {
 
                 textarea_text.value = "";
                 makevalidInput("post", data.success);
+                textarea_text.innerHTML="";
                 preparePostBox(data);
-                //  showAlert('danger' , 'Error' , data.errors[err])
-
+                //  showAlert('danger' , 'Error' , data.errors[err]);
+             if(attach_input)
+             {  attach_input.remove();}
+           
 
             }
             else if (data.sql_error) {
@@ -42,7 +59,9 @@ share_post_btn.addEventListener("click", (e) => {
                 showAlert('error', 'Error', data.sql_error)
             }
         })
+         
 });
+
 }
 
 
@@ -50,7 +69,7 @@ share_post_btn.addEventListener("click", (e) => {
     if (data.posts) {
         
         let allPosts = data.posts;
-        console.log(allPosts)
+       
         if (allPosts.length > 0) {
             post_box.innerHTML = "";
             for (var i = allPosts.length; i--;) {
@@ -64,14 +83,15 @@ share_post_btn.addEventListener("click", (e) => {
                               </div>
                               <div class="card-body big_card_body">
                                 <div class="row g-0">
-                                    <div class="col-md-4 post_image_box">
+                                    <div class="col-3 post_image_box">
                                         <img src="../../public/uploades/images/profile/${image}"  class="img-fluid rounded-start  post_user_image" alt="...">
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-9">
                                       <div class="card-body">
                                         <p class="card-text">${allPosts[i].postText}</p>
                                         <p class="card-text"><small class="text-muted">Post Date : ${allPosts[i].postDate}</small></p>
                                     </div>
+                               </div>
                                </div>
                                 <!-- here comments -->
                                
@@ -140,7 +160,7 @@ function fetchPostsUrl() {
 
 function prepareTextarea()
 {
-    textarea_text.addEventListener("keydown", () => {
+    textarea_text.addEventListener("keydown", (e) => {
     textarea_text.classList.remove("is-invalid");
     textarea_text.classList.remove("is-valid");
 })
