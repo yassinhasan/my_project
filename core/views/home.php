@@ -19,8 +19,8 @@ use core\app\user;
                   <div class="card-body shar_post_box">
                       <form class="share_post_form" action="/sharePosts" enctype="multipart/form-data">
                         <div class="mb-3" style="margin-bottom: 5px">
-                            <div name="post" class="form-control textarea_text" id="Write_Post" contentEditable="true">
-                                <p class="post_text"></p>
+                            <div class="textarea_text_box">
+                                <textarea  name="post" class="form-control textarea_text" id="Write_Post" placeholder="write your day"></textarea>
                                 <img class="post_image" hidden/>
                             </div>
                         </div>
@@ -41,6 +41,9 @@ use core\app\user;
 
                   </div>
                 </div>
+            <div class="progress_div">
+                <span class="progress"></span>
+            </div>
                 
                 <!-- posts-->
                <div class="card post_box" mt="20" style="margin: 20px 0 "></div>

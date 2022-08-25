@@ -5,6 +5,7 @@ use core\app\Application;
 use core\models\postsModel;
 use core\app\user;
 use core\app\uploadImage;
+use core\app\uploadVideo;
 class homecontroller extends abstractController
 {
 
@@ -36,46 +37,66 @@ class homecontroller extends abstractController
         if($this->request->method() == "POST")
         {
             $data = $this->request->getBody();
-            // first if no image or attach
-            $postImages = null;
-            // here let imageName = NULL;
-            //here if attach found
-            $imageerrors = null;
-            $postText = null;
-            if(isset($_FILES["postImages"]) and $_FILES["postImages"]["error"] != 4)
+            $rules = $this->model->rules();
+            $type = $data['attachmentType'];
+
+            $validRules = $this->validate->isValid( $this->model , $rules , $data);
+            $hasAttach = false;
+
+
+            // no upload or no file selected
+            if(isset($_FILES['attachment']) )
             {
-                
-                $upload = new uploadImage("postImages");
-                $dir = POSTS_PATH;
-                if(!$upload->move( $dir))
+                if(!$_FILES["attachment"]["error"] == 4)
                 {
-                    $imageerrors =  $upload->showErrors();
-                    foreach($imageerrors as $key=>$value)
-                    {
-                        $this->validate->addCustomError("postImages" , $value);
-                    }
-                    $this->jData['postImages'] =  " problem in uploading";
-                    
-                }else
-                {
-                    $postImages = $upload->getFileSavedNameInDb();
+                   $hasAttach = true;
+                   if($type == "image")
+                   {
+                      $upload = new uploadImage("attachment"); 
+                   }elseif($type == "video")
+                   {
+                        $upload = new uploadVideo("attachment"); 
+                   }else
+                   {
+                       $upload = new uploadImage("attachment");  
+                   }
+                   
+                   $noError =  $upload->noError(); 
                 }
             }
-            // here if  attach found so no check required for post if empty or not
-            $rules = $this->model->rules();
-            if((!$this->validate->isValid( $this->model , $rules , $data)) and $postImages == NULL)
-            
-            $this->jData['errors'] =  $this->validate->getErrors();
-            elseif($this->model->savePost( $userId , $postImages)) 
+
+                
+            // if nothing wtire or image
+            if(!$validRules AND $hasAttach == false ){
+                $this->jData['errors'] =  $this->validate->getErrors();
+            }
+            if($validRules AND $hasAttach == false)
             {
-                $this->jData['posts'] = $this->model->fetchPosts($userId);
+                $this->model->savePost( $userId); 
                 $this->jData['success'] = "your post is shared ";
-            }
-            else
+            }elseif($hasAttach == true )
             {
-                    $this->jData['sql_error'] = "sorry there is somthing error please try in another time";
+                 if($noError)
+                 {
+                    $postId = $this->model->savePost( $userId);
+                    $dir = POSTS_PATH.$type."/".$postId."/";
+                    $upload->move( $dir);
+                    $attachment = $upload->getFileSavedNameInDb();
+                    $this->model->saveAttachment($postId ,$userId , $attachment  , $type);
+                    $this->jData['success'] = "your post is shared ";
+                 }else
+                 {
+                     $imageerrors =  $upload->showErrors();
+                    foreach($imageerrors as $key=>$value)
+                    {
+                        $this->validate->addCustomError("attachment" , $value);
+                    }
+                    $this->jData['attachment'] =  $this->validate->getErrors();
+                 }
+
             }
-            
+        
+            $this->jData['posts'] = $this->model->fetchPosts($userId);
             $this->json();
         }else
         {
@@ -92,6 +113,7 @@ class homecontroller extends abstractController
         {
 
              $this->jData['posts'] = $this->model->fetchPosts($userId);
+           
              $this->json();
         }else
         {

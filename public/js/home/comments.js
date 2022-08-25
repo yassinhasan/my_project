@@ -93,13 +93,15 @@ function clickedOnAddCommentBtn()
     document.body.addEventListener("click", e =>{
     if(e.target.classList.contains("add_comment_btn"))
     {
-
-
         let add_comment_btn = e.target;
         e.preventDefault();
         let comments_form_textarea = add_comment_btn.parentElement.querySelector(".comments_form_textarea");
         let comment = comments_form_textarea.value;
         let postId = add_comment_btn.getAttribute("data-postId");
+        // 
+        let comments_form_box = document.getElementById("comments_form_box_"+postId);
+         showCustomeSpinner(comments_form_box);
+        // 
         if (comment != "") {
             let formData = new FormData();
             formData.append('comment', comment);
@@ -112,9 +114,6 @@ function clickedOnAddCommentBtn()
                 .then(resp => resp.json())
                 .then(data => {
                   comments_form_textarea.value = "";
-                  let comments_form_box = document.getElementById("comments_form_box_"+postId);
-                  comments_form_box.innerHTML = "";
-                  showCustomeSpinner(comments_form_box);
                   fetchComments(postId);
                   loadCommentsForm(postId);
                 })

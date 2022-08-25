@@ -3,7 +3,7 @@ namespace core\models;
 
 use core\app\Rrequest;
 use core\app\Validate;
-
+use core\app\Application;
 class postsModel extends abstractModel
 {
     public $postText;
@@ -17,13 +17,24 @@ class postsModel extends abstractModel
 
     }
         //create users
-    public function savePost($userId , $postImages = null)
+    public function savePost($userId)
+    {
+        if($this->data([
+            "postText" => $this->post ,
+            "postUserId"   => $userId 
+        ])->insert(self::$tableName));
+  
+        return Application::$app->db::lastId();
+    }
+    
+    public function saveAttachment($postId , $userId , $attachment = null , $attachmentType =null)
     {
         $this->data([
-            "postText" => $this->post ,
-            "postUserId"   => $userId , 
-            "postImages"   => $postImages
-        ])->insert(self::$tableName);
+            "postId" =>  $postId ,
+            "attachment"   => $attachment , 
+            "attachmentType"   => $attachmentType ,
+            "userId"       => $userId
+        ])->insert("posts_attach");
         return true;
     }
     public function fetchPosts($userId)
@@ -32,14 +43,16 @@ class postsModel extends abstractModel
             INNER JOIN app_users  ON 
             app_users.id = app_posts.postUserId
             INNER JOIN app_user_profile  ON 
-            app_user_profile.userId = app_posts.postUserId
-            
+            app_user_profile.userId = app_posts.postUserId 
+            LEFT JOIN posts_attach  ON 
+            posts_attach.postId = app_posts.id 
             ")->where(" app_posts.postUserId = ?  or app_posts.postUserId = ( select app_users_follow.receiver from app_users_follow
             where app_users_follow.sender = $userId and app_users_follow.receiver = app_users.id and followStatus = 'approve'
             )" 
             
             , $userId)->select("
              app_posts.*  ,app_users.id as userId , app_users.firstName , app_users.lastName , app_user_profile.profileImage  ,
+             posts_attach.attachment , posts_attach.attachmentType  ,
              (SELECT  COUNT(app_post_comments.postId) from app_post_comments where app_post_comments.postId = app_posts.id) as comments ,
              (SELECT  COUNT(app_post_likes.id) from app_post_likes where (app_post_likes.likeType = 'like' AND app_post_likes.postId = app_posts.id )) as liked , 
              (SELECT  COUNT(app_post_likes.id) from app_post_likes where ( app_post_likes.likeType = 'unlike' AND app_post_likes.postId = app_posts.id ) )as disliked ,

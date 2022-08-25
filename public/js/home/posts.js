@@ -3,63 +3,113 @@ let form = getElm("share_post_form");
 let textarea_text = getElm("textarea_text");
 let shar_post_box = getElm("shar_post_box"); 
 let post_box = getElm("post_box");
-let post_text = getElm("post_text");
 let post_image = getElm("post_image");
-let attach_input = document.querySelector(".postImages");
+let progress_div = getElm("progress_div");
+let progress     =getElm("progress");
+let attach_input = document.querySelector(".attachment");
+
+import {attachmentType } from "./uploadattach.js";
+
+
 function clickedShareBtn()
 {
-   
-share_post_btn.addEventListener("click", (e) => {
+  share_post_btn.addEventListener("click", (e) => {
+    
     e.preventDefault();
-  
     removeAnyValidation();
     showCustomeSpinner(shar_post_box);
+    
     let data = new FormData(form);
-    let post = textarea_text.textContent.trim();
-    if(!attach_input)
-    {
-        data.append("postImages" , null); 
-    }
-    data.append("post" , post);
+    data.append("attachmentType" , attachmentType)
     let url = form.action;
-    fetch(url, {
-            method: "post",
-            body: data
-        })
-        .then(resp => resp.json())
-        .then(data => {
+  /* A POST request using XML object */
+      const req = new XMLHttpRequest(); // Initialize request
+      req.open('POST', url); // Specify request type and endpoint
+    
+      // Add event listener to upload listening for progress. Function fires
+      // regularly, with progress contained in "e" object
+      req.upload.addEventListener('progress', function(e) {
+        // Every time progress occurs
+        const percentComplete = (Math.floor(e.loaded) / Math.floor(e.total))*100;
+        if(attachmentType != null)
+        {
+             progress_div.style.display="block";
+             progress.style.width = percentComplete + "%"; 
+             progress.innerHTML = "Uploading " + Math.floor(percentComplete) + "%";
+             if(percentComplete == 100)
+             {
+                progress.innerHTML = "Uploading complete ... be patient Until Post Your Post";
+                progress.style.backgroundColor = "#2b705c";
+             }
+        }
+
+      // console.log(percentComplete)// Calculate percentage complete via "e" object
+        // progress.setAttribute('value', percentComplete); // Update value of progress HTML element
+        // progress.nextElementSibling.nextElementSibling.innerText = Math.round(percentComplete)+"%"; // Prints progress in progress element label as well
+      })
+
+      // Fires when upload is complete
+      req.addEventListener('load', function() {
+        if(req.status == 200) {
+            
+            let data = JSON.parse(req.response);
             console.log(data);
             removeCustomSpinner(shar_post_box);
-            if (data.errors && data.errors.postImages == null) {
+            if (data.errors && data.errors.attachment == null) {
                 for (let err in data.errors) {
-
-                    makeInvalidInput(err, data.errors[err])
+                makeInvalidInput(err, data.errors[err])
                     //  showAlert('danger' , 'Error' , data.errors[err])
-                }
+            }
 
-            }else if (data.errors && data.errors.postImages)
+            }else if (data.attachment)
             {
-                showAlert('danger', 'Error', data.errors.postImages);
+                showAlert('danger', 'Error', data.attachment.attachment);
                 
             }
             else if (data.success) {
-
                 textarea_text.value = "";
                 makevalidInput("post", data.success);
                 textarea_text.innerHTML="";
                 preparePostBox(data);
                 //  showAlert('danger' , 'Error' , data.errors[err]);
-             if(attach_input)
-             {  attach_input.remove();}
-           
+                 progress_div.style.display="none";
+                 let image_thumb_div = getElm("image_thumb_div");
+                 if(image_thumb_div)
+                 {
+                     image_thumb_div.innerHTML = "";
+                    image_thumb_div.remove();
+                 }
 
-            }
+             }
             else if (data.sql_error) {
 
                 showAlert('error', 'Error', data.sql_error)
+            } 
+            progress_div.style.display="none";
+            let image_thumb_div = getElm("image_thumb_div");
+            if(image_thumb_div)
+            {
+                     image_thumb_div.innerHTML = "";
+                    image_thumb_div.remove();
             }
-        })
-         
+            
+            
+           
+        } 
+        let attach_input = getElm("attachment");
+        if(attach_input)
+        {
+             attach_input.remove();
+             form.reset()
+        }
+       
+       })
+    
+      req.send(data);
+
+
+
+      
 });
 
 }
@@ -69,12 +119,32 @@ share_post_btn.addEventListener("click", (e) => {
     if (data.posts) {
         
         let allPosts = data.posts;
-       
+        console.log(allPosts);
         if (allPosts.length > 0) {
             post_box.innerHTML = "";
             for (var i = allPosts.length; i--;) {
                 let  type = allPosts[i].likeType;
                 let  postId = allPosts[i].id;
+                let attachment = allPosts[i].attachment == null ? null  : allPosts[i].attachment;
+                let attachment_div= "";
+                let attachment_type = allPosts[i].attachmentType;
+                if(attachment_type == "image")
+                {
+                   attachment_div = `<div class="post_attachment_div"><img src="../../public/uploades/images/posts/image/${postId}/${attachment}" class="post_attachment"/></div>`;
+                }else if(attachment_type == "video")
+                {
+                   let src = attachment.split(".");
+                   let filename =  src[0];
+                   let type     = src[1];
+
+                   attachment_div = `<div class="post_attachment_div">
+                        <video  controls autoplay class="video_attach">
+                          <source src="../../public/uploades/images/posts/video/${postId}/${attachment}"  type="video/mp4" >
+                          Your browser does not support the video tag.
+                        </video>
+                   </div>`;
+
+                }
                 let image = allPosts[i].profileImage == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].profileImage}`;
                 post_box.innerHTML += `
                         <div class="post_box_details"  id="post_box_details_${postId}">
@@ -88,8 +158,9 @@ share_post_btn.addEventListener("click", (e) => {
                                     </div>
                                     <div class="col-9">
                                       <div class="card-body">
+                                        ${attachment_div}
                                         <p class="card-text">${allPosts[i].postText}</p>
-                                        <p class="card-text"><small class="text-muted">Post Date : ${allPosts[i].postDate}</small></p>
+                                        <p class="card-text"><small class="text-muted">${allPosts[i].postDate}</small></p>
                                     </div>
                                </div>
                                </div>
@@ -160,11 +231,16 @@ function fetchPostsUrl() {
 
 function prepareTextarea()
 {
-    textarea_text.addEventListener("keydown", (e) => {
-    textarea_text.classList.remove("is-invalid");
-    textarea_text.classList.remove("is-valid");
+        textarea_text.addEventListener("keydown", (e) => {
+        textarea_text.classList.remove("is-invalid");
+        textarea_text.classList.remove("is-valid");
+        })
+        textarea_text.addEventListener("click", (e) => {
+        textarea_text.classList.remove("is-invalid");
+        textarea_text.classList.remove("is-valid");
 })
+    
 }
 
 
-export {fetchPostsUrl , clickedShareBtn , preparePostBox  , prepareTextarea}
+export {fetchPostsUrl , clickedShareBtn , preparePostBox  , prepareTextarea }

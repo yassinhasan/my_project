@@ -56,6 +56,11 @@ class upload
         if($this->noError())
         {
  
+            if(!(is_dir($destionaion)))
+            {
+              
+                mkdir($destionaion, 0777, true);
+            }
             $filename = \time().sha1(rand(0,1000)).".".$this->file_extension;        
             if(move_uploaded_file($this->file_temp_name,$destionaion.$filename))
             {

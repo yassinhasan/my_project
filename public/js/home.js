@@ -1,11 +1,7 @@
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
 
-import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea} from "./home/posts.js"
-clickedShareBtn()
-prepareTextarea();
-// function fetch all posts 
-fetchPostsUrl()
+
 
 //fetch all users
 import {fetchUsers , prepareUsersBox} from "./home/users.js"
@@ -34,6 +30,16 @@ import { clickedOnAddLiketBtn } from "./home/likes.js"
 
 import {uploadAttach} from "./home/uploadattach.js"
 uploadAttach()
+
+
+// must be after uplaod 
+import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea} from "./home/posts.js"
+clickedShareBtn()
+prepareTextarea();
+
+// function fetch all posts 
+fetchPostsUrl()
+
 
 
 function notifyMe() {

@@ -16,22 +16,22 @@ class uploadVideo extends upload
     }
     public function isAllowedExtension()
     {
-        return in_array($this->file_extension , $this->allowed_Extension);
+        return in_array(strtoupper($this->file_extension) , $this->allowed_Extension);
     }
     public function isAllowedSize()
     {
         return ($this->file_size /  1048576) < self::ALLOWD_FILE_SIZE;
     }
-    public function isImage()
+    public function isVideo()
     {
-        return $this->file_type === "image" ? true : false;
+        return $this->file_type === "video" ? true : false;
     }
 
     public function checkErrors()
     {
         if(! $this->isVideo())
         {
-            $this->error[] = "sorry this file is not image";
+            $this->error[] = "sorry this file is not video";
         }else
         {
             // if not allowed extension
