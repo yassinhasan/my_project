@@ -16,8 +16,9 @@ use core\app\Application;
     <br>
 <?php    $this->view->renderSubmitBtn(["name" => "save" , 
                                 "class" => "primary login_btn" ,
-                                "data" => "data_target='/login'" ,
                                 "label" => "login"]);
     $this->view->endForm();
 ?>
+</div>
+<div class="overlay">
 </div>

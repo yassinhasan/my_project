@@ -41,6 +41,9 @@ class user
        if($user)
        {
             return $user->firstName." ".$user->lastName;
+       }else
+       {
+           return "guest";
        }
     }
     public static function displayEmail()

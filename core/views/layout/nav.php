@@ -32,7 +32,14 @@ $user = user::findUser();
             if($user): ?>
                 <a class="nav-link dropdown-toggle logged_user_name" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-loggedUserId=<?= Application::$app->session->userId?>>
                     <?= $user->firstName." ".$user->lastName?>
+                  <img
+                    src="<?= user::displayImage(); ?>"
+                    class="rounded-circle user_profile_image"
+                    height="22"
+                    alt="Black and White Portrait of a Man"
+                  />
                 </a>
+                
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="/profile">profile</a></li>
                     <li><hr class="dropdown-divider"></li>
@@ -45,3 +52,4 @@ $user = user::findUser();
         </div>
     </div>
     </nav>
+    

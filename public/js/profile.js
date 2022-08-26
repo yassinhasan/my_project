@@ -143,6 +143,9 @@ function fetchUpdateImage(form,url)
             }
         }else
         {
+            
+            let user_profile_image = getElm("user_profile_image");
+            user_profile_image.src = data.image;
             hide(update_profile_image);
             hide(cancel_profile_image);
            

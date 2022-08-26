@@ -76,6 +76,7 @@ class profileController extends abstractController
             if($this->model->updateProfileImage($id , $imagName))
             {
                 $this->jData['succ'] =  "done";
+                $this->jData['image']  = user::displayImage();
                 // $this->session->setFlashMsg("success_image" , " you have updated your profile image succuflly");
                 $this->json();
             }

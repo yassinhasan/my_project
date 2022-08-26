@@ -7,7 +7,7 @@ login_btn.addEventListener("click",(e)=>
     showLoadSpinner();
     removeAnyValidation()
     let data = new FormData(form);
-    let url = login_btn.getAttribute("data_target"); 
+    let url = form.action; 
    fetch(url , {
        method: "post" , 
         body: data

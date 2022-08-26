@@ -38,11 +38,10 @@ class View
     public function renderSubmitBtn(array $data = [
         "name" => "save" , 
         "class" => "primary" ,
-        "data" => "" ,
         "label" => "submit"
     ])
     {
-            echo "<button type='submit' class='btn btn-".$data['class']."' name='".$data['name']."' ".$data['data'].">".$data['label']."</button>";
+            echo "<button type='submit' class='btn btn-".$data['class']."' name='".$data['name']."' >".$data['label']."</button>";
     }
     public function renderCheckBtn($name , $value ='' , $label = "")
     {

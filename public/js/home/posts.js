@@ -51,9 +51,7 @@ function clickedShareBtn()
       // Fires when upload is complete
       req.addEventListener('load', function() {
         if(req.status == 200) {
-            
             let data = JSON.parse(req.response);
-            console.log(data);
             removeCustomSpinner(shar_post_box);
             if (data.errors && data.errors.attachment == null) {
                 for (let err in data.errors) {
@@ -119,7 +117,6 @@ function clickedShareBtn()
     if (data.posts) {
         
         let allPosts = data.posts;
-        console.log(allPosts);
         if (allPosts.length > 0) {
             post_box.innerHTML = "";
             for (var i = allPosts.length; i--;) {
@@ -130,7 +127,7 @@ function clickedShareBtn()
                 let attachment_type = allPosts[i].attachmentType;
                 if(attachment_type == "image")
                 {
-                   attachment_div = `<div class="post_attachment_div"><img src="../../public/uploades/images/posts/image/${postId}/${attachment}" class="post_attachment"/></div>`;
+                   attachment_div = `<div class="post_attachment_div"><img src="../../public/uploades/images/posts/image/${postId}/${attachment} " loading="lazy" class="post_attachment"/></div>`;
                 }else if(attachment_type == "video")
                 {
                    let src = attachment.split(".");
@@ -138,7 +135,7 @@ function clickedShareBtn()
                    let type     = src[1];
 
                    attachment_div = `<div class="post_attachment_div">
-                        <video  controls autoplay class="video_attach">
+                        <video  controls  class="video_attach" loading="lazy">
                           <source src="../../public/uploades/images/posts/video/${postId}/${attachment}"  type="video/mp4" >
                           Your browser does not support the video tag.
                         </video>
@@ -174,7 +171,7 @@ function clickedShareBtn()
                                         </div>
                                </div>
                                 <!-- here form of comments -->
-                                 <div class="comments_form_box hidden" id="comments_form_box_${postId}">
+                                 <div class="comments_form_box hidden" id="comments_form_box_${postId}" data-postId=${postId}>
                                  </div>
                                 <!-- end form of comments -->
                                 <!-- end here comments -->

@@ -36,6 +36,12 @@
   color:   #2196f3 !important
 }
 
+.user_profile_image
+{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
 .custom_load_spinner
 {
     

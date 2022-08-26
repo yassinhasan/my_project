@@ -12,47 +12,42 @@ function clickedOnCommentsDiv()
         {   
             let parent = e.target.parentElement.parentElement;
              let postId = e.target.getAttribute("data-postId");
+            
             e.target.parentElement.classList.toggle("show");
+           
             parent.querySelector(".comments_form_box").classList.toggle("hidden");
             let comments_form_box = parent.querySelector(".comments_form_box")
             if(!parent.querySelector(".comments_form_box").classList.contains("hidden"))
             {
-     
-                 comments_form_box.innerHTML = "";
                 showCustomeSpinner(comments_form_box);
-                prepareCommentsArea(postId)
+                fetchComments(comments_form_box , postId)
             }
         }
     }); 
 }
 
-function prepareCommentsArea(postId)
-{
 
-         fetchComments(postId)
-         loadCommentsForm(postId)
-
-}
-
-function loadCommentsForm(postId) {
-   let comments_form_box = document.getElementById("comments_form_box_"+postId);
+function loadCommentsForm(div ,postId) {
     let form = `<form class="comments_form" >
     <textarea class="comments_form_textarea form-control" placeholder="write your comments" name="comments_form_textarea" maxlength="200"></textarea>
     <button class="btn btn-secondary add_comment_btn" name="add_comment" type="submit" data-postId=${postId}>
         Add Comment
     </button>
 `;
-    comments_form_box.insertAdjacentHTML("beforeend",form);
+    div.insertAdjacentHTML("beforeend",form);
 }
 
-function loadComments(data ,postId)
+function loadComments(data , postId)
 {
    let comments_form_box = document.getElementById("comments_form_box_"+postId);
+   comments_form_box.innerHTML = "";
+   
    let commentsData = data.comment;
    let comments = `<div class="user_comments_box">`;
+   
      if(commentsData.length > 0)
      {
-        
+      
        for (var i = commentsData.length; i--;) {
         let image = commentsData[i].profileImage == null ? 'avatar.jpg' : `${commentsData[i].firstName}${commentsData[i].lastName}/${commentsData[i].profileImage}`;
         comments +=  `
@@ -82,7 +77,7 @@ function loadComments(data ,postId)
      }
      
     comments_form_box.insertAdjacentHTML("afterbegin",comments);
-     
+    loadCommentsForm(comments_form_box , postId)  
 }
 
 
@@ -95,11 +90,11 @@ function clickedOnAddCommentBtn()
     {
         let add_comment_btn = e.target;
         e.preventDefault();
+        let comments_form_box = add_comment_btn.parentElement.parentElement;
         let comments_form_textarea = add_comment_btn.parentElement.querySelector(".comments_form_textarea");
         let comment = comments_form_textarea.value;
-        let postId = add_comment_btn.getAttribute("data-postId");
+        let postId = comments_form_box.getAttribute("data-postId");
         // 
-        let comments_form_box = document.getElementById("comments_form_box_"+postId);
          showCustomeSpinner(comments_form_box);
         // 
         if (comment != "") {
@@ -114,8 +109,8 @@ function clickedOnAddCommentBtn()
                 .then(resp => resp.json())
                 .then(data => {
                   comments_form_textarea.value = "";
-                  fetchComments(postId);
-                  loadCommentsForm(postId);
+                  fetchComments(comments_form_box, postId);
+                 
                 })
         
         }else
@@ -141,10 +136,10 @@ function clickedOnCommentTextarea()
 
 
 
-function fetchComments(postId)
+function fetchComments(div ,postId)
 {
 
-    let comments_form_box = document.getElementById("comments_form_box_"+postId);
+ 
     let formData = new FormData();
     formData.append('postId', postId);
     let url = "/fetchComments";
@@ -165,14 +160,11 @@ function fetchComments(postId)
       {
             comments_num_span.innerHTML = 0;
       }
-
-
       
       loadComments(data ,postId)
-      removeCustomSpinner(comments_form_box);
+      removeCustomSpinner(div);
       channel.bind('addComment', function(data) {
-
-        console.log(data)
+      
         let user_name  = "";
         if(data.userId == loggedUserId)
         {
