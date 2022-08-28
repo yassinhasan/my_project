@@ -13,7 +13,6 @@
                                 , "password");
     $this->view->renderSubmitBtn(["name" => "save" , 
     "class" => "primary register_btn" ,
-     "data" => "data_target='/register'" ,
     "label" => "submit"]);
     $this->view->endForm();
 ?>

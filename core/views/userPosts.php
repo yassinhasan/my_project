@@ -21,10 +21,12 @@ use core\app\user;
        $follow = "unfollow";
        $follow_class = "unfollow";
        }
+       
+       
 ?>
 
 
-<div class="container">
+<div class="container" >
     <!--profile of user-->
         <div class="card profile_user">
              <h3 class="card-title" style="text-align: center;margin: 8px 0"><?= $user->firstName." ".$user->lastName?></h3>
@@ -65,7 +67,7 @@ use core\app\user;
         <!--posts-->
         <div class="main_page_posts_box">
                 <!-- posts-->
-               <div class="card post_box" mt="20" style="margin: 20px 0 ">
+               <div class="card post_box"  style="margin: 20px 0 ">
                    <?php
                     if(count($user_posts) > 0)
                     {
@@ -73,11 +75,33 @@ use core\app\user;
                              $type = $user_posts[$i]->likeType;
                              $postId = $user_posts[$i]->id;
                              $image = $user_posts[$i]->profileImage == null ? 'avatar.jpg' : $user_posts[$i]->firstName.$user_posts[$i]->lastName."/".$user_posts[$i]->profileImage;
+                            //  attachment
+                            $attachment = $user_posts[$i]->attachment == null ? null  : $user_posts[$i]->attachment;
+                            $attachment_div= "";
+                            $attachment_type = $user_posts[$i]->attachmentType;
+                             if($attachment_type == "image"){
+                                   $attachment_div = "<div class='post_attachment_div'><img src='../../public/uploades/images/posts/image/$postId/$attachment' loading='lazy' class='post_attachment' alt=''/></div>";
+                             }else if($attachment_type == "video")
+                              {
+                               $src = explode(".",$attachment);
+                               $filename =  $src[0];
+                               $filetype  = $src[1];
+                        
+                               $attachment_div = "<div class='post_attachment_div'>
+                                                <video  controls  class='video_attach' >
+                                                  <source src='../../public/uploades/images/posts/video/$postId/$attachment'  type='video/mp4' >
+                                                  Your browser does not support the video tag.
+                                                </video>
+                                           </div>";
+                        
+                            }
+                            //end attachment
                     ?>
                     
                          <div class="post_box_details"  id="post_box_details_<?=$postId?>">
                               <div class="card-body big_card_body">
                                     <div class="card-body post_text_box">
+                                        <?=   $attachment_div ?>
                                         <p class="card-title post_text"><?=$user_posts[$i]->postText?></p>
                                         <span class="card-text post_date"><small class="text-muted"> <?=$user_posts[$i]->postDate?></small></span>
                                     </div>
@@ -93,7 +117,7 @@ use core\app\user;
                                         </div>
                                </div>
                                 <!-- here form of comments -->
-                                 <div class="comments_form_box hidden" id="comments_form_box_<?=$postId?>">
+                                 <div class="comments_form_box hidden" id="comments_form_box_<?=$postId?>" data-postId="<?= $postId ?>">
                                  </div>
                                 <!-- end form of comments -->
                                 <!-- end here comments -->

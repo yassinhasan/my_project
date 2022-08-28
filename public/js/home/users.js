@@ -42,7 +42,7 @@ function prepareUsersBox(data) {
                 <div class="card-body users_box_details">
                     <div class="row g-0">
                         <div class="col-md-4 user_image_box">
-                            <img src="../../public/uploades/images/profile/${image}"  class="img-fluid rounded-start ifno_user_image" alt="...">
+                            <img src="../../public/uploades/images/profile/${image}"  class="ifno_user_image" alt="...">
                         </div>
                         <div class="col-md-8" style="width: 100%;">
                           <div class="card-body">

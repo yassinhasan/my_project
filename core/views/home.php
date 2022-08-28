@@ -21,7 +21,7 @@ use core\app\user;
                         <div class="mb-3" style="margin-bottom: 5px">
                             <div class="textarea_text_box">
                                 <textarea  name="post" class="form-control textarea_text" id="Write_Post" placeholder="write your day"></textarea>
-                                <img class="post_image" hidden/>
+                                <img class="post_image" hidden src=".." alt=""/>
                             </div>
                         </div>
                         <div class="share_post_attach row ">
@@ -46,7 +46,7 @@ use core\app\user;
             </div>
                 
                 <!-- posts-->
-               <div class="card post_box" mt="20" style="margin: 20px 0 "></div>
+               <div class="card post_box" style="margin: 20px 0 "></div>
                 <!--end posts-->
         </div>
         <!-- users info -->

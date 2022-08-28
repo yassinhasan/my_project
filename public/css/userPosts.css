@@ -2,7 +2,7 @@
 {
     margin-top: 60px;
     
-    
+    border: none !important;
 }
 .profile_user_image_box
 {
@@ -59,7 +59,11 @@
 
 
 /* posts */
-
+.main_page_posts_box
+{
+        max-width: 900px;
+    margin: auto;
+}
 .post_image_box , .user_image_box
 {
     display: flex;
@@ -88,8 +92,33 @@
 .post_box_details
 {
     margin: 30px 0;
-    box-shadow: 0 1px 9px #9e9e9e;
+  box-shadow: 0 1px 9px #9e9e9e3b;
     position: relative;
+}
+
+/*attach*/
+.post_attachment_div
+{
+    position: relative;
+    background:#e2eaf1;;
+    height: 380px;
+    margin-top: 30px;
+ 
+}
+.post_attachment_div .post_attachment
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.video_attach
+{
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
 }
 .post_box_details .card-header
 {
@@ -105,7 +134,7 @@
 }
 .post_text_box
 {
-    background-color: antiquewhite;
+    background-color: ##cccccc7a;
     margin-top: 40px;
 }
 .post_text
@@ -123,17 +152,18 @@
     border-radius: 6px;
     padding: 8px;
     justify-content: center;
-    box-shadow: 0px 0 2px #777;
-     font-size: 17px;
+    font-size: 17px;
     font-weight: 500;
+    margin: 20px;
     cursor: pointer;
+    box-shadow: 0 1px 12px #6c757d24;
 }
 .comments_box
 {
    margin: 20px 8px;
    padding: 0;
-   max-height: 45px;
-   transition: all  0.5s ease-in-out;
+   max-height: 80px;
+   transition: all  0.3s ease-in-out;
    overflow: hidden;
 }
 .comments_box.show
@@ -192,16 +222,19 @@
 }
 .users_comments_image
 {
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
+    height: 40px;
+    position: relative;
+    width: 40px;
+    margin-right: 15px;
 }
 .users_comments_image img
 {
-    width: 60px;
-    height: 60px;
     border-radius: 50%;
     object-fit: cover;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 
 .add_comment_btn
@@ -234,11 +267,11 @@
 }
 .likes_box
 {
-    top: 3px;
+    top: 10px;
     opacity: 70%;
     max-width: 130px;
     position: absolute;
-    right: 0;
+    right: 10px;
     background: #ddd;
     padding: 5px;
     border-radius: 5px;

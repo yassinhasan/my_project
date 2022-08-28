@@ -27,9 +27,9 @@ $this->view->getFlashMsg("success_profile" , "success" );
 
             <li class="main-list list-group-item d-flex justify-content-between align-items-start">
                 <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-                    Profile Info
-                    <button type="button" class="btn btn-outline-light btn-sm edit_profile">Edit</button>
-                </button>
+                    Profile Info </button>
+                <button type="button" class="btn btn-outline-light btn-sm edit_profile">Edit</button>
+               
             </li>
 
             <li class="list-group-item">
@@ -100,6 +100,8 @@ $this->view->getFlashMsg("success_profile" , "success" );
                 <button type="button" class="btn btn-secondary btn-sm cancel_profile">cancel</button>
             </li>
         </ul>
-    </div>
-    </div>
-<?php $this->view->endForm(); ?>
+        <?php $this->view->endForm(); ?>
+</div>
+</div>
+  
+

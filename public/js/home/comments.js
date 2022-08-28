@@ -1,7 +1,13 @@
 
+let loggedUserId;
 let logged_user_name_link = getElm("logged_user_name");
-let loggedUserId = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim());
-let loggedUserName = (logged_user_name_link.innerHTML).trim();
+
+if(logged_user_name_link)
+{
+     loggedUserId = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim());
+    let loggedUserName = (logged_user_name_link.innerHTML).trim(); 
+}
+
 
 function clickedOnCommentsDiv()
 {
@@ -58,12 +64,16 @@ function loadComments(data , postId)
                          class = ""
                          alt = "..." >
                 </div>
-                <div class="users_comments_comment_area col-10">
-                    <p class="user_comments_name">  <a href="/userPosts?id=${commentsData[i].userId}" style="color: #795548 ; text-decoration: none"> ${commentsData[i].firstName} ${commentsData[i].lastName}</a>
+                <div class="users_comments_comment_area col-10 row">
+                    <div  class="user_comments_name">  
+                        <a href="/userPosts?id=${commentsData[i].userId}" style="color: #795548 ; text-decoration: none;font-size:14px"> ${commentsData[i].firstName} ${commentsData[i].lastName}</a>
                         <span class="users_comments_comment_area_date">${commentsData[i].commentDate}</span>
-                    </p>
-                    <p class="users_comments_comment_area_comment">${commentsData[i].comment}</p>
-              </div>
+                    </div>
+                     <div>
+                     <p class="users_comments_comment_area_comment">${commentsData[i].comment}</p>
+                    </div>
+                </div>
+
          </div>
         <!-- end comment -->
         </div>
@@ -95,6 +105,7 @@ function clickedOnAddCommentBtn()
         let comment = comments_form_textarea.value;
         let postId = comments_form_box.getAttribute("data-postId");
         // 
+        
          showCustomeSpinner(comments_form_box);
         // 
         if (comment != "") {
@@ -115,6 +126,7 @@ function clickedOnAddCommentBtn()
         
         }else
         {
+           removeCustomSpinner(comments_form_box);
             makeInvalidInput("comments_form_textarea" , "soory there is no comment added");
         }
 
@@ -151,7 +163,9 @@ function fetchComments(div ,postId)
      .then(resp => resp.json())
      .then(data => {
 
+        
       let comments_num_parents = document.getElementById("comments_"+postId);
+     
       let comments_num_span = comments_num_parents.querySelector(".comments_num");
       if(data.comment.length > 0)
       {

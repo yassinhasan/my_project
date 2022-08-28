@@ -145,21 +145,31 @@ function clickedShareBtn()
                 let image = allPosts[i].profileImage == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].profileImage}`;
                 post_box.innerHTML += `
                         <div class="post_box_details"  id="post_box_details_${postId}">
-                              <div class="card-header">
-                                <a href="/userPosts?id=${allPosts[i].userId}" class="userPosts_link">${allPosts[i].firstName} ${allPosts[i].lastName}</a>
+                              <div class="card-header row post_card_header">
+                                <div class="col-11">
+                                      <a href="/userPosts?id=${allPosts[i].userId}" class="userPosts_link">${allPosts[i].firstName} ${allPosts[i].lastName}</a>
+                                </div>
+                                <div class="edit_big_box col-1 showt_edit_div" data-show=${i}>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <div class="edit_box" id="edit_box_${i}">
+                                        <div class="edit_box_edit">edit</div>
+                                        <div class="edit_box_delete">delete</div>
+                                    </div>
+                                </div>
                               </div>
+                            
                               <div class="card-body big_card_body">
                                 <div class="row g-0">
-                                    <div class="col-3 post_image_box">
-                                        <img src="../../public/uploades/images/profile/${image}"  class="img-fluid rounded-start  post_user_image" alt="...">
+                                    <div class="col-2 post_image_box">
+                                        <img src="../../public/uploades/images/profile/${image}"  class="post_user_image" alt="...">
                                     </div>
                                     <div class="col-9">
                                       <div class="card-body">
                                         ${attachment_div}
                                         <p class="card-text">${allPosts[i].postText}</p>
-                                        <p class="card-text"><small class="text-muted">${allPosts[i].postDate}</small></p>
+                                        <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
                                     </div>
-                               </div>
+                                </div>
                                </div>
                                 <!-- here comments -->
                                
@@ -239,5 +249,71 @@ function prepareTextarea()
     
 }
 
+function showEditBox()
+{
+        document.body.addEventListener("click",e=>
+        { 
+           
+            // 2: first if popup is opened so check if i clicked on clsoed btn 
+            // get that only pop and check it if contain show class
+            // so remove all pop up contain show even that
+            //3:  if not also remove all but keep it
+            
+            // 4: if clicked ouside popup or in popup or in any area not closed btn // remove only that popup
+            
+            // 1:  last if not popup click so oopen and add class show to it
+            
+            // this step will not happen at first time but at second time
+            let edit_box  = document.querySelector(".edit_box.show");
+            if(edit_box)
+                 {
+                if( e.target.classList.contains("showt_edit_div"))
+                {
+                     
+                    
+                    // i will get only popup that related to edit btn 
+                   let id = e.target.getAttribute("data-show");    
+                   let clickedEditBox = document.getElementById("edit_box_"+id)   ;
+                   // then check if it already opened == answer is yes == so close all even it
+                   if(clickedEditBox.classList.contains("show"))
+                   { 
+                        let all_edit_box = document.querySelectorAll(".edit_box.show");
+                        all_edit_box.forEach(elm=>
+                        {
+                          elm.classList.remove("show");
+                        })
+                   }else
+                   {
+                       // else that mean i click again on me so remove other popup and keep me
+                      let all_edit_box = document.querySelectorAll(".edit_box.show");
+                        all_edit_box.forEach(elm=>
+                        {
+                          elm.classList.remove("show");
+                        })
+                       clickedEditBox.classList.add("show");
+                   }
+                      return;
+                };
+                //   this happen only when i clicked outside popup 
+                if(e.target != edit_box && e.target.parentElement != edit_box && !e.target.classList.contains("showt_edit_div"))
+                {
+                    edit_box.classList.remove("show");
+                    return
+                }
+                 
 
-export {fetchPostsUrl , clickedShareBtn , preparePostBox  , prepareTextarea }
+            }
+            // this will happen when click at first time
+            else if(e.target.classList.contains("showt_edit_div") && !edit_box)
+            {
+               
+                let edit_box  = e.target.querySelector(".edit_box");
+                edit_box.classList.toggle("show")
+            }
+
+    })
+
+   
+}
+
+export {fetchPostsUrl , clickedShareBtn , preparePostBox  , prepareTextarea ,showEditBox}
