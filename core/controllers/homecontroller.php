@@ -236,4 +236,25 @@ class homecontroller extends abstractController
         }
 
     }
+    
+    public function postDelete()
+    {
+        $data = $this->request->getBody();
+        $userId = Application::$app->session->userId;
+        $postId = $data['postId'];
+        if($this->request->method() == "POST")
+        {
+             if($this->model->postDelete( $postId , $userId))
+             {
+                $this->jData["delete"] = "success";
+             }
+            
+             $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
+    
 }

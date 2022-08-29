@@ -65,6 +65,7 @@ $app->router->get("/",[ homecontroller::class , "home"]);
 $app->router->get("/notfound",[ notfoundController::class , "notfound"]);
 $app->router->get("/home",[ homecontroller::class , "home"]);
 $app->router->post("/sharePosts",[ homecontroller::class , "sharePosts"]);
+$app->router->post("/postDelete",[ homecontroller::class , "postDelete"]);
 $app->router->post("/fetchPosts",[ homecontroller::class , "fetchPosts"]);
 $app->router->post("/fetchUsers",[ homecontroller::class , "fetchUsers"]);
 $app->router->post("/addComment",[ homecontroller::class , "addComment"]);

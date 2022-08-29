@@ -225,7 +225,7 @@ class Database
 
 
 
-        // insert into 
+        // delete into 
     public function delete($tableName = null)
         {
             if($tableName != null)

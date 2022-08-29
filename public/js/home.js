@@ -33,11 +33,11 @@ uploadAttach()
 
 
 // must be after uplaod 
-import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea ,showEditBox} from "./home/posts.js"
+import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea ,showEditBox , postDelete} from "./home/posts.js"
 clickedShareBtn();
 prepareTextarea();
 showEditBox();
-
+postDelete();
 // function fetch all posts 
 fetchPostsUrl()
 

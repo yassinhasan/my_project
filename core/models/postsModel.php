@@ -173,4 +173,18 @@ class postsModel extends abstractModel
              (SELECT  COUNT(app_post_likes.id) from app_post_likes where ( app_post_likes.likeType = 'unlike' AND app_post_likes.postId = $postId) ) as disliked
                 ")->fetch();
     }
+    
+    
+    //  delete post by id
+    
+   public function postDelete($postId , $userId)
+    {
+        $count =  $this->from(" app_posts " )
+         ->where("app_posts.id = ? And app_posts.postUserId = ? " , [$postId , $userId ])
+         ->delete();
+
+        return $count > 0;
+        
+
+    }
 }
