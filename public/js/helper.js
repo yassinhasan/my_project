@@ -101,9 +101,12 @@ function removeLoadSpinner()
 // validation 
 function makeInvalidInput(inputName ,msg )
 {
-    let input;
-
-    input = document.querySelector("[name='"+inputName+"']");
+     let input ;
+     input = document.querySelector("[name='"+inputName+"']");
+    if(input == null)
+    {
+        input = document.querySelector("."+inputName);  
+    }
     input.classList.add("is-invalid");
     let div_error_msg = `<div class="invalid-feedback">${msg}</div>`;
      input.insertAdjacentHTML("afterend" , div_error_msg);
@@ -111,7 +114,12 @@ function makeInvalidInput(inputName ,msg )
 
 function makevalidInput(inputName , msg)
 {
-    let input = document.querySelector("[name='"+inputName+"']");
+    let input ;
+     input = document.querySelector("[name='"+inputName+"']");
+    if(input == null)
+    {
+        input = document.querySelector("."+inputName);  
+    }
     input.classList.add("is-valid");
     let div_success_msg = `<div class="valid-feedback">${msg}</div>`;
     input.insertAdjacentHTML("afterend" , div_success_msg);

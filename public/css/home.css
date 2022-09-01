@@ -378,3 +378,27 @@ cursor: pointer
      background-color: #dc3545 ;
       color: #fff;
 }
+
+
+/*edit post*/
+.post_edit_image
+{
+        margin-bottom: 12px;
+        text-align: center;
+}
+.post_edit_image img 
+{
+    max-height: 250px;
+}
+.remove_attach
+{
+   position: absolute;
+    right: 19px;
+    height: 20px;
+    width: 20px;
+    background: #41464b;
+    line-height: 20px;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+}

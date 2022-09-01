@@ -15,29 +15,42 @@ let progress_div = getElm("progress_div");
 let progress = getElm("progress");
 let attach_input = document.querySelector(".attachment");
 
-import { attachmentType } from "./uploadattach.js";
+import { attachmentType  } from "./uploadattach.js";
+import { attachNeedUpdate  } from "./edit.js";
 
 
-function clickedShareBtn() {
-    share_post_btn.addEventListener("click", (e) => {
-
-        e.preventDefault();
+function sharePost(mainSharePox , update = false)
+{
+        
+      
+        let form = mainSharePox.querySelector(".share_post_form");
+        let textarea_text = mainSharePox.querySelector(".textarea_text");
+        let shar_post_box =  mainSharePox.querySelector(".shar_post_box");
+        let post_image = mainSharePox.querySelector(".post_image");
+        let progress_div = mainSharePox.querySelector(".progress_div");
+        let progress = mainSharePox.querySelector(".progress");
+        let attach_input = document.querySelector(".attachment");
+        let postId = mainSharePox.getAttribute("data-postId")
         removeAnyValidation();
         showCustomeSpinner(shar_post_box);
-
+        
         let data = new FormData(form);
-        data.append("attachmentType", attachmentType)
+        data.append("attachmentType",  attachmentType.type);
+     
+        if(postId)
+        {
+              data.append("postId", postId);
+              data.append("attachNeedUpdate", attachNeedUpdate.need);
+              data.append("alreadyHasAttach", attachNeedUpdate.alreadyHasAttach);
+              
+        }
         let url = form.action;
-        /* A POST request using XML object */
         const req = new XMLHttpRequest(); // Initialize request
-        req.open('POST', url); // Specify request type and endpoint
-
-        // Add event listener to upload listening for progress. Function fires
-        // regularly, with progress contained in "e" object
+        req.open('POST', url); 
         req.upload.addEventListener('progress', function(e) {
-            // Every time progress occurs
+           
             const percentComplete = (Math.floor(e.loaded) / Math.floor(e.total)) * 100;
-            if (attachmentType != null) {
+            if ( attachmentType.type != null) {
                 progress_div.style.display = "block";
                 progress.style.width = percentComplete + "%";
                 progress.innerHTML = "Uploading " + Math.floor(percentComplete) + "%";
@@ -47,9 +60,6 @@ function clickedShareBtn() {
                 }
             }
 
-            // console.log(percentComplete)// Calculate percentage complete via "e" object
-            // progress.setAttribute('value', percentComplete); // Update value of progress HTML element
-            // progress.nextElementSibling.nextElementSibling.innerText = Math.round(percentComplete)+"%"; // Prints progress in progress element label as well
         })
 
         // Fires when upload is complete
@@ -59,7 +69,15 @@ function clickedShareBtn() {
                 removeCustomSpinner(shar_post_box);
                 if (data.errors && data.errors.attachment == null) {
                     for (let err in data.errors) {
-                        makeInvalidInput(err, data.errors[err])
+                        
+                        if(update)
+                        {
+                             makeInvalidInput("update_input", data.errors[err])
+                        }else
+                        {
+                             makeInvalidInput( err, data.errors[err])
+                        }
+                       
                         //  showAlert('danger' , 'Error' , data.errors[err])
                     }
 
@@ -75,67 +93,115 @@ function clickedShareBtn() {
                     preparePostBox(data);
                     //  showAlert('danger' , 'Error' , data.errors[err]);
                     progress_div.style.display = "none";
-                    let image_thumb_div = getElm("image_thumb_div");
-                    if (image_thumb_div) {
-                        image_thumb_div.innerHTML = "";
-                        image_thumb_div.remove();
+                    let post_image  = getElm("post_image");
+                    if (post_image ) {
+                        post_image .remove()
                     }
-
+                    let remove_attach  = getElm("remove_attach");
+                    if (remove_attach ) {
+                        remove_attach .remove()
+                    }
+                    // hide modal
                 }
                 else if (data.sql_error) {
 
                     showAlert('error', 'Error', data.sql_error)
                 }
-                progress_div.style.display = "none";
-                let image_thumb_div = getElm("image_thumb_div");
-                if (image_thumb_div) {
-                    image_thumb_div.innerHTML = "";
-                    image_thumb_div.remove();
+                else if(data.updatePostOnly)
+                {
+                        updatePostOnly(data.updatePostOnly);
+                        var myModal = document.getElementById('postEditModal');
+                        let close_modal = myModal.querySelector(".close_modal");
+                        close_modal.click()
                 }
-
-
-
+                progress_div.style.display = "none";
+                let post_image  = getElm("post_image");
+                if (post_image ) {
+                    post_image .remove()
+                }
+                let remove_attach  = getElm("remove_attach");
+                if (remove_attach ) {
+                    remove_attach .remove()
+                }
+          
             }
             let attach_input = getElm("attachment");
             if (attach_input) {
                 attach_input.remove();
-                form.reset()
+                form.reset();
+                attachmentType.type = null;
             }
 
         })
 
         req.send(data);
-
-
-
-
-    });
-
 }
 
+function clickedShareBtn() {
+    let share_post_box = getElm("share_post_box");
+    let clickedElm = share_post_box.querySelector(".share_post_btn");
+    clickedElm.addEventListener("click", (e) => {
+        e.preventDefault();
+        sharePost(share_post_box);
+    })
+     
+}
+function updatePost(){
+    
+    let postEditModal = document.getElementById("postEditModal");
+    let clickedElm = postEditModal.querySelector(".share_post_btn");
+    clickedElm.addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        sharePost(postEditModal , true);
+    })
+}
 
+function updatePostOnly(data)
+{
+    let post_box_details = document.getElementById("post_box_details_"+data.id);
+    post_box_details.querySelector(".post_text").innerHTML = data.postText;
+    post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
+}
 function preparePostBox(data) {
-    if (data.posts) {
-
-        let allPosts = data.posts;
+    
+       let allPosts;
+       if(data.lastPost)
+       {
+                 
+             allPosts = data.lastPost; 
+        }else if(data.posts)
+        {
+              post_box.innerHTML = "";
+              allPosts = data.posts;
+        }
+        
+        let post = "";
         if (allPosts.length > 0) {
-            post_box.innerHTML = "";
+            console.log(allPosts);
             for (var i = allPosts.length; i--;) {
                 let type = allPosts[i].likeType;
                 let postId = allPosts[i].id;
                 let attachment = allPosts[i].attachment == null ? null : allPosts[i].attachment;
                 let attachment_div = "";
                 let attachment_type = allPosts[i].attachmentType;
+               
+                let post = allPosts[i].postText == "null" ? "" : allPosts[i].postText;
                 if (attachment_type == "image") {
-                    attachment_div = `<div class="post_attachment_div"><img src="../../public/uploades/images/posts/image/${postId}/${attachment} " loading="lazy" class="post_attachment"/></div>`;
+                    attachment_div = `
+                    
+                    <div class="post_attachment_div" data-type="${attachment_type}">
+                    <img src="../../public/uploades/images/posts/image/${postId}/${attachment} " loading="lazy" class="post_attachment"/>
+                    </div>`
+                    ;
                 }
                 else if (attachment_type == "video") {
                     let src = attachment.split(".");
                     let filename = src[0];
                     let type = src[1];
 
-                    attachment_div = `<div class="post_attachment_div">
-                        <video  controls  class="video_attach" loading="lazy">
+                    attachment_div = `<div class="post_attachment_div" data-type="${attachment_type}">
+                        <video  controls  class="video_attach post_attachment" loading="lazy">
                           <source src="../../public/uploades/images/posts/video/${postId}/${attachment}"  type="video/mp4" >
                           Your browser does not support the video tag.
                         </video>
@@ -147,13 +213,13 @@ function preparePostBox(data) {
                      <div class="edit_big_box col-1 showt_edit_div" data-show=${i}>
                                     <i class="fas fa-ellipsis-v"></i>
                                     <div class="edit_box" id="edit_box_${i}">
-                                        <div class="edit_box_edit">edit</div>
+                                        <div class="edit_box_edit" data-postId="${postId}" data-bs-toggle="modal" data-bs-target="#postEditModal">edit</div>
                                         <div class="edit_box_delete" data-postId="${postId}">delete</div>
                                     </div>
                     </div>
                 `;
                 // start add post
-                post_box.innerHTML += `
+                 post = `
                         <div class="post_box_details"  id="post_box_details_${postId}">
                               <div class="card-header row post_card_header">
                                 <div class="col-11">
@@ -172,7 +238,7 @@ function preparePostBox(data) {
                                     <div class="col-9">
                                       <div class="card-body">
                                         ${attachment_div}
-                                        <p class="card-text">${allPosts[i].postText}</p>
+                                        <p class="card-text post_text">${post}</p>
                                         <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
                                     </div>
                                 </div>
@@ -212,7 +278,16 @@ function preparePostBox(data) {
                             <!-- end likes -->
                         </div>
                         `;
+                 if(data.lastPost)
+                {
+                    post_box.insertAdjacentHTML("afterbegin" , post)
+                }
+                else if(data.posts)
+                {
+                    post_box.innerHTML += post;
+                }        
             }
+            
 
         }
         else
@@ -220,14 +295,16 @@ function preparePostBox(data) {
         {
             post_box.innerHTML = "";
         }
+        
+        
+         removeCustomSpinner(post_box);
 
-        removeCustomSpinner(post_box);
-
-    }
+    
 }
 
 
 function fetchPostsUrl() {
+   
     showCustomeSpinner(post_box);
     let url = "/fetchPosts";
     fetch(url, {
@@ -235,13 +312,13 @@ function fetchPostsUrl() {
         })
         .then(resp => resp.json())
         .then(data => {
-
+          
             preparePostBox(data)
 
         })
 
 }
-
+fetchPostsUrl() 
 function prepareTextarea() {
     textarea_text.addEventListener("keydown", (e) => {
         textarea_text.classList.remove("is-invalid");
@@ -346,4 +423,4 @@ function postDelete() {
         }
     })
 }
-export { fetchPostsUrl, clickedShareBtn, preparePostBox, prepareTextarea, showEditBox , postDelete}
+export { fetchPostsUrl, clickedShareBtn, preparePostBox, prepareTextarea, showEditBox , postDelete , updatePost}

@@ -39,10 +39,9 @@ class homecontroller extends abstractController
             $data = $this->request->getBody();
             $rules = $this->model->rules();
             $type = $data['attachmentType'];
-
             $validRules = $this->validate->isValid( $this->model , $rules , $data);
             $hasAttach = false;
-
+            $postId = null;
 
             // no upload or no file selected
             if(isset($_FILES['attachment']) )
@@ -72,7 +71,7 @@ class homecontroller extends abstractController
             }
             if($validRules AND $hasAttach == false)
             {
-                $this->model->savePost( $userId); 
+              $postId =   $this->model->savePost( $userId); 
                 $this->jData['success'] = "your post is shared ";
             }elseif($hasAttach == true )
             {
@@ -95,8 +94,10 @@ class homecontroller extends abstractController
                  }
 
             }
-        
-            $this->jData['posts'] = $this->model->fetchPosts($userId);
+            
+           
+            $this->jData['lastPost'] = $this->model->fetchlastPost($postId,$userId);
+          
             $this->json();
         }else
         {
@@ -250,6 +251,46 @@ class homecontroller extends abstractController
              }
             
              $this->json();
+        }else
+        {
+                $this->response->renderView("home",$this->data );
+        }
+
+    }
+    
+    public function postEdit()
+    {
+
+        if($this->request->method() == "POST")
+        {
+            $data = $this->request->getBody();
+            $userId = Application::$app->session->userId;
+            $postId = $data['postId'];
+            $attachNeedUpdate = $data["attachNeedUpdate"];
+            $rules = $this->model->rules();
+            $type = $data['attachmentType'];
+            $alreadyHasAttach = $data['alreadyHasAttach'];
+            $validRules = $this->validate->isValid( $this->model , $rules , $data);
+            $hasAttach = false;
+            // no upload or no file selected
+            
+        if($attachNeedUpdate == "false" AND $alreadyHasAttach == "true")
+        {
+         
+            $this->model->updatePost( $postId); 
+            $this->jData['updatePostOnly'] = "your post is updated ";
+            $updatedPosts = $this->model->fetchlastPost($postId,$userId);
+            $updatedPost = array_shift($updatedPosts);
+            $updatedPostToSend = [
+                   "id" => $updatedPost->id ,
+                  "postText" =>   $updatedPost->postText , 
+                 "postDateModified" =>   $updatedPost->postDateModified,
+                ];
+            $this->jData['updatePostOnly'] = $updatedPostToSend;
+            
+        }
+
+            $this->json();
         }else
         {
                 $this->response->renderView("home",$this->data );

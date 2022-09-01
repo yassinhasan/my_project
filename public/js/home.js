@@ -28,20 +28,28 @@ import { clickedOnAddLiketBtn } from "./home/likes.js"
 
  // realTimeNoti( 1 ,"hasn meady" , "is online now");
 
-import {uploadAttach} from "./home/uploadattach.js"
-uploadAttach()
+import {uploadAttach} from "./home/uploadattach.js";
+
+let share_post_box = getElm("shar_post_box");
+let default_clicked_elm  = share_post_box.querySelector(".fa-photo-film"); 
+uploadAttach(share_post_box , default_clicked_elm);
+
+
 
 
 // must be after uplaod 
-import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea ,showEditBox , postDelete} from "./home/posts.js"
+import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea ,showEditBox , postDelete , updatePost} from "./home/posts.js"
 clickedShareBtn();
 prepareTextarea();
 showEditBox();
 postDelete();
-// function fetch all posts 
-fetchPostsUrl()
+updatePost();
 
 
+
+//edit posts
+import {postEdit } from "./home/edit.js"
+postEdit();
 
 function notifyMe() {
  if (Notification.permission !== 'granted')

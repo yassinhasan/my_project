@@ -12,38 +12,42 @@ use core\app\user;
         <!--posts-->
         <div class="col col-8 main_page_posts_box">
             <!--share posts-->
-           <div class="card">
-                  <div class="card-header share_post_header">
-                    Share Your Post
-                  </div>
-                  <div class="card-body shar_post_box">
-                      <form class="share_post_form" action="/sharePosts" enctype="multipart/form-data">
-                        <div class="mb-3" style="margin-bottom: 5px">
-                            <div class="textarea_text_box">
-                                <textarea  name="post" class="form-control textarea_text" id="Write_Post" placeholder="write your day"></textarea>
-                                <img class="post_image" hidden src=".." alt=""/>
+           <div class="share_post_box">
+               <div class="card">
+                      <div class="card-header share_post_header">
+                        Share Your Post
+                      </div>
+                      <div class="card-body shar_post_box">
+                          <form class="share_post_form" action="/sharePosts" enctype="multipart/form-data">
+                               <div class="post_edit_image"> </div>
+                            <div class="mb-3" style="margin-bottom: 5px">
+                                <div class="textarea_text_box">
+                                    <textarea  name="post" class="form-control textarea_text" id="Write_Post" placeholder="write your day"></textarea>
+                                    <img class="post_image" hidden src=".." alt=""/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="share_post_attach row ">
-                             <div class="add_attach col-1">
-                             <i class="fa-solid fa-photo-film"></i>
+                            <div class="share_post_attach row ">
+                                 <div class="add_attach col-1">
+                                 <i class="fa-solid fa-photo-film"></i>
+                                </div>
+                                <div class="add_audio col-1">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </div>
                             </div>
-                            <div class="add_audio col-1">
-                                <i class="fa-solid fa-volume-high"></i>
-                            </div>
-                        </div>
-                        <div class="mt-10">
-                            <button type="submit" name="sharePost" value="Share" class="btn btn-primary share_post_btn">
-                            Share
-                            </button>
-                        </div>                          
-                      </form>
+                            <div class="mt-10">
+                                <button type="submit" name="sharePost" value="Share" class="btn btn-primary share_post_btn">
+                                Share
+                                </button>
+                            </div>                          
+                          </form>
+    
+                      </div>
+                    </div>
+                <div class="progress_div">
+                    <span class="progress"></span>
+                </div>               
+           </div>
 
-                  </div>
-                </div>
-            <div class="progress_div">
-                <span class="progress"></span>
-            </div>
                 
                 <!-- posts-->
                <div class="card post_box" style="margin: 20px 0 "></div>
@@ -58,4 +62,29 @@ use core\app\user;
      <!-- end main users info -->
     </div>
 </div>
+
+
+<!--model -->
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="postEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="postEditModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close close_modal" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary share_post_btn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end modal -->
 
