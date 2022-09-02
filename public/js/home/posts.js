@@ -178,7 +178,7 @@ function preparePostBox(data) {
         
         let post = "";
         if (allPosts.length > 0) {
-            console.log(allPosts);
+          //  console.log(allPosts);
             for (var i = allPosts.length; i--;) {
                 let type = allPosts[i].likeType;
                 let postId = allPosts[i].id;
@@ -232,11 +232,10 @@ function preparePostBox(data) {
                             
                               <div class="card-body big_card_body">
                                 <div class="row g-0">
-                                    <div class="col-2 post_image_box">
+                                    <div class="col-4 post_image_box">
                                         <img src="../../public/uploades/images/profile/${image}"  class="post_user_image" alt="...">
                                     </div>
-                                    <div class="col-9">
-                                      <div class="card-body">
+                                    <div class="col-8">
                                         ${attachment_div}
                                         <p class="card-text post_text">${post}</p>
                                         <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
@@ -318,7 +317,7 @@ function fetchPostsUrl() {
         })
 
 }
-fetchPostsUrl() 
+// fetchPostsUrl() 
 function prepareTextarea() {
     textarea_text.addEventListener("keydown", (e) => {
         textarea_text.classList.remove("is-invalid");

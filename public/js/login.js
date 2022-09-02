@@ -1,10 +1,11 @@
 
 let login_btn = getElm("login_btn");
 let form = getElm("form");
+let container = getElm("container");
 login_btn.addEventListener("click",(e)=>
 {
     e.preventDefault();
-    showLoadSpinner();
+    showCustomeSpinner(container);
     removeAnyValidation()
     let data = new FormData(form);
     let url = form.action; 
@@ -15,9 +16,10 @@ login_btn.addEventListener("click",(e)=>
    .then(resp=>resp.json())
    .then(data=>{
     
+    
     if(data.errors)
     {
-        removeLoadSpinner();
+     
         for(let err in data.errors)
         {
          makeInvalidInput(err,data.errors[err] )
@@ -35,13 +37,14 @@ login_btn.addEventListener("click",(e)=>
       
     }else if(data.sql_error)
     {
-        removeLoadSpinner();
+       
         showAlert('error' , 'Error' , data.sql_error)
     }else if(data.message_error)
     {
-        removeLoadSpinner();
+      
         showAlert('error' , 'Error' , data.message_error)
     }
+      removeCustomSpinner(container);
    })
 })
 

@@ -44,7 +44,7 @@ prepareTextarea();
 showEditBox();
 postDelete();
 updatePost();
-
+fetchPostsUrl()
 
 
 //edit posts

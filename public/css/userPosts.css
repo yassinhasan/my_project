@@ -64,7 +64,7 @@
         max-width: 900px;
     margin: auto;
 }
-.post_image_box , .user_image_box
+ .user_image_box
 {
     display: flex;
     justify-content: center;
@@ -73,7 +73,7 @@
     position: relative;
     height: 150px;
 }
-.post_user_image , .ifno_user_image
+ .ifno_user_image
 {
     width: 150px;
     height: 150px;
@@ -184,6 +184,7 @@
     padding: 5px 20px;
     position: relative;
     padding-bottom: 40px;
+      min-height: 30px
 }
 .comments_form_textarea
 {    height: 120px;

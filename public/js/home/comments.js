@@ -22,7 +22,8 @@ function clickedOnCommentsDiv()
             e.target.parentElement.classList.toggle("show");
            
             parent.querySelector(".comments_form_box").classList.toggle("hidden");
-            let comments_form_box = parent.querySelector(".comments_form_box")
+            let comments_form_box = parent.querySelector(".comments_form_box");
+            
             if(!parent.querySelector(".comments_form_box").classList.contains("hidden"))
             {
                 showCustomeSpinner(comments_form_box);

@@ -20,7 +20,7 @@ register_btn.addEventListener("click",(e)=>
         removeLoadSpinner();
         for(let err in data.errors)
         {
-         makeInvalidInput(err  , null, data.errors[err] )
+         makeInvalidInput(err , data.errors[err] )
         }
        
     }else if(data.success)

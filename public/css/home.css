@@ -22,8 +22,6 @@
     position: relative;
     background:#e2eaf1;;
     height: 350px;
-    margin-top: 30px;
- 
 }
 .post_attachment_div .post_attachment
 {
@@ -87,12 +85,21 @@
 }
 .post_image_box 
 {
-    position: relative;
-    max-height: 100px;
+    /*position: relative;*/
+    /*max-height: 100px;*/
     /* max-width: 100px; */
-    margin-top: 49px;
+    /*margin-top: 49px;*/
+    /*height: 60px;*/
+    /*width: 60px;*/
+    align-items: center;
+}
+.post_user_image 
+{
     height: 60px;
     width: 60px;
+    border-radius: 50%;
+    line-height: 50px;;
+    object-fit: cover;
 }
 .ifno_user_image
 {
@@ -101,14 +108,7 @@
     border-radius: 50%;
     object-fit: cover;
 }
-.post_user_image 
-{
-    position: absolute;
-    width: 100%;
-    object-fit: cover;
-    height: 100%;
-    border-radius: 50%;
-}
+
 .shar_post_box , .post_box , .users_box
 {
     position: relative;
@@ -177,6 +177,7 @@
     margin-top: 20px;
     padding: 5px 20px;
     position: relative;
+    min-height: 30px
   
 }
 .comments_form_textarea
@@ -258,14 +259,15 @@
 .big_card_body
 {
     position: relative;
+    margin-top: 10px
 }
 .likes_box
 {
-    top: 10px;
+    top: 4px;
     opacity: 70%;
     max-width: 130px;
     position: absolute;
-    right: 10px;
+    right: 37px;
     background: #ddd;
     padding: 5px;
     border-radius: 5px;

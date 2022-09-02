@@ -21,8 +21,7 @@ use core\app\user;
        $follow = "unfollow";
        $follow_class = "unfollow";
        }
-       
-       
+
 ?>
 
 
@@ -69,6 +68,7 @@ use core\app\user;
                 <!-- posts-->
                <div class="card post_box"  style="margin: 20px 0 ">
                    <?php
+                 
                     if(count($user_posts) > 0)
                     {
                         for($i =count($user_posts); $i--;) {
