@@ -220,6 +220,33 @@ class postsModel extends abstractModel
             return true;
         }
     }
+        
+    public function updatePostWithAttach($postId ,$attachment , $type)
+    {
+       if($this->data([
+            "postText" => $this->post ,
+            "postDateModified" => date( 'Y-m-d H:i:s', time() )
+        ])->where(" id = ? " , $postId)->update(self::$tableName))
+        {
+            $this->data([
+            "attachment" => $attachment ,
+            "attachmentType" => $type
+        ])->where(" postId = ? " , $postId)->update("posts_attach");
+        }
+        return true;
+    }
     
+        public function getlastUpdatedPost($postId)
+    {
+        $posts = $this->from(" app_posts " )->join(" 
+            LEFT JOIN posts_attach  ON 
+            posts_attach.postId = app_posts.id 
+            ")->where(" app_posts.id = ?  " , $postId)->select("
+           app_posts.id ,   app_posts.postText   , app_posts.postDateModified ,
+             posts_attach.attachment , posts_attach.attachmentType  ")->fetchAll();
+
+        return $posts;
+ 
+    }
     
 }

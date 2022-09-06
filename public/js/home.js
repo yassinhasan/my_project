@@ -31,10 +31,10 @@ import { clickedOnAddLiketBtn } from "./home/likes.js"
 import {uploadAttach} from "./home/uploadattach.js";
 
 let share_post_box = getElm("shar_post_box");
-let default_clicked_elm  = share_post_box.querySelector(".fa-photo-film"); 
-uploadAttach(share_post_box , default_clicked_elm);
-
-
+let image_video_attach_elm  = share_post_box.querySelector(".fa-photo-film"); 
+let doc_attach_elm  = share_post_box.querySelector(".fa-file");
+uploadAttach(share_post_box , image_video_attach_elm);
+uploadAttach(share_post_box , doc_attach_elm);
 
 
 // must be after uplaod 

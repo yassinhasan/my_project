@@ -30,81 +30,7 @@ class homecontroller extends abstractController
         $this->response->renderView("/home" ,$this->data );
     }
     
-    public function sharePosts()
-    {
-        
-        $userId = Application::$app->session->userId;
-        if($this->request->method() == "POST")
-        {
-            $data = $this->request->getBody();
-            $rules = $this->model->rules();
-            $type = $data['attachmentType'];
-            $validRules = $this->validate->isValid( $this->model , $rules , $data);
-            $hasAttach = false;
-            $postId = null;
 
-            // no upload or no file selected
-            if(isset($_FILES['attachment']) )
-            {
-                if(!$_FILES["attachment"]["error"] == 4)
-                {
-                   $hasAttach = true;
-                   if($type == "image")
-                   {
-                      $upload = new uploadImage("attachment"); 
-                   }elseif($type == "video")
-                   {
-                        $upload = new uploadVideo("attachment"); 
-                   }else
-                   {
-                       $upload = new uploadImage("attachment");  
-                   }
-                   
-                   $noError =  $upload->noError(); 
-                }
-            }
-
-                
-            // if nothing wtire or image
-            if(!$validRules AND $hasAttach == false ){
-                $this->jData['errors'] =  $this->validate->getErrors();
-            }
-            if($validRules AND $hasAttach == false)
-            {
-              $postId =   $this->model->savePost( $userId); 
-                $this->jData['success'] = "your post is shared ";
-            }elseif($hasAttach == true )
-            {
-                 if($noError)
-                 {
-                    $postId = $this->model->savePost( $userId);
-                    $dir = POSTS_PATH.$type."/".$postId."/";
-                    $upload->move( $dir);
-                    $attachment = $upload->getFileSavedNameInDb();
-                    $this->model->saveAttachment($postId ,$userId , $attachment  , $type);
-                    $this->jData['success'] = "your post is shared ";
-                 }else
-                 {
-                     $imageerrors =  $upload->showErrors();
-                    foreach($imageerrors as $key=>$value)
-                    {
-                        $this->validate->addCustomError("attachment" , $value);
-                    }
-                    $this->jData['attachment'] =  $this->validate->getErrors();
-                 }
-
-            }
-            
-           
-            $this->jData['lastPost'] = $this->model->fetchlastPost($postId,$userId);
-          
-            $this->json();
-        }else
-        {
-                $this->response->renderView("home",$this->data );
-        }
-
-    }
     public function fetchPosts()
     {
     
@@ -270,26 +196,183 @@ class homecontroller extends abstractController
             $rules = $this->model->rules();
             $type = $data['attachmentType'];
             $alreadyHasAttach = $data['alreadyHasAttach'];
+            $attachment = null;
             $validRules = $this->validate->isValid( $this->model , $rules , $data);
-            $hasAttach = false;
             // no upload or no file selected
             
-        if($attachNeedUpdate == "false" AND $alreadyHasAttach == "true")
+            if($attachNeedUpdate == "false" AND $alreadyHasAttach == "true")
+            {
+                $this->model->updatePost( $postId); 
+                $this->jData['updatePostOnly'] = "your post is updated ";
+                $updatedPosts = $this->model->getlastUpdatedPost($postId,$userId);
+                $updatedPost = array_shift($updatedPosts);
+                $updatedPostToSend = [
+                       "id" => $updatedPost->id ,
+                      "postText" =>   $updatedPost->postText , 
+                     "postDateModified" =>   $updatedPost->postDateModified,
+                    ];
+                $this->jData['updatePostOnly'] = $updatedPostToSend;
+                
+            }
+            elseif($attachNeedUpdate == "false" AND $alreadyHasAttach == "false" )
+            {
+                    if(!$validRules)
+                    {
+                         $this->jData['errors'] =  $this->validate->getErrors();   
+                    }else
+                    {
+                        $this->model->updatePost( $postId); 
+                        $this->jData['updatePostOnly'] = "your post is updated ";
+                        $updatedPosts = $this->model->getlastUpdatedPost($postId,$userId);
+                        $updatedPost = array_shift($updatedPosts);
+                        $updatedPostToSend = [
+                               "id" => $updatedPost->id ,
+                              "postText" =>   $updatedPost->postText , 
+                             "postDateModified" =>   $updatedPost->postDateModified,
+                            ];
+                        $this->jData['updatePostOnly'] = $updatedPostToSend; 
+                    }
+                 
+            }elseif($attachNeedUpdate == "true" && isset($_FILES['attachment']))
+            {
+               // first move attach
+                if(!$_FILES["attachment"]["error"] == 4)
+                {
+                    if($type == "image")
+                    {
+                       $upload = new uploadImage("attachment"); 
+                    }elseif($type == "video")
+                    {
+                        $upload = new uploadVideo("attachment"); 
+                    }else
+                    {
+                        $upload = new uploadImage("attachment");  
+                    }
+                    $noError =  $upload->noError();
+                    if($noError)
+                    {
+                        $dir = POSTS_PATH.$type."/".$postId."/";
+                        $upload->move( $dir);
+                        $attachment = $upload->getFileSavedNameInDb();
+                     }else
+                     {
+                        $imageerrors =  $upload->showErrors();
+                        foreach($imageerrors as $key=>$value)
+                        {
+                            $this->validate->addCustomError("attachment_error_msg" , $value);
+                        }
+                        $this->jData['attachment_error'] =  $this->validate->getErrors(); 
+                     }
+                 }
+                // first get last attach and remove it or make it as archive
+                 $this->model->updatePostWithAttach($postId , $attachment ,$type ); 
+                 $updatedPosts = $this->model->getlastUpdatedPost($postId,$userId);
+                 $updatedPost = array_shift($updatedPosts);
+                 $updatedPostToSend = [
+                      "id" => $updatedPost->id ,
+                      "postText" =>   $updatedPost->postText , 
+                     "postDateModified" =>   $updatedPost->postDateModified,
+                     "attachment"          =>  $updatedPost->attachment,
+                     "attachmentType"     => $updatedPost->attachmentType
+              ];
+              $this->jData['updateAllPost'] = $updatedPostToSend;
+            }elseif($attachNeedUpdate == "true" && !isset($_FILES['attachment']))
+            {
+               // first move attach
+
+                // first get last attach and remove it or make it as archive
+                 $this->model->updatePostWithAttach($postId , $attachment ,$type ); 
+                 $updatedPosts = $this->model->getlastUpdatedPost($postId,$userId);
+                 $updatedPost = array_shift($updatedPosts);
+                 $updatedPostToSend = [
+                      "id" => $updatedPost->id ,
+                      "postText" =>   $updatedPost->postText , 
+                     "postDateModified" =>   $updatedPost->postDateModified,
+                     "attachment"          =>  $updatedPost->attachment,
+                     "attachmentType"     => $updatedPost->attachmentType
+              ];
+              $this->jData['updateAllPost'] = $updatedPostToSend;
+            }
+            elseif(!$validRules && $attachment == null)
+            {
+                 $this->jData['errors'] =  $this->validate->getErrors(); 
+            }
+    
+            $this->json();
+        }else
         {
-         
-            $this->model->updatePost( $postId); 
-            $this->jData['updatePostOnly'] = "your post is updated ";
-            $updatedPosts = $this->model->fetchlastPost($postId,$userId);
-            $updatedPost = array_shift($updatedPosts);
-            $updatedPostToSend = [
-                   "id" => $updatedPost->id ,
-                  "postText" =>   $updatedPost->postText , 
-                 "postDateModified" =>   $updatedPost->postDateModified,
-                ];
-            $this->jData['updatePostOnly'] = $updatedPostToSend;
-            
+                $this->response->renderView("home",$this->data );
         }
 
+    }
+    public function sharePosts()
+    {
+        
+        $userId = Application::$app->session->userId;
+        if($this->request->method() == "POST")
+        {
+            $data = $this->request->getBody();
+            $rules = $this->model->rules();
+            $type = $data['attachmentType'];
+            $validRules = $this->validate->isValid( $this->model , $rules , $data);
+            $hasAttach = false;
+            $postId = null;
+
+            // no upload or no file selected
+            if(isset($_FILES['attachment']) )
+            {
+                if(!$_FILES["attachment"]["error"] == 4)
+                {
+                   $hasAttach = true;
+                   if($type == "image")
+                   {
+                      $upload = new uploadImage("attachment"); 
+                   }elseif($type == "video")
+                   {
+                        $upload = new uploadVideo("attachment"); 
+                   }else
+                   {
+                       $upload = new uploadImage("attachment");  
+                   }
+                   
+                   $noError =  $upload->noError(); 
+                }
+            }
+
+                
+            // if nothing wtire or image
+            if(!$validRules AND $hasAttach == false ){
+                $this->jData['errors'] =  $this->validate->getErrors();
+            }
+            if($validRules AND $hasAttach == false)
+            {
+              $postId =   $this->model->savePost( $userId); 
+                $this->jData['success'] = "your post is shared ";
+            }elseif($hasAttach == true )
+            {
+                 if($noError)
+                 {
+                    $postId = $this->model->savePost( $userId);
+                    $dir = POSTS_PATH.$type."/".$postId."/";
+                    $upload->move( $dir);
+                    $attachment = $upload->getFileSavedNameInDb();
+                    $this->model->saveAttachment($postId ,$userId , $attachment  , $type);
+                    $this->jData['success'] = "your post is shared ";
+                 }else
+                 {
+                     $imageerrors =  $upload->showErrors();
+                    foreach($imageerrors as $key=>$value)
+                    {
+                        $this->validate->addCustomError("attachment_error_msg" , $value);
+                    }
+                    $this->jData['attachment_error'] =  $this->validate->getErrors();
+                 }
+
+            }
+            
+           
+            $this->jData['lastPost'] = $this->model->fetchlastPost($postId,$userId);
+          
             $this->json();
         }else
         {

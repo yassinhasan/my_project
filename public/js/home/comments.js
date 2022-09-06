@@ -1,12 +1,5 @@
+import {user} from "./userinfo.js" 
 
-let loggedUserId;
-let logged_user_name_link = getElm("logged_user_name");
-
-if(logged_user_name_link)
-{
-     loggedUserId = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim());
-    let loggedUserName = (logged_user_name_link.innerHTML).trim(); 
-}
 
 
 function clickedOnCommentsDiv()
@@ -181,7 +174,7 @@ function fetchComments(div ,postId)
       channel.bind('addComment', function(data) {
       
         let user_name  = "";
-        if(data.userId == loggedUserId)
+        if(data.userId == user.loggedUserId)
         {
            user_name = "You ";
         }else

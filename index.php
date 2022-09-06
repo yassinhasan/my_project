@@ -4,6 +4,7 @@ use core\app\Application;
 use core\controllers\accessController;
 use core\controllers\homecontroller;
 use core\controllers\userPostsController;
+use core\controllers\showPostController;
 use core\controllers\registerController;
 use core\controllers\loginController;
 use core\controllers\logoutController;
@@ -76,6 +77,7 @@ $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
 //  userPotsts
 $app->router->get("/userPosts",[ userPostsController::class , "userPosts"]);
+$app->router->get("/showPost",[ showPostController::class , "showPost"]);
 $app->router->post("/fetchPostsById",[ userPostsController::class , "fetchPostsById"]);
 
 $app->router->get("/register",[ registerController::class , "register"]);

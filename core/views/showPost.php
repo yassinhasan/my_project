@@ -1,66 +1,14 @@
 <?php
-
 use core\app\Application;
 use core\app\user;
     $isMe = false;
     $loggedUserId = Application::$app->session->userId;
-    $userId = $user->id;
+    $userId = $user_posts[0]->userId;
     if($loggedUserId == $userId) $isMe = true;
-
-    $follow="";
-    $follow_class="";
-    if ($user->follow_status == null || $user->follow_status == 'NULL' || $user->follow_status == 'null'){
-     $follow = 'follow' ; 
-     $follow_class = "follow";
-    }
-    else if ($user->follow_status == 'pending') {
-       $follow = "pending";
-       $follow_class = "follow";
-    }
-    else {
-       $follow = "unfollow";
-       $follow_class = "unfollow";
-       }
-
 ?>
 
 
 <div class="container" >
-    <!--profile of user-->
-        <div class="card profile_user">
-             <h3 class="card-title" style="text-align: center;margin: 8px 0"><?= $user->firstName." ".$user->lastName?></h3>
-            <div class="profile_user_image_box">
-            <?php 
-          
-             $image = $user->profileImage == null ? 'avatar.jpg' : $user->firstName.$user->lastName."/".$user->profileImage;
-            ?>
-              <img src="../../public/uploades/images/profile/<?=$image?>" class="card-img-top profile_user_image_box_img" alt="...">
-         </div>
-          <div class="card-body profile_user_info">
-            <p class="card-text">Bio : <?= $user->bio ?></p>
-            <p class="card-text">Gender : <?= $user->gender ?></p>
-            <p class="card-text">Mobile : <?= $user->mobile ?></p>
-            <p class="card-text">Email : <?= $user->email ?></p>
-            <p class="card-text">created At : <?= (explode(" ",$user->createdAt))[0] ?></p>
-            <!--follow-->
-            
-            <div class="users_box_follow" data-id="<?=$user->id?>" data-status="<?=$user->follow_status ?>">
-                <?php 
-                if(!$isMe)
-                { ?>
-                  <button class="btn  follow_btn <?=$follow_class ?>" type="submit" name="follow"><?= $follow ?>
-                  </button>                   
-                    
-               <?php }
-                
-                ?>
-
-                 <div class="card-text"><span class="follower_num"><?= $user->followers ?></span> <span class="follower_text">Followers </span></div>
-                 </div>
-            <!-- unfollow-->
-          </div>
-        </div>
-    <!--end profile of user -->
     <!-- main page consist of posts and usersinfo-->
     <div class="main_page" data-singlePage="true">
         <!--posts-->
@@ -68,8 +16,7 @@ use core\app\user;
                 <!-- posts-->
                <div class="card post_box"  style="margin: 20px 0 ">
                    <?php
-                    
-                    $edit = "";
+                 
                     if(count($user_posts) > 0)
                     {
                         for($i =count($user_posts); $i--;) {
@@ -96,13 +43,7 @@ use core\app\user;
                                            </div>";
                         
                             }
-                            
                             //end attachment
-                            if($isMe)
-                            {
-                                $edit =  "<div class='edit_box_edit' data-postId='$postId' data-bs-toggle='modal' data-bs-target='#postEditModal'>edit</div>
-                                      <div class='edit_box_delete' data-postId='$postId'>delete</div>";
-                            };
                     ?>
                     
                          <div class="post_box_details"  id="post_box_details_<?=$postId?>">
@@ -147,14 +88,20 @@ use core\app\user;
                                 </div>
                             <!-- end likes -->
                             <!--edit-->
-                            <div class="edit_big_box col-1 showt_edit_div" data-show="<?=$i?>">
-                                       <i class="fas fa-ellipsis-v"></i>
-                                       <div class="edit_box" id="edit_box_<?=$i?>">
-                                          <div class="edit_box_showPost" data-postid="<?=$postId?>"><a href="/showPost?postId=<?=$postId?>">Show Post</a>
-                                          </div>
-                                          <?= $edit ?>
-                                     </div>
-                            </div>
+                             <?php 
+                             if($isMe)
+                             {
+                                 echo "
+                                 <div class='edit_big_box col-1 showt_edit_div' data-show=$i>
+                                                <i class='fas fa-ellipsis-v'></i>
+                                                <div class='edit_box' id='edit_box_$i'>
+                                                    <div class='edit_box_edit' data-postId='$postId' data-bs-toggle='modal' data-bs-target='#postEditModal'>edit</div>
+                                                    <div class='edit_box_delete' data-postId='$postId'>delete</div>
+                                                </div>
+                                </div>
+                                 ";
+                             }
+                             ?>
                             <!--end edit-->
                         </div> 
                         

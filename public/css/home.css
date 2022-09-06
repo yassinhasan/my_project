@@ -19,18 +19,26 @@
 /*attachment*/
 .post_attachment_div
 {
+   
     position: relative;
-    background:#e2eaf1;;
-    height: 350px;
+    /*width: 300px;*/
+    margin-bottom: 8px
 }
-.post_attachment_div .post_attachment
+.post_attachment_div[data-type='video']
 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: 300px
 }
-
+.post_attachment_div .video_attach
+{
+    width: 100%;
+    height: 100%;;
+}
+.post_attachment_div .image_attach
+{
+    max-width: 100%;
+    /*max-height: 300px;*/
+    /*height: auto;*/
+}
 /*image show when choose image or attach*/
 .image_thumb_div
 {
@@ -49,7 +57,6 @@
 {
     width: 100%;
     height: 100%;
-    position: absolute
 }
 /*progress*/
 .progress_div{
@@ -263,16 +270,15 @@
 }
 .likes_box
 {
-    top: 4px;
+    top: 7px;
     opacity: 70%;
     max-width: 130px;
     position: absolute;
-    right: 37px;
+    right: 50px;
     background: #ddd;
-    padding: 5px;
+    padding: 2px;
     border-radius: 5px;
     transition: opacity 0.2s ease;
-    
 }
 .likes_box:hover
 {
@@ -311,7 +317,7 @@ cursor: pointer
      background: #6c757d47;
     border-radius: 3px;
 }
-.fa-photo-film, .fa-volume-high
+.fa-photo-film, .fa-volume-high , .fa-file
 {
     cursor: pointer;
 }
@@ -341,14 +347,12 @@ cursor: pointer
     position: absolute;
     background: #fff;
     color: #000;
-    /* display: flex; */
-    /* flex-direction: column; */
     text-align: center;
-    width: fit-content;
+    width: 120px;
    border-radius: 3px;
-    top: 36px;
-    z-index: 10;
+    top: 43px;
     right: 26px;
+    z-index: 10;
     box-shadow: 0 1px 12px #6c757dd1;
     max-height: 0;
     transition: all 0.3s ease;
@@ -356,18 +360,26 @@ cursor: pointer
 }
 .edit_box.show
 {
-    max-height: 85px;
+    max-height: 156px;
     overflow: visible;
    visibility: visible;
 }
-.edit_box_edit , .edit_box_delete 
+.edit_box.show a , .edit_box.show:hover a , .edit_box.show a:hover
+{
+    color: #000 !important;
+    text-decoration: none;
+}
+.edit_box_edit , .edit_box_delete ,.edit_box_showPost
 {
     cursor: pointer;
     transition: all 0.3s ease;
-    padding: 8px 34px;  
-    
- 
-    
+    padding: 8px 0px;  
+   
+}
+.edit_box_showPost:hover 
+{
+    background-color : #198754;
+    color: #fff;
 }
 .edit_box_edit:hover 
 {
@@ -386,21 +398,31 @@ cursor: pointer
 .post_edit_image
 {
         margin-bottom: 12px;
-        text-align: center;
 }
 .post_edit_image img 
 {
-    max-height: 250px;
+    /*max-height: 250px;*/
 }
 .remove_attach
 {
-   position: absolute;
-    right: 19px;
-    height: 20px;
-    width: 20px;
-    background: #41464b;
-    line-height: 20px;
+    position: absolute;
+    right: 25px;
+    height: 25px;
+    width: 25px;
+    background: var(--text-follow);
+    line-height: 25px;
     border-radius: 50px;
     color: #fff;
     cursor: pointer;
+    top: 25px;
+    text-align: center;
+}
+
+
+/*doc attach */
+.file_thumb
+{
+        margin-left: 30px;
+    font-size: 60px;
+    color: var(--follow-btn);
 }

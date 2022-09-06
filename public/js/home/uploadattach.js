@@ -9,6 +9,12 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
     let video_type = "video/";
     let limit_video_size = 50;
     const image_type = "image/";
+    const docs_type = [
+        "text/plain" ,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/pdf" ,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ];
     const limit_image_size = 2;
     default_clicked_elm.addEventListener("click", (e) => {
        textarea_text.classList.remove("is-invalid");
@@ -31,11 +37,12 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
             let file = e.target.files[0];
              if(file)
              {
+                
                  let fileReader = new FileReader();
+                //  image
                  if (file.type.includes(image_type)) {
                          attachmentType.type = "image";
                         fileReader.addEventListener("load", () => {
-        
                          let post_edit_image = main_box.querySelector(".post_edit_image");
                                post_edit_image.innerHTML="";
                                     let image_thumb = `
@@ -50,6 +57,7 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
                         fileReader.readAsDataURL(file);
                        
                     }
+                //  video
                  else if (file.type.includes(video_type)) {
                          attachmentType.type = "video";
                         fileReader.onload = function() {
@@ -101,7 +109,27 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
                         };
                         fileReader.readAsArrayBuffer(file);
                        
-                         }                
+                         } 
+                // document
+                 else if (docs_type.includes(file.type)) {
+                         attachmentType.type = "document";
+                         
+                        fileReader.addEventListener("load", () => {
+                         let post_edit_image = main_box.querySelector(".post_edit_image");
+                               post_edit_image.innerHTML="";
+                                    let image_thumb = `
+                                    <i class="fas fa-file file_thumb"></i>
+                                    <span>${file.name}</span>
+                                    <i class="fas fa-close remove_attach"></i>
+                                    `;
+                        post_edit_image.insertAdjacentHTML("afterbegin", image_thumb);
+                       
+                         remove_attach()
+                                    
+                        });
+                        fileReader.readAsDataURL(file);
+                       
+                    }        
                  attachNeedUpdate.need = true;                 
              }
 

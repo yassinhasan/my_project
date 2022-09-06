@@ -1,4 +1,5 @@
 import {uploadAttach , attachmentType} from "./uploadattach.js";
+import {user} from "./userinfo.js" 
 let attachNeedUpdate = 
 {
     need : false , 
@@ -8,13 +9,13 @@ function postEdit() {
     document.body.addEventListener("click", e => {
             if (e.target.classList.contains("edit_box_edit")) {
                 attachNeedUpdate.need = false;
-                
+               
                 e.target.parentElement.classList.remove("show");
                     let postId = e.target.getAttribute("data-postId");
                     let post_box_details = document.getElementById("post_box_details_"+postId);
                     let postEditModal = document.getElementById("postEditModal");
                     postEditModal.setAttribute("data-postId", postId);
-                    let userName = post_box_details.querySelector(".userPosts_link").innerHTML;
+                    let userName = user.loggedUserName;
                     
                     let post_attachment_div = post_box_details.querySelector(".post_attachment_div");
                     let attach_div = "";
@@ -27,7 +28,7 @@ function postEdit() {
                        
                        switch (attach_type) {
                            case 'image':
-                                 postAttachSrc = attach.src;  
+                               postAttachSrc = attach.src;  
                                attach_div = ` 
                                <img class="post_image img-fluid"  src="${postAttachSrc}" alt="" data-type="${attach_type}"/>
                                <i class="fas fa-close remove_attach"></i>
@@ -38,7 +39,7 @@ function postEdit() {
                                let videoHasSrc = postAttach.getElementsByTagName("source")[0];
                                 postAttachSrc = videoHasSrc.src;
                                 attach_div = `
-                                    <video  controls  class="img-fluid" loading="lazy">
+                                    <video  controls  class="img-fluid video_attach" loading="lazy">
                                       <source src="${postAttachSrc}"  type="video/mp4" >
                                       Your browser does not support the video tag.
                                     </video>
@@ -72,6 +73,9 @@ function postEdit() {
                                 <div class="share_post_attach row ">
                                      <div class="add_attach col-1">
                                      <i class="fa-solid fa-photo-film"></i>
+                                    </div>
+                                    <div class="add_docs col-1">
+                                        <i class="fas fa-file" aria-hidden="true"></i>
                                     </div>
                                     <div class="add_audio col-1">
                                         <i class="fa-solid fa-volume-high"></i>

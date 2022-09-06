@@ -1,13 +1,3 @@
-
-let logged_user_name_link = getElm("logged_user_name");
-if(logged_user_name_link)
-{
- let loggedUserId = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim());
-let loggedUserName = (logged_user_name_link.innerHTML).trim();
-}
-
-
-
 var pusher = new Pusher('24d30dbe202f39f2b07f', {
       cluster: 'ap2'
  });

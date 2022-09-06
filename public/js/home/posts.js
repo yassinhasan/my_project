@@ -1,10 +1,6 @@
-let loggedUserId;
-let logged_user_name_link = getElm("logged_user_name");
+import {user} from "./userinfo.js" 
 
-if (logged_user_name_link) {
-    loggedUserId = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim());
-    let loggedUserName = (logged_user_name_link.innerHTML).trim();
-}
+
 let share_post_btn = getElm("share_post_btn");
 let form = getElm("share_post_form");
 let textarea_text = getElm("textarea_text");
@@ -66,6 +62,7 @@ function sharePost(mainSharePox , update = false)
         req.addEventListener('load', function() {
             if (req.status == 200) {
                 let data = JSON.parse(req.response);
+              
                 removeCustomSpinner(shar_post_box);
                 if (data.errors && data.errors.attachment == null) {
                     for (let err in data.errors) {
@@ -82,8 +79,8 @@ function sharePost(mainSharePox , update = false)
                     }
 
                 }
-                else if (data.attachment) {
-                    showAlert('danger', 'Error', data.attachment.attachment);
+                else if (data.attachment_error) {
+                    showAlert('danger', 'Error', data.attachment_error.attachment_error_msg);
 
                 }
                 else if (data.success) {
@@ -95,7 +92,7 @@ function sharePost(mainSharePox , update = false)
                     progress_div.style.display = "none";
                     let post_image  = getElm("post_image");
                     if (post_image ) {
-                        post_image .remove()
+                        post_image .remove();
                     }
                     let remove_attach  = getElm("remove_attach");
                     if (remove_attach ) {
@@ -109,10 +106,14 @@ function sharePost(mainSharePox , update = false)
                 }
                 else if(data.updatePostOnly)
                 {
+                     
                         updatePostOnly(data.updatePostOnly);
-                        var myModal = document.getElementById('postEditModal');
-                        let close_modal = myModal.querySelector(".close_modal");
-                        close_modal.click()
+   
+                }
+                else if(data.updateAllPost)
+                {
+                        updateAllPost(data.updateAllPost);
+  
                 }
                 progress_div.style.display = "none";
                 let post_image  = getElm("post_image");
@@ -129,11 +130,11 @@ function sharePost(mainSharePox , update = false)
             if (attach_input) {
                 attach_input.remove();
                 form.reset();
-                attachmentType.type = null;
+               
             }
 
         })
-
+        
         req.send(data);
 }
 
@@ -152,7 +153,6 @@ function updatePost(){
     let clickedElm = postEditModal.querySelector(".share_post_btn");
     clickedElm.addEventListener("click", (e) => {
         e.preventDefault();
-        
         sharePost(postEditModal , true);
     })
 }
@@ -162,9 +162,46 @@ function updatePostOnly(data)
     let post_box_details = document.getElementById("post_box_details_"+data.id);
     post_box_details.querySelector(".post_text").innerHTML = data.postText;
     post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
+    var myModal = document.getElementById('postEditModal');
+    let close_modal = myModal.querySelector(".close_modal");
+    close_modal.click()
+}
+// docs
+function updateAllPost(data)
+{
+    let post_box_details = document.getElementById("post_box_details_"+data.id);
+    post_box_details.querySelector(".post_text").innerHTML = data.postText;
+    post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
+    let post_attachment_div = post_box_details.querySelector(".post_attachment_div");
+
+    if(data.attachment == null)
+    {
+        post_attachment_div.innerHTML ="";
+        post_attachment_div.setAttribute("data-type" , null);
+       attachNeedUpdate.alreadyHasAttach = false;
+       
+    }else if(data.attachment && data.attachmentType == "image")
+    {
+        post_attachment_div.innerHTML = `<img src="../../public/uploades/images/posts/image/${data.id}/${data.attachment}" loading="lazy" class="post_attachment image_attach">`
+    
+         post_attachment_div.setAttribute("data-type" , "image")
+    }
+    else if(data.attachment && data.attachmentType == "video")
+    {
+        post_attachment_div.innerHTML = `<div class="post_attachment_div" data-type="video">
+                        <video controls="" class="video_attach post_attachment" loading="lazy">
+                          <source src="../../public/uploades/images/posts/video/${data.id}/${data.attachment}" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                   </div>`
+
+   post_attachment_div.setAttribute("data-type" , "video")
+    }
+    var myModal = document.getElementById('postEditModal');
+    let close_modal = myModal.querySelector(".close_modal");
+    close_modal.click()    
 }
 function preparePostBox(data) {
-    
        let allPosts;
        if(data.lastPost)
        {
@@ -189,10 +226,8 @@ function preparePostBox(data) {
                 let post = allPosts[i].postText == "null" ? "" : allPosts[i].postText;
                 if (attachment_type == "image") {
                     attachment_div = `
-                    
-                    <div class="post_attachment_div" data-type="${attachment_type}">
-                    <img src="../../public/uploades/images/posts/image/${postId}/${attachment} " loading="lazy" class="post_attachment"/>
-                    </div>`
+                    <img src="../../public/uploades/images/posts/image/${postId}/${attachment} " loading="lazy" class="post_attachment image_attach"/>
+                    `
                     ;
                 }
                 else if (attachment_type == "video") {
@@ -200,24 +235,18 @@ function preparePostBox(data) {
                     let filename = src[0];
                     let type = src[1];
 
-                    attachment_div = `<div class="post_attachment_div" data-type="${attachment_type}">
+                    attachment_div = `
                         <video  controls  class="video_attach post_attachment" loading="lazy">
                           <source src="../../public/uploades/images/posts/video/${postId}/${attachment}"  type="video/mp4" >
                           Your browser does not support the video tag.
                         </video>
-                   </div>`;
+                  `;
 
                 }
                 let image = allPosts[i].profileImage == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].profileImage}`;
-                let addEditBox = (loggedUserId != allPosts[i].userId) ? "" : `
-                     <div class="edit_big_box col-1 showt_edit_div" data-show=${i}>
-                                    <i class="fas fa-ellipsis-v"></i>
-                                    <div class="edit_box" id="edit_box_${i}">
-                                        <div class="edit_box_edit" data-postId="${postId}" data-bs-toggle="modal" data-bs-target="#postEditModal">edit</div>
-                                        <div class="edit_box_delete" data-postId="${postId}">delete</div>
-                                    </div>
-                    </div>
-                `;
+                // show edit and delete if logged user
+                let edit = (user.loggedUserId != allPosts[i].userId)? '' :`<div class="edit_box_edit" data-postId="${postId}" data-bs-toggle="modal" data-bs-target="#postEditModal">edit</div>
+                         <div class="edit_box_delete" data-postId="${postId}">delete</div>`;
                 // start add post
                  post = `
                         <div class="post_box_details"  id="post_box_details_${postId}">
@@ -226,7 +255,15 @@ function preparePostBox(data) {
                                       <a href="/userPosts?id=${allPosts[i].userId}" class="userPosts_link">${allPosts[i].firstName} ${allPosts[i].lastName}</a>
                                 </div>
                                   <!-- here edit -->
-                                  ${addEditBox}
+
+                             <div class="edit_big_box col-1 showt_edit_div" data-show=${i}>
+                                            <i class="fas fa-ellipsis-v"></i>
+                                            <div class="edit_box" id="edit_box_${i}">
+                                                 <div class="edit_box_showPost" data-postId="${postId}"><a href="/showPost?postId=${postId}">Show Post</a></div>
+                                                 ${edit}
+                                            </div>
+                            </div>
+                        
                                   <!-- here end edit -->
                               </div>
                             
@@ -236,7 +273,9 @@ function preparePostBox(data) {
                                         <img src="../../public/uploades/images/profile/${image}"  class="post_user_image" alt="...">
                                     </div>
                                     <div class="col-8">
+                                      <div class="post_attachment_div" data-type="${attachment_type}">
                                         ${attachment_div}
+                                      </div>
                                         <p class="card-text post_text">${post}</p>
                                         <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
                                     </div>

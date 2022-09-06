@@ -31,7 +31,7 @@ $user = user::findUser();
             <?php
             if($user): ?>
                 <a class="nav-link dropdown-toggle logged_user_name" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-loggedUserId=<?= Application::$app->session->userId?>>
-                    <?= $user->firstName." ".$user->lastName?>
+                    <span class="username"><?= $user->firstName." ".$user->lastName?></span>
                   <img
                     src="<?= user::displayImage(); ?>"
                     class="rounded-circle user_profile_image"
