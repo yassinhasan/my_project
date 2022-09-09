@@ -6,6 +6,7 @@ use core\models\postsModel;
 use core\app\user;
 use core\app\uploadImage;
 use core\app\uploadVideo;
+use core\app\uploadDocs;
 class homecontroller extends abstractController
 {
 
@@ -169,14 +170,23 @@ class homecontroller extends abstractController
         $data = $this->request->getBody();
         $userId = Application::$app->session->userId;
         $postId = $data['postId'];
+        $type   = $data['attachmentType'];
+        $alreadyHasAttach = $data['alreadyHasAttach'];
         if($this->request->method() == "POST")
         {
-             if($this->model->postDelete( $postId , $userId))
-             {
-                $this->jData["delete"] = "success";
-             }
-            
-             $this->json();
+          if($alreadyHasAttach == "true")
+                {
+                 // remove old attach
+                //  $oldattach = $this->model->getOldAttach($postId);
+                 $dir = POSTS_PATH.$type."/".$postId;
+                 deleteDirectory($dir);
+                }
+          if($this->model->postDelete( $postId , $userId))
+          {
+              $this->jData["delete"] = "success";
+              
+          }
+          $this->json();
         }else
         {
                 $this->response->renderView("home",$this->data );
@@ -195,6 +205,7 @@ class homecontroller extends abstractController
             $attachNeedUpdate = $data["attachNeedUpdate"];
             $rules = $this->model->rules();
             $type = $data['attachmentType'];
+            $oldType = $data['oldAttachTyp'];
             $alreadyHasAttach = $data['alreadyHasAttach'];
             $attachment = null;
             $validRules = $this->validate->isValid( $this->model , $rules , $data);
@@ -244,7 +255,12 @@ class homecontroller extends abstractController
                     }elseif($type == "video")
                     {
                         $upload = new uploadVideo("attachment"); 
-                    }else
+                    }
+                    elseif($type == "document")
+                    {
+                        $upload = new uploadDocs("attachment"); 
+                    }
+                    else
                     {
                         $upload = new uploadImage("attachment");  
                     }
@@ -278,8 +294,9 @@ class homecontroller extends abstractController
               $this->jData['updateAllPost'] = $updatedPostToSend;
             }elseif($attachNeedUpdate == "true" && !isset($_FILES['attachment']))
             {
-               // first move attach
-
+                // remove old attach
+                 $dir = POSTS_PATH.$oldType."/".$postId;
+                  deleteDirectory($dir);
                 // first get last attach and remove it or make it as archive
                  $this->model->updatePostWithAttach($postId , $attachment ,$type ); 
                  $updatedPosts = $this->model->getlastUpdatedPost($postId,$userId);
@@ -330,6 +347,10 @@ class homecontroller extends abstractController
                    }elseif($type == "video")
                    {
                         $upload = new uploadVideo("attachment"); 
+                   
+                  }elseif($type == "document")
+                   {
+                        $upload = new uploadDocs("attachment"); 
                    }else
                    {
                        $upload = new uploadImage("attachment");  

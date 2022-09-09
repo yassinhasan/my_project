@@ -418,3 +418,24 @@ cursor: pointer
 .fa-photo-film, .fa-volume-high
 {
     cursor: pointer;
+}
+
+
+/*doc attach */
+.file_thumb_div
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 120px;
+    text-align: center;
+}
+.file_thumb_div .filename
+{
+   font-family: serif; 
+}
+.file_thumb
+{
+    font-size: 50px;
+    color: var(--bs-gray);
+}

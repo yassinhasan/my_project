@@ -236,7 +236,7 @@ class postsModel extends abstractModel
         return true;
     }
     
-        public function getlastUpdatedPost($postId)
+    public function getlastUpdatedPost($postId)
     {
         $posts = $this->from(" app_posts " )->join(" 
             LEFT JOIN posts_attach  ON 
@@ -248,5 +248,12 @@ class postsModel extends abstractModel
         return $posts;
  
     }
-    
+    public function getOldAttach($postId)
+    {
+        $getOldAttach = $this->from(" posts_attach " )
+        ->where(" posts_attach.postId = ?  " , $postId)->select("
+          attachment ,attachmentType  ")->fetch();
+        return $getOldAttach;
+ 
+    } 
 }

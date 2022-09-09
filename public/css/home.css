@@ -420,9 +420,20 @@ cursor: pointer
 
 
 /*doc attach */
+.file_thumb_div
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 120px;
+    text-align: center;
+}
+.file_thumb_div .filename
+{
+   font-family: serif; 
+}
 .file_thumb
 {
-        margin-left: 30px;
-    font-size: 60px;
-    color: var(--follow-btn);
+    font-size: 50px;
+    color: var(--bs-gray);
 }

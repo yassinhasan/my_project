@@ -38,7 +38,7 @@ function sharePost(mainSharePox , update = false)
               data.append("postId", postId);
               data.append("attachNeedUpdate", attachNeedUpdate.need);
               data.append("alreadyHasAttach", attachNeedUpdate.alreadyHasAttach);
-              
+              data.append("oldType", attachNeedUpdate.oldAttachTyp);
         }
         let url = form.action;
         const req = new XMLHttpRequest(); // Initialize request
@@ -220,6 +220,7 @@ function preparePostBox(data) {
                 let type = allPosts[i].likeType;
                 let postId = allPosts[i].id;
                 let attachment = allPosts[i].attachment == null ? null : allPosts[i].attachment;
+                if(attachment != null) attachNeedUpdate.alreadyHasAttach  = true;
                 let attachment_div = "";
                 let attachment_type = allPosts[i].attachmentType;
                
@@ -240,6 +241,13 @@ function preparePostBox(data) {
                           <source src="../../public/uploades/images/posts/video/${postId}/${attachment}"  type="video/mp4" >
                           Your browser does not support the video tag.
                         </video>
+                  `;
+
+                }
+                else if (attachment_type == "document") {
+                    attachment_div = `
+                    <i class="fas fa-file file_thumb"></i>
+                    <span class="filename">${attachment}</span>
                   `;
 
                 }
@@ -432,14 +440,19 @@ function postDelete() {
     document.body.addEventListener("click", e => {
             if (e.target.classList.contains("edit_box_delete")) {
                 e.target.parentElement.classList.remove("show");
-               
+            
                 if(confirm("Are you sure you want to delete this post ?"))
                 {
+                    
                     let postId = e.target.getAttribute("data-postId");
                     let post_box_details = document.getElementById("post_box_details_"+postId);
+                    let post_attachment_div = post_box_details.querySelector(".post_attachment_div");
+                    let type = post_attachment_div.getAttribute("data-type");
                     showCustomeSpinner(post_box_details);
                     let form = new FormData();
                     form.append("postId", postId);
+                    form.append("alreadyHasAttach" ,attachNeedUpdate.alreadyHasAttach)
+                    form.append("attachmentType" ,type)
                     let url = "/postDelete";
                     fetch(url, {
                             method: "POST" ,

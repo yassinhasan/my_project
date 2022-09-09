@@ -3,7 +3,8 @@ import {user} from "./userinfo.js"
 let attachNeedUpdate = 
 {
     need : false , 
-    alreadyHasAttach : false
+    alreadyHasAttach : false ,
+    oldAttachTyp : null
 }
 function postEdit() {
     document.body.addEventListener("click", e => {
@@ -25,6 +26,7 @@ function postEdit() {
                         let attach_type = postAttach.getAttribute("data-type");
                         let attach = postAttach.querySelector(".post_attachment");
                         let postAttachSrc;
+                        attachNeedUpdate.oldAttachTyp = attach_type;
                        
                        switch (attach_type) {
                            case 'image':
@@ -47,6 +49,15 @@ function postEdit() {
                                     `
                                      attachNeedUpdate.alreadyHasAttach  = true;
                                 break;
+                            case "document" :
+                               
+                            let filename = postAttach.querySelector(".filename").innerHTML;   
+                                attach_div = `<div class="file_thumb_div image_post">
+                                        <i class="fas fa-file file_thumb"></i>
+                                        <span class="filename">${filename}</span>
+                                    </div>
+                                    <i class="fas fa-close remove_attach"></i>`;
+                             break;
                            default:
                               attach_div =   "";
                        }
@@ -64,7 +75,6 @@ function postEdit() {
                                     <div class="textarea_text_box">
                                     <div class="post_edit_image"> 
                                         ${attach_div}
-                                        
                                     </div>
                                      
                                         <textarea  name="post" class="form-control textarea_text update_input" id="Write_Post" >${post}</textarea>
@@ -93,10 +103,13 @@ function postEdit() {
             let post_image = postEditModal.querySelector(".post_image");
             let default_clicked_elm  = postEditModal.querySelector(".fa-photo-film");
             let file_input = postEditModal.querySelector(".attachment");
+            let doc_attach_elm  = postEditModal.querySelector(".fa-file");
             if (file_input) {
              file_input.remove();
             }
+            
             uploadAttach(postEditModal  ,default_clicked_elm,true);
+             uploadAttach(postEditModal  ,doc_attach_elm,true);
             if(post_image) uploadAttach(postEditModal ,post_image ,true);
             remove_attach()
             }

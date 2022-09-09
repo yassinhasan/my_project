@@ -11,6 +11,7 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
     const image_type = "image/";
     const docs_type = [
         "text/plain" ,
+        "application/vnd.ms-excel",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "application/pdf" ,
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -25,10 +26,23 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
             image_thumb_div.remove();
         }
         let file_input = main_box.querySelector(".attachment");
+         
         if (file_input) {
             file_input.remove();
         }
-        let input = `<input type="file" name="attachment" id="attach_input" class="attachment"style="display: none">`;
+        
+        // accept type
+        let accept_type = "";
+        //"*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-offic";
+        if(default_clicked_elm.classList.contains("fa-photo-film"))
+        {
+            accept_type="image/*,video/*";
+        }else if(default_clicked_elm.classList.contains("fa-file"))
+        {
+            accept_type= "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-offic"
+        }
+
+        let input = `<input type="file" name="attachment" id="attach_input" class="attachment"style="display: none" accept="${accept_type}"> `;
         textarea_text_box.insertAdjacentHTML("afterbegin", input);
         let attach_input = main_box.querySelector(".attachment");
         attach_input.click();
@@ -37,7 +51,7 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
             let file = e.target.files[0];
              if(file)
              {
-                
+                 console.log(file)
                  let fileReader = new FileReader();
                 //  image
                  if (file.type.includes(image_type)) {
@@ -113,13 +127,14 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
                 // document
                  else if (docs_type.includes(file.type)) {
                          attachmentType.type = "document";
-                         
                         fileReader.addEventListener("load", () => {
                          let post_edit_image = main_box.querySelector(".post_edit_image");
                                post_edit_image.innerHTML="";
                                     let image_thumb = `
-                                    <i class="fas fa-file file_thumb"></i>
-                                    <span>${file.name}</span>
+                                    <div class="file_thumb_div post_image">
+                                        <i class="fas fa-file file_thumb"></i>
+                                        <span class="filename">${file.name}</span>
+                                    </div>
                                     <i class="fas fa-close remove_attach"></i>
                                     `;
                         post_edit_image.insertAdjacentHTML("afterbegin", image_thumb);
