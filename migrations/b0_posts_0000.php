@@ -10,7 +10,7 @@ class b0_posts_0000
         CREATE TABLE IF NOT EXISTS app_posts
         (
             id INT (11) AUTO_INCREMENT PRIMARY KEY ,
-            postText VARCHAR(255) ,
+            postText TEXT,
             postDate DATETIME DEFAULT CURRENT_TIMESTAMP ,
             postDateModified DATETIME DEFAULT NULL,
             comments VARCHAR(255) DEFAULT NULL,

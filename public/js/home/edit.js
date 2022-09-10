@@ -10,7 +10,6 @@ function postEdit() {
     document.body.addEventListener("click", e => {
             if (e.target.classList.contains("edit_box_edit")) {
                 attachNeedUpdate.need = false;
-               
                 e.target.parentElement.classList.remove("show");
                     let postId = e.target.getAttribute("data-postId");
                     let post_box_details = document.getElementById("post_box_details_"+postId);
@@ -50,7 +49,7 @@ function postEdit() {
                                      attachNeedUpdate.alreadyHasAttach  = true;
                                 break;
                             case "document" :
-                               
+                              
                             let filename = postAttach.querySelector(".filename").innerHTML;   
                                 attach_div = `<div class="file_thumb_div image_post">
                                         <i class="fas fa-file file_thumb"></i>
@@ -85,7 +84,7 @@ function postEdit() {
                                      <i class="fa-solid fa-photo-film"></i>
                                     </div>
                                     <div class="add_docs col-1">
-                                        <i class="fas fa-file" aria-hidden="true"></i>
+                                        <i class="fas fa-file upload_docs" aria-hidden="true"></i>
                                     </div>
                                     <div class="add_audio col-1">
                                         <i class="fa-solid fa-volume-high"></i>
@@ -103,13 +102,14 @@ function postEdit() {
             let post_image = postEditModal.querySelector(".post_image");
             let default_clicked_elm  = postEditModal.querySelector(".fa-photo-film");
             let file_input = postEditModal.querySelector(".attachment");
-            let doc_attach_elm  = postEditModal.querySelector(".fa-file");
+            let doc_attach_elm  = postEditModal.querySelector(".upload_docs");
+            
             if (file_input) {
              file_input.remove();
             }
             
             uploadAttach(postEditModal  ,default_clicked_elm,true);
-             uploadAttach(postEditModal  ,doc_attach_elm,true);
+            uploadAttach(postEditModal  ,doc_attach_elm,true);
             if(post_image) uploadAttach(postEditModal ,post_image ,true);
             remove_attach()
             }

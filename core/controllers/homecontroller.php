@@ -330,25 +330,25 @@ class homecontroller extends abstractController
         {
             $data = $this->request->getBody();
             $rules = $this->model->rules();
-            $type = $data['attachmentType'];
+            $attachmentType = $data['attachmentType'];
             $validRules = $this->validate->isValid( $this->model , $rules , $data);
             $hasAttach = false;
             $postId = null;
 
             // no upload or no file selected
-            if(isset($_FILES['attachment']) )
+            if(isset($_FILES['attachment']) && $attachmentType != "null")
             {
                 if(!$_FILES["attachment"]["error"] == 4)
                 {
                    $hasAttach = true;
-                   if($type == "image")
+                   if($attachmentType == "image")
                    {
                       $upload = new uploadImage("attachment"); 
-                   }elseif($type == "video")
+                   }elseif($attachmentType == "video")
                    {
                         $upload = new uploadVideo("attachment"); 
                    
-                  }elseif($type == "document")
+                  }elseif($attachmentType == "document")
                    {
                         $upload = new uploadDocs("attachment"); 
                    }else
@@ -362,7 +362,7 @@ class homecontroller extends abstractController
 
                 
             // if nothing wtire or image
-            if(!$validRules AND $hasAttach == false ){
+            if(!$validRules AND $attachmentType == "null" ){
                 $this->jData['errors'] =  $this->validate->getErrors();
             }
             if($validRules AND $hasAttach == false)
@@ -374,10 +374,10 @@ class homecontroller extends abstractController
                  if($noError)
                  {
                     $postId = $this->model->savePost( $userId);
-                    $dir = POSTS_PATH.$type."/".$postId."/";
+                    $dir = POSTS_PATH.$attachmentType."/".$postId."/";
                     $upload->move( $dir);
                     $attachment = $upload->getFileSavedNameInDb();
-                    $this->model->saveAttachment($postId ,$userId , $attachment  , $type);
+                    $this->model->saveAttachment($postId ,$userId , $attachment  , $attachmentType);
                     $this->jData['success'] = "your post is shared ";
                  }else
                  {

@@ -12,7 +12,7 @@ class e_app_post_comments_0000
             id INT (11) AUTO_INCREMENT PRIMARY KEY ,
             postId INT (11) ,
             userId INT (11) ,
-            comment VARCHAR (255) , 
+            comment TEXT , 
             commentDate DATETIME DEFAULT CURRENT_TIMESTAMP ,
             commentStatus VARCHAR (50) DEFAULT NULL ,
             hasReplies INT DEFAULT 0

@@ -21,6 +21,7 @@ class userPostsController extends abstractController
         if($this->request->method() == "GET")
         {
             $loggedUserId = Application::$app->session->userId;
+            if(!$loggedUserId)return;
             $data = $this->request->getBody();
             $userId = $this->request->get("id") ? filter_var($this->request->get("id"),FILTER_SANITIZE_NUMBER_INT) : null;
             if($userId)

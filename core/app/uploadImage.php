@@ -6,7 +6,7 @@ class uploadImage extends upload
 
     const ALLOWD_FILE_SIZE = 2;
     private $allowed_Extension = [
-        "gif","jpeg", "png" , "pdf"
+        "gif","jpeg", "png" 
     ];
     public function __construct($file)
     {

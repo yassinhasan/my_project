@@ -171,18 +171,18 @@ function fetchComments(div ,postId)
       
       loadComments(data ,postId)
       removeCustomSpinner(div);
-      channel.bind('addComment', function(data) {
+    //   channel.bind('addComment', function(data) {
       
-        let user_name  = "";
-        if(data.userId == user.loggedUserId)
-        {
-           user_name = "You ";
-        }else
-        {
-           user_name = data.userName ;
-        } 
-        realTimeNoti( data.userId ,user_name , " added comment ");
-        });
+    //     let user_name  = "";
+    //     if(data.userId == user.loggedUserId)
+    //     {
+    //        user_name = "You ";
+    //     }else
+    //     {
+    //        user_name = data.userName ;
+    //     } 
+    //     realTimeNoti( data.userId ,user_name , " added comment ");
+    //     });
      
      })
     

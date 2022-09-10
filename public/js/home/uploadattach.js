@@ -39,7 +39,8 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
             accept_type="image/*,video/*";
         }else if(default_clicked_elm.classList.contains("fa-file"))
         {
-            accept_type= "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-offic"
+            accept_type= "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-offic,text/plain"
+            
         }
 
         let input = `<input type="file" name="attachment" id="attach_input" class="attachment"style="display: none" accept="${accept_type}"> `;
@@ -51,7 +52,7 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
             let file = e.target.files[0];
              if(file)
              {
-             
+             //console.log(file)
                  let fileReader = new FileReader();
                 //  image
                  if (file.type.includes(image_type)) {

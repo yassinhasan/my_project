@@ -32,9 +32,10 @@ class upload
             $this->file_name = $file['name'];
             $this->file_size = $file['size'];
             $this->file_temp_name = $file['tmp_name'];
-            $file_extension = explode("/",$file['type']);
-            $this->file_type = array_shift($file_extension);
-            $this->file_extension = $file_extension[0]; 
+            $file_type = explode("/",$file['type']);
+            $this->file_type = array_shift($file_type);
+            $file_extension = explode(".",$file['name']);
+            $this->file_extension = end($file_extension);
         }
     }
 
@@ -61,7 +62,8 @@ class upload
               
                 mkdir($destionaion, 0777, true);
             }
-            $filename = \time().sha1(rand(0,1000)).".".$this->file_extension;        
+          //  $filename = \time().sha1(rand(0,1000)).".".$this->file_extension;        
+            $filename = \date("dnYHisa").".".$this->file_extension;    
             if(move_uploaded_file($this->file_temp_name,$destionaion.$filename))
             {
                 $this->file_saved_name_in_db = $filename;

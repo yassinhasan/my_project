@@ -18,7 +18,9 @@ class showPostController extends abstractController
     {
         if($this->request->method() == "GET")
         {
+
             $loggedUserId = Application::$app->session->userId;
+            if(!$loggedUserId)return;
             $data = $this->request->getBody();
             $PostId = $this->request->get("postId") ? filter_var($this->request->get("postId"),FILTER_SANITIZE_NUMBER_INT) : null;
             if($PostId)

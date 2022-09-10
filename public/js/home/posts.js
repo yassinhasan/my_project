@@ -197,6 +197,17 @@ function updateAllPost(data)
           
    post_attachment_div.setAttribute("data-type" , "video")
     }
+    else if(data.attachment && data.attachmentType == "document")
+    {
+        post_attachment_div.innerHTML =
+                        `<div class="file_thumb_div image_post">
+                        <i class="fas fa-file file_thumb"></i>
+                        <span class="filename"><a href="../../public/uploades/images/posts/video/${data.id}/${data.attachment}" download>${data.attachment}</a></span>
+                    </div> 
+                   `;
+          
+   post_attachment_div.setAttribute("data-type" , "document")
+    }
     var myModal = document.getElementById('postEditModal');
     let close_modal = myModal.querySelector(".close_modal");
     close_modal.click()    
@@ -247,7 +258,7 @@ function preparePostBox(data) {
                 else if (attachment_type == "document") {
                     attachment_div = `
                     <i class="fas fa-file file_thumb"></i>
-                    <span class="filename">${attachment}</span>
+                    <span class="filename"><a href="../../public/uploades/images/posts/document/${postId}/${attachment}" download>${attachment}</a></span>
                   `;
 
                 }

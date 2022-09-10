@@ -1,8 +1,8 @@
-var pusher = new Pusher('24d30dbe202f39f2b07f', {
-      cluster: 'ap2'
- });
-                   //
-var channel = pusher.subscribe('my_project');
+// var pusher = new Pusher('24d30dbe202f39f2b07f', {
+//       cluster: 'ap2'
+//  });
+//                    //
+// var channel = pusher.subscribe('my_project');
 
 
 

@@ -98,11 +98,14 @@ use core\app\user;
                             }else if($attachment_type == "document")
                             {
                           
-                                $attachment_div = "<div class='file_thumb_div'>
+                                $attachment_div = "
+                                <div class='post_attachment_div' data-type='document'>
+                                <div class='file_thumb_div'>
                                         <i class='fas fa-file file_thumb'></i>
                                         <span class='filename'>$attachment</span>
                                     </div>
-                                    <i class='fas fa-close remove_attach'></i>";
+                                  </div>
+                                    ";
                             }
                             
                             //end attachment
