@@ -2,3 +2,4 @@
 .env
 web.config
 public/uploades/images/profile/*
+.gitignore
