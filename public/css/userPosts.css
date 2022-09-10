@@ -99,11 +99,10 @@
 /*attachment*/
 .post_attachment_div
 {
-   
-    position: relative;
-    /*width: 300px;*/
-    margin-bottom: 8px;
-    max-width: 600px;
+   position: relative;
+   /*width: 300px;*/
+   margin-bottom: 8px;
+   /* max-width: 600px; */
 }
 .post_attachment_div[data-type='video']
 {
@@ -113,6 +112,7 @@
 {
     width: -webkit-fill-available;
     /*height: auto;*/
+    max-height: 350px;
 }
 .post_attachment_div .image_attach
 {
@@ -386,6 +386,8 @@ cursor: pointer
 /*edit post*/
 .post_edit_image
 {
+        text-align: center;
+        /* max-height: 350px; */
         margin-bottom: 12px;
 }
 .post_edit_image img 

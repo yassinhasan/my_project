@@ -38,7 +38,7 @@ function sharePost(mainSharePox , update = false)
               data.append("postId", postId);
               data.append("attachNeedUpdate", attachNeedUpdate.need);
               data.append("alreadyHasAttach", attachNeedUpdate.alreadyHasAttach);
-              data.append("oldType", attachNeedUpdate.oldAttachTyp);
+              data.append("oldAttachTyp", attachNeedUpdate.oldAttachTyp);
         }
         let url = form.action;
         const req = new XMLHttpRequest(); // Initialize request
@@ -188,13 +188,13 @@ function updateAllPost(data)
     }
     else if(data.attachment && data.attachmentType == "video")
     {
-        post_attachment_div.innerHTML = `<div class="post_attachment_div" data-type="video">
+        post_attachment_div.innerHTML = `
                         <video controls="" class="video_attach post_attachment" loading="lazy">
                           <source src="../../public/uploades/images/posts/video/${data.id}/${data.attachment}" type="video/mp4">
                           Your browser does not support the video tag.
                         </video>
-                   </div>`
-
+                   `;
+          
    post_attachment_div.setAttribute("data-type" , "video")
     }
     var myModal = document.getElementById('postEditModal');
@@ -215,7 +215,7 @@ function preparePostBox(data) {
         
         let post = "";
         if (allPosts.length > 0) {
-          //  console.log(allPosts);
+         
             for (var i = allPosts.length; i--;) {
                 let type = allPosts[i].likeType;
                 let postId = allPosts[i].id;

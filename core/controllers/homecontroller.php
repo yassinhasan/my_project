@@ -292,7 +292,7 @@ class homecontroller extends abstractController
                      "attachmentType"     => $updatedPost->attachmentType
               ];
               $this->jData['updateAllPost'] = $updatedPostToSend;
-            }elseif($attachNeedUpdate == "true" && !isset($_FILES['attachment']))
+            }elseif($attachNeedUpdate == "true" && !isset($_FILES['attachment']) && $validRules)
             {
                 // remove old attach
                  $dir = POSTS_PATH.$oldType."/".$postId;

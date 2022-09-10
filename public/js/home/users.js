@@ -16,7 +16,7 @@ function prepareUsersBox(data) {
     if (data.users) {
        
         let allUsers = data.users;
-        //   console.log(data.users)
+     
         if (allUsers.length > 0) {
             users_box.innerHTML = "";
           

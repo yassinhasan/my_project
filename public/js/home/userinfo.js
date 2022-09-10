@@ -12,5 +12,4 @@ if(logged_user_name_link)
   user.loggedUserName = username.trim();
 
 }
-console.log(user)
 export {user}

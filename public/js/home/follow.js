@@ -45,7 +45,7 @@ function fetchUpdateUserFollowSystem(followerId , status)
         })
         .then(resp => resp.json())
         .then(data =>  {
-            console.log(singlePage)
+           
             if(singlePage == "false")
             {
                 

@@ -26,7 +26,7 @@
 }
 .post_attachment_div[data-type='video']
 {
-    height: 300px
+    height: 350px;
 }
 .post_attachment_div .video_attach
 {
@@ -57,6 +57,7 @@
 {
     width: 100%;
     height: 100%;
+    max-height: 300px;
 }
 /*progress*/
 .progress_div{
@@ -398,6 +399,7 @@ cursor: pointer
 .post_edit_image
 {
         margin-bottom: 12px;
+        text-align: center;
 }
 .post_edit_image img 
 {

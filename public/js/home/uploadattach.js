@@ -51,7 +51,7 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
             let file = e.target.files[0];
              if(file)
              {
-                 console.log(file)
+             
                  let fileReader = new FileReader();
                 //  image
                  if (file.type.includes(image_type)) {
