@@ -99,7 +99,7 @@ class homecontroller extends abstractController
              {
                $xdata['userId'] = $userId;
                $xdata["userName"] = user::displayName();
-               $this->pusher->trigger( $_ENV['CHANNEL'], 'addComment',  $xdata);
+              // $this->pusher->trigger( $_ENV['CHANNEL'], 'addComment',  $xdata);
                $this->jData["comment"] = $this->model->fetchComments( $postId);
              }
       

@@ -436,6 +436,12 @@ cursor: pointer
 }
 .file_thumb
 {
-    font-size: 50px;
+    margin-bottom: 6px;
+    font-size: 30px;
     color: var(--bs-gray);
+    /* display: block; */
+}
+.docs_name
+{
+    color: #6c757d !important;
 }

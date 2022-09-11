@@ -160,8 +160,8 @@ function updatePost(){
 function updatePostOnly(data)
 {
     let post_box_details = document.getElementById("post_box_details_"+data.id);
-    post_box_details.querySelector(".post_text").innerHTML = data.postText;
-    post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
+     post_box_details.querySelector(".post_text").innerHTML = data.postText;
+     post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
     var myModal = document.getElementById('postEditModal');
     let close_modal = myModal.querySelector(".close_modal");
     close_modal.click()
@@ -169,26 +169,28 @@ function updatePostOnly(data)
 // docs
 function updateAllPost(data)
 {
-    let post_box_details = document.getElementById("post_box_details_"+data.id);
-    post_box_details.querySelector(".post_text").innerHTML = data.postText;
-    post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
+     let post_box_details = document.getElementById("post_box_details_"+data.id);
     let post_attachment_div = post_box_details.querySelector(".post_attachment_div");
+    post_attachment_div.innerHTML ="";
+    // post_box_details.querySelector(".post_text").innerHTML = data.postText;
+    // post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
+   
 
     if(data.attachment == null)
     {
-        post_attachment_div.innerHTML ="";
+       
         post_attachment_div.setAttribute("data-type" , null);
        attachNeedUpdate.alreadyHasAttach = false;
        
     }else if(data.attachment && data.attachmentType == "image")
     {
-        post_attachment_div.innerHTML = `<img src="../../public/uploades/images/posts/image/${data.id}/${data.attachment}" loading="lazy" class="post_attachment image_attach">`
+        post_attachment_div.innerHTML += `<img src="../../public/uploades/images/posts/image/${data.id}/${data.attachment}" loading="lazy" class="post_attachment image_attach">`
     
          post_attachment_div.setAttribute("data-type" , "image")
     }
     else if(data.attachment && data.attachmentType == "video")
     {
-        post_attachment_div.innerHTML = `
+        post_attachment_div.innerHTML += `
                         <video controls="" class="video_attach post_attachment" loading="lazy">
                           <source src="../../public/uploades/images/posts/video/${data.id}/${data.attachment}" type="video/mp4">
                           Your browser does not support the video tag.
@@ -197,12 +199,15 @@ function updateAllPost(data)
           
    post_attachment_div.setAttribute("data-type" , "video")
     }
-    else if(data.attachment && data.attachmentType == "document")
+    post_attachment_div.innerHTML +=
+    `<p class="card-text post_text">${data.postText}</p>
+    <p class="card-text"><small class="text-muted post_date_release">"Modified at : ${data.postDateModified}</small></p>`;
+    if(data.attachment && data.attachmentType == "document")
     {
-        post_attachment_div.innerHTML =
+        post_attachment_div.innerHTML +=
                         `<div class="file_thumb_div image_post">
                         <i class="fas fa-file file_thumb"></i>
-                        <span class="filename"><a href="../../public/uploades/images/posts/video/${data.id}/${data.attachment}" download>${data.attachment}</a></span>
+                        <span class="filename"><a href="../../public/uploades/images/posts/video/${data.id}/${data.attachment}" download class="docs_name">${data.attachment}</a></span>
                     </div> 
                    `;
           
@@ -233,6 +238,7 @@ function preparePostBox(data) {
                 let attachment = allPosts[i].attachment == null ? null : allPosts[i].attachment;
                 if(attachment != null) attachNeedUpdate.alreadyHasAttach  = true;
                 let attachment_div = "";
+                let document_attachment_div = "";
                 let attachment_type = allPosts[i].attachmentType;
                
                 let post = allPosts[i].postText == "null" ? "" : allPosts[i].postText;
@@ -256,9 +262,9 @@ function preparePostBox(data) {
 
                 }
                 else if (attachment_type == "document") {
-                    attachment_div = `
+                    document_attachment_div = `
                     <i class="fas fa-file file_thumb"></i>
-                    <span class="filename"><a href="../../public/uploades/images/posts/document/${postId}/${attachment}" download>${attachment}</a></span>
+                    <span class="filename"><a href="../../public/uploades/images/posts/document/${postId}/${attachment}" download class="docs_name">${attachment}</a></span>
                   `;
 
                 }
@@ -293,10 +299,11 @@ function preparePostBox(data) {
                                     </div>
                                     <div class="col-8">
                                       <div class="post_attachment_div" data-type="${attachment_type}">
-                                        ${attachment_div}
-                                      </div>
-                                        <p class="card-text post_text">${post}</p>
-                                        <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
+                                            ${attachment_div}
+                                            <p class="card-text post_text">${post}</p>
+                                            <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
+                                            ${document_attachment_div}
+                                        </div>
                                     </div>
                                 </div>
                                </div>

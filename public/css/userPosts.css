@@ -100,6 +100,7 @@
 .post_attachment_div
 {
    position: relative;
+   text-align: center;
    /*width: 300px;*/
    margin-bottom: 8px;
    /* max-width: 600px; */
@@ -134,7 +135,7 @@
 }
 .post_text_box
 {
-    background-color: ##cccccc7a;
+    background-color: #cccccc7a;
     margin-top: 40px;
 }
 .post_text
@@ -439,4 +440,8 @@ cursor: pointer
 {
     font-size: 50px;
     color: var(--bs-gray);
+}
+.docs_name
+{
+    color: #6c757d !important;
 }
