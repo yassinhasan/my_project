@@ -1,4 +1,5 @@
 body{
+    background: #181D25;
     min-height: 100vh;
     position: relative;
     background-position: center;
@@ -22,13 +23,18 @@ form
   
 }
 .background_overlay {
-    background-image: url("../../public/uploades/images/login/global.jpg");
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.2;
+    /* background-image: url("../../public/uploades/images/login/global.jpg"); */
+    /* position: absolute; */
+    /* top: 0; */
+    /* left: 0; */
+    /* width: 100%; */
+    /* height: 100%; */
+    /* opacity: 0.2; */
+    /* background: #181D25; */
+}
+label , a 
+{
+   color: #fff !important;
 }
 
 /*.main_login */

@@ -3,3 +3,11 @@
    max-width: 700px;
     margin: 83px auto;
  }
+body
+{
+  background-color: #181D25;
+}
+label , a 
+{
+   color: #fff !important;
+}

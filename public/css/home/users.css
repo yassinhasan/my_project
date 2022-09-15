@@ -1,7 +1,8 @@
 .users_box_details
 {
-       box-shadow : 1px 0 10px #66666685;
-        margin: 20px 0;
+       /* box-shadow : 1px 0 10px #66666685; */
+       margin: 20px 0;
+       background: #272E3A;
 }
 .users_box_name
 {
@@ -33,5 +34,5 @@
 }
 .follower_text
 {
-    color: #53687c;
+    color: #f8f9fa;
 }

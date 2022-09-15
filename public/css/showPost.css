@@ -62,7 +62,8 @@
 .main_page_posts_box
 {
         max-width: 900px;
-    margin: auto;
+        margin: auto;
+        /* background-color: #212529!important; */
 }
  .user_image_box
 {
@@ -87,13 +88,16 @@
 }
 .post_box
 {
+    /* background-color: #212529!important; */
     border: none !important;
 }
 .post_box_details
 {
     margin: 30px 0;
-  box-shadow: 0 1px 9px #9e9e9ed9;
+    padding: 10px;
+    /* box-shadow: 0 1px 9px #9e9e9ed9; */
     position: relative;
+    background-color: #212529!important;
 }
 
 /*attachment*/
@@ -138,7 +142,7 @@
 }
 .post_text_box
 {
-    background-color: #cccccc7a;
+    /* background-color: #cccccc7a; */
     margin-top: 40px;
 }
 .post_text
@@ -148,6 +152,7 @@
     /* padding: 10px 0; */
     margin-bottom: 3px;
     padding-top: 10px;
+    color: #fff;
 }
 /* comments area*/
 .comments
@@ -159,6 +164,7 @@
     font-size: 17px;
     font-weight: 500;
     margin: 20px;
+    background: #fff;
     cursor: pointer;
     box-shadow: 0 1px 12px #6c757d24;
 }
@@ -269,19 +275,20 @@
 .big_card_body
 {
     position: relative;
+    background:     background-color: #212529!important;
+    /* background-color: #212529!important; */
 }
 .likes_box
 {
-    top: 10px;
+    top: 13px;
     opacity: 70%;
     max-width: 130px;
     position: absolute;
-    right: 10px;
+    right: 15px;
     background: #ddd;
     padding: 5px;
     border-radius: 5px;
     transition: opacity 0.2s ease;
-    
 }
 .likes_box:hover
 {
@@ -436,12 +443,14 @@ cursor: pointer
 }
 .file_thumb_div .filename
 {
-   font-family: serif; 
+   font-family: serif;
+   color: #fff;
 }
 .file_thumb
 {
+    color: #fff;
     font-size: 50px;
-    color: var(--bs-gray);
+    /* color: var(--bs-gray); */
 }
 .docs_name
 {

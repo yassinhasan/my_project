@@ -33,7 +33,7 @@
 }
 .navbar-brand 
 {
-  color: #842029 !important;
+  color: #f8f9fa !important;
 }
 
 .user_profile_image
@@ -116,4 +116,9 @@
     {
         top: -500px;
     }
+}
+.navbar
+{
+    background: transparent ;
+    background-image: linear-gradient(180deg,#1f252e,#1f252e) ;
 }
