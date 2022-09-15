@@ -101,7 +101,7 @@
 {
    position: relative;
    text-align: center;
-   /*width: 300px;*/
+   /* width: 300px; */
    margin-bottom: 8px;
    /* max-width: 600px; */
 }
@@ -113,13 +113,12 @@
 {
     width: -webkit-fill-available;
     /*height: auto;*/
-    max-height: 350px;
+    max-height: 450px;
 }
 .post_attachment_div .image_attach
 {
     max-width: 100%;
-   
-    height: auto;
+    height: 500px;
 }
 .post_box_details .card-header
 {
@@ -135,8 +134,9 @@
 }
 .post_text_box
 {
-    background-color: #cccccc7a;
+    /* background-color: #cccccc7a; */
     margin-top: 40px;
+    /* text-align: center; */
 }
 .post_text
 {
@@ -145,6 +145,7 @@
     /* padding: 10px 0; */
     margin-bottom: 3px;
     padding-top: 10px;
+    font-size: 20px;
 }
 /* comments area*/
 .comments
@@ -266,6 +267,7 @@
 .big_card_body
 {
     position: relative;
+    /* text-align: center; */
 }
 .likes_box
 {
@@ -426,19 +428,24 @@ cursor: pointer
 /*doc attach */
 .file_thumb_div
 {
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     justify-content: center;
-    width: 120px;
-    text-align: center;
+    /* width: 120px; */
+    /* text-align: center; */
 }
 .file_thumb_div .filename
 {
-   font-family: serif; 
+   font-family: serif;
+   display: -webkit-inline-box;
 }
 .file_thumb
 {
-    font-size: 50px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 20px;
+    color: var(--bs-gray);
+    /* font-size: 50px; */
     color: var(--bs-gray);
 }
 .docs_name

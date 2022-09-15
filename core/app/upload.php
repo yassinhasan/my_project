@@ -36,6 +36,7 @@ class upload
             $this->file_type = array_shift($file_type);
             $file_extension = explode(".",$file['name']);
             $this->file_extension = end($file_extension);
+            
         }
     }
 

@@ -3,8 +3,14 @@ use core\app\Application;
 use core\app\user;
     $isMe = false;
     $loggedUserId = Application::$app->session->userId;
-    $userId = $user_posts[0]->userId;
-    if($loggedUserId == $userId) $isMe = true;
+    $foundPost = null;
+    if(isset($user_posts))
+    {
+          $userId = $user_posts[0]->userId;
+         if($loggedUserId == $userId) $isMe = true;
+         $foundPost = $user_posts;
+    }
+
 ?>
 
 
@@ -17,7 +23,7 @@ use core\app\user;
                <div class="card post_box"  style="margin: 20px 0 ">
                    <?php
                  
-                    if(count($user_posts) > 0)
+                    if( $foundPost != null)
                     {
                         for($i =count($user_posts); $i--;) {
                              $type = $user_posts[$i]->likeType;
@@ -121,7 +127,7 @@ use core\app\user;
                     
                     else
                     {
-                     echo " No Posts "; 
+                     echo "<h3 class='heading'> No Post Found </h3>"; 
                     }
                    ?>
                </div>

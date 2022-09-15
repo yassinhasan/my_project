@@ -38,3 +38,30 @@ function deleteDirectory($dir) {
 
     return rmdir($dir);
 }
+
+function readMore($post , $postId)
+{
+    if(strlen($post) > 300)
+    {
+        $post = substr($post,0 ,300);
+        $href = "<a href='/showPost?postId=$postId'> read More... </a>";
+        $post = $post."  ".$href;
+    }
+    return $post;
+}
+
+function tolower($array)
+{
+   $newarray =  array_map("makelower" , $array);
+   $newstring = join(",",$newarray);
+   pre($newstring);
+}
+
+function makelower($var)
+{
+    return strtolower($var);
+}
+// $allowed_Extension = [
+//     "WebM","MKV", "WebM" , "AVI" ,"FLV" , "WMV" , "MP4", "MPEG4" ,"MPEG-1","MPEG-2","MPEG4","MPG","MPEGPS","3GPP","DNxHR","ProRes","CineForm","HEVC (h265)"
+// ];
+// tolower($allowed_Extension);

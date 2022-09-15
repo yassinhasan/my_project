@@ -6,7 +6,7 @@ class uploadImage extends upload
 
     const ALLOWD_FILE_SIZE = 2;
     private $allowed_Extension = [
-        "gif","jpeg", "png" 
+        "gif","jpeg", "png","jpg" 
     ];
     public function __construct($file)
     {
@@ -16,7 +16,8 @@ class uploadImage extends upload
     }
     public function isAllowedExtension()
     {
-        return in_array($this->file_extension , $this->allowed_Extension);
+      //  echo $this->file_extension;
+        return in_array(strtolower($this->file_extension) , $this->allowed_Extension);
     }
     public function isAllowedSize()
     {

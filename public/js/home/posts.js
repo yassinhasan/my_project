@@ -13,7 +13,7 @@ let attach_input = document.querySelector(".attachment");
 
 import { attachmentType  } from "./uploadattach.js";
 import { attachNeedUpdate  } from "./edit.js";
-
+import {readMore} from "./manageposts.js";
 
 function sharePost(mainSharePox , update = false)
 {
@@ -240,8 +240,8 @@ function preparePostBox(data) {
                 let attachment_div = "";
                 let document_attachment_div = "";
                 let attachment_type = allPosts[i].attachmentType;
-               
-                let post = allPosts[i].postText == "null" ? "" : allPosts[i].postText;
+                
+                let post = allPosts[i].postText == "null" ? "" : readMore(allPosts[i].postText , postId);
                 if (attachment_type == "image") {
                     attachment_div = `
                     <img src="../../public/uploades/images/posts/image/${postId}/${attachment} " loading="lazy" class="post_attachment image_attach"/>

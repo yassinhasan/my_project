@@ -4,23 +4,32 @@ use core\app\Application;
 use core\app\user;
     $isMe = false;
     $loggedUserId = Application::$app->session->userId;
-    $userId = $user->id;
-    if($loggedUserId == $userId) $isMe = true;
-
-    $follow="";
-    $follow_class="";
-    if ($user->follow_status == null || $user->follow_status == 'NULL' || $user->follow_status == 'null'){
-     $follow = 'follow' ; 
-     $follow_class = "follow";
+    $founduser = null;
+    if(isset($user))
+    {
+      $userId = $user->id;
+      if($loggedUserId == $userId) $isMe = true;
+      $follow="";
+      $follow_class="";
+      if ($user->follow_status == null || $user->follow_status == 'NULL' || $user->follow_status == 'null'){
+      $follow = 'follow' ; 
+      $follow_class = "follow";
+      }
+      else if ($user->follow_status == 'pending') {
+        $follow = "pending";
+        $follow_class = "follow";
+      }
+      else {
+        $follow = "unfollow";
+        $follow_class = "unfollow";
+        }
+      $userName = $user->firstName." ".$user->lastName;
+      $image = $user->profileImage == null ? 'avatar.jpg' : $user->firstName.$user->lastName."/".$user->profileImage;
+    }else
+    {
+      echo "<h3>sorry this user not found</h3>";
+      return;
     }
-    else if ($user->follow_status == 'pending') {
-       $follow = "pending";
-       $follow_class = "follow";
-    }
-    else {
-       $follow = "unfollow";
-       $follow_class = "unfollow";
-       }
 
 ?>
 
@@ -28,12 +37,8 @@ use core\app\user;
 <div class="container" >
     <!--profile of user-->
         <div class="card profile_user">
-             <h3 class="card-title" style="text-align: center;margin: 8px 0"><?= $user->firstName." ".$user->lastName?></h3>
+             <h3 class="card-title" style="text-align: center;margin: 8px 0"><?= $userName?></h3>
             <div class="profile_user_image_box">
-            <?php 
-          
-             $image = $user->profileImage == null ? 'avatar.jpg' : $user->firstName.$user->lastName."/".$user->profileImage;
-            ?>
               <img src="../../public/uploades/images/profile/<?=$image?>" class="card-img-top profile_user_image_box_img" alt="...">
          </div>
           <div class="card-body profile_user_info">
@@ -70,7 +75,7 @@ use core\app\user;
                    <?php
                     
                     $edit = "";
-                    if(count($user_posts) > 0)
+                    if($user_posts and count($user_posts) > 0)
                     {
                         for($i =count($user_posts); $i--;) {
                              $type = $user_posts[$i]->likeType;
@@ -120,7 +125,7 @@ use core\app\user;
                               <div class="card-body big_card_body">
                                     <div class="card-body post_text_box">
                                         <?=   $attachment_div ?>
-                                        <p class="card-title post_text"><?=$user_posts[$i]->postText?></p>
+                                        <p class="card-title post_text"><?=readMore($user_posts[$i]->postText , $postId)?></p>
                                         <span class="card-text post_date"><small class="text-muted post_date_release"> <?=$user_posts[$i]->postDate?></small></span>
                                     </div>
                                 

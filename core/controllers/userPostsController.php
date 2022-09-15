@@ -27,13 +27,12 @@ class userPostsController extends abstractController
             if($userId)
             {
               
-              $this->data['user'] = $this->model->getuserPostsInfo($userId , $loggedUserId);
-              $this->data['user_posts'] = $this->model->fetchPostsById($userId ,  $loggedUserId);
+             $user= $this->model->getuserPostsInfo($userId , $loggedUserId) ;
+             $user != null ? $this->data['user'] = $user : null;
+              $user_posts = $this->model->fetchPostsById($userId ,  $loggedUserId);
+              $user_posts != null ? $this->data['user_posts'] = $user_posts : $this->data['user_posts'] = null;
 
-            }else
-            {
-                echo "sorry this id not found";
-            } 
+            }
         }
         $this->response->renderView("/userPosts", $this->data);
     }

@@ -27,12 +27,16 @@ class showPostController extends abstractController
             {
               
               $this->data['loggedUserId'] = $loggedUserId;
-              $this->data['user_posts'] = $this->model->fetchPostsById($PostId , $loggedUserId);
+              $post = $this->model->fetchPostsById($PostId , $loggedUserId);
+              if($post)
+              {
+                $this->data['user_posts'] = $post;
+              }else
+              {
+               $this->data['user_posts'] = null;
+              }
 
-            }else
-            {
-                echo "sorry this Post not found";
-            } 
+            }
         }
         $this->response->renderView("/showPost", $this->data);
     }

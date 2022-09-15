@@ -6,7 +6,8 @@ class uploadVideo extends upload
 
     const ALLOWD_FILE_SIZE = 20000;
     private $allowed_Extension = [
-        "WebM","MKV", "WebM" , "AVI" ,"FLV" , "WMV" , "MP4", "MPEG4" ,"MPEG-1","MPEG-2","MPEG4","MPG","MPEGPS","3GPP","DNxHR","ProRes","CineForm","HEVC (h265)"
+        "webm,mkv,webm,avi,flv,wmv,mp4,mpeg4,mpeg-1,mpeg-2,mpeg4,mpg,mpegps,3gpp,dnxhr,prores,cineform,hevc (h265)"
+
     ];
     public function __construct($file)
     {
@@ -16,7 +17,7 @@ class uploadVideo extends upload
     }
     public function isAllowedExtension()
     {
-        return in_array(strtoupper($this->file_extension) , $this->allowed_Extension);
+        return in_array(strtolower($this->file_extension) , $this->allowed_Extension);
     }
     public function isAllowedSize()
     {

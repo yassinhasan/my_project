@@ -17,7 +17,7 @@ class uploadDocs extends upload
     }
     public function isAllowedExtension()
     {
-        return in_array($this->file_extension, $this->allowed_Extension);
+        return in_array(strtolower($this->file_extension), $this->allowed_Extension);
     }
     public function isAllowedSize()
     {
