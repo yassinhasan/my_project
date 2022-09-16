@@ -11,3 +11,7 @@ label , a
 {
    color: #fff !important;
 }
+.password_hint
+{
+  color: #6c757d;
+}

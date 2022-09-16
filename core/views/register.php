@@ -16,7 +16,7 @@
        <div class="mb-3 ">
          <label for="password" class="form-label">Type Your Password </label>
          <input type="password" class="form-control " id="password" name="password" value="" autocomplete="true">
-         <small>please enter password contain at least Captial letter min 8 letters</small>
+         <small class="password_hint">please enter password contain at least Captial letter min 8 letters</small>
       </div> 
       <div class="mb-3 form-group">
         <label for="confirmPassword" class="form-label">Confirm Your Password </label>

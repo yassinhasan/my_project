@@ -7,7 +7,8 @@ reset_passwrod_btn.addEventListener("click",(e)=>
     showLoadSpinner();
     removeAnyValidation()
     let data = new FormData(form);
-    let url = reset_passwrod_btn.getAttribute("data_target"); 
+    let url = form.action; 
+    console.log(url)
     let url2 = new URLSearchParams(window.location.search);
     let code = url2.get("code");
     data.append("code" , code)

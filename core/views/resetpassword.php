@@ -1,21 +1,9 @@
 <div class="container">
-<div class="reset_password row justify-center" style="margin-top: 100px" >
-
-<?php
-
-    $this->view->startPostForm($model , "/resetPassword");
-    echo "<div class='row'>";
-    $this->view->renderInput( ["password" => "Type Your New Password" ]
-                                , "password" , "col-12");
-    $this->view->renderInput( ["confirmPassword" => "Retype Your New Password" ]
-                                , "confirm Password" , "col-12");
-  //  $this->view->getFlashMsg('success');      
-    echo "</div>";                      
-    $this->view->renderSubmitBtn(["name" => "send" , 
-                                "class" => "primary reset_password_btn" ,
-                                "data" => "data_target='/resetPassword'" ,
-                                "label" => "Save"]);
-    $this->view->endForm();
-?>
+<form method="POST" action="/resetPassword" class="form"> 
+   <div class="mb-3 ">
+    <label for="email" class="form-label">Type Your Email </label>
+    <input type="email" class="form-control " id="email" name="email" value="">
 </div>
+<button type="submit" class="btn btn-primary reset_password_btn" name="send">Send Reset Password</button>
+</form>
 </div>
