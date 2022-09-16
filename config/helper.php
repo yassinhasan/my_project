@@ -49,6 +49,19 @@ function readMore($post , $postId)
     }
     return $post;
 }
+function handle_file_name($file_name)
+{
+    if(strlen($file_name) > 15)
+    {
+        $file_name = explode(".",$file_name);
+        $extension = end($file_name);
+        $startfilename = substr($file_name[0],0 ,8);
+        $lastfilename=  substr($file_name[0],-4);;
+        $file_name = $startfilename."...".$lastfilename.".".$extension;
+    }
+    
+    return $file_name;
+}
 
 function tolower($array)
 {

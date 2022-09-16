@@ -30,11 +30,17 @@ use core\app\user;
                              $postId = $user_posts[$i]->id;
                              $image = $user_posts[$i]->profileImage == null ? 'avatar.jpg' : $user_posts[$i]->firstName.$user_posts[$i]->lastName."/".$user_posts[$i]->profileImage;
                             //  attachment
+                            $post =$user_posts[$i]->postText;
+                            $post_date =  $user_posts[$i]->postDate ;
                             $attachment = $user_posts[$i]->attachment == null ? null  : $user_posts[$i]->attachment;
                             $attachment_div= "";
                             $attachment_type = $user_posts[$i]->attachmentType;
                              if($attachment_type == "image"){
-                                   $attachment_div = "<div class='post_attachment_div' data-type='image'><img src='../../public/uploades/images/posts/image/$postId/$attachment' loading='lazy' class='post_attachment image_attach' alt=''/></div>";
+                              $attachment_div = "<div class='post_attachment_div' data-type='image'>
+                              <img src='../../public/uploades/images/posts/image/$postId/$attachment' loading='lazy' class='post_attachment image_attach' alt=''/>
+                              <p class='card-title post_text'>$post</p>
+                              <span class='card-text post_date'><small class='text-muted post_date_release'>$post_date</small></span>
+                              </div>";
                              }else if($attachment_type == "video")
                               {
                                $src = explode(".",$attachment);
@@ -46,19 +52,25 @@ use core\app\user;
                                                   <source src='../../public/uploades/images/posts/video/$postId/$attachment'  type='video/mp4' >
                                                   Your browser does not support the video tag.
                                                 </video>
+                                                <p class='card-title post_text'>$post</p>
+                                                <span class='card-text post_date'><small class='text-muted post_date_release'>$post_date</small></span>
                                            </div>";
                         
                             }else if($attachment_type == "document")
                             {
                           
-                                $attachment_div = "
-                                <div class='post_attachment_div' data-type='document'>
-                                <div class='file_thumb_div'>
-                                        <i class='fas fa-file file_thumb'></i>
-                                        <span class='filename'>$attachment</span>
-                                    </div>
-                                    </div>
-                                   ";
+                              $shorted_attachemnt = handle_file_name($attachment);
+                                
+                              $attachment_div = "
+                              <div class='post_attachment_div' data-type='document'>
+                              <p class='card-title post_text'>$post</p>
+                              <span class='card-text post_date'><small class='text-muted post_date_release'>$post_date</small></span>
+                              <div class='file_thumb_div'>
+                                      <i class='fas fa-file file_thumb'></i>
+                                      <span class='filename'><a download href='../../public/uploades/images/posts/document/$postId/$attachment'>$shorted_attachemnt</a></span>
+                                  </div>
+                                </div>
+                                  ";
                             }
                             //end attachment
                     ?>
@@ -67,8 +79,6 @@ use core\app\user;
                               <div class="card-body big_card_body">
                                     <div class="card-body post_text_box">
                                         <?=   $attachment_div ?>
-                                        <p class="card-title post_text"><?=$user_posts[$i]->postText?></p>
-                                        <span class="card-text post_date"><small class="text-muted post_date_release"> <?=$user_posts[$i]->postDate?></small></span>
                                     </div>
                                 
                                </div>

@@ -6,5 +6,16 @@ function readMore(post , postId)
     }
     return post;
 }
-
-export {readMore}
+function handleFileName(filename)
+{
+    if(filename.length > 15)
+    {
+        let first_file_name = filename.slice(0,8);
+        let ext = filename.split(".").pop();
+        let last_file_name = filename.split(".").shift().slice(-4);
+        filename = first_file_name+"..."+last_file_name+"."+ext
+        
+    }
+    return filename;
+}
+export {readMore , handleFileName}

@@ -13,7 +13,7 @@ let attach_input = document.querySelector(".attachment");
 
 import { attachmentType  } from "./uploadattach.js";
 import { attachNeedUpdate  } from "./edit.js";
-import {readMore} from "./manageposts.js";
+import {readMore , handleFileName} from "./manageposts.js";
 
 function sharePost(mainSharePox , update = false)
 {
@@ -262,9 +262,11 @@ function preparePostBox(data) {
 
                 }
                 else if (attachment_type == "document") {
+                    
+                    let handled_filename = handleFileName(attachment);
                     document_attachment_div = `
                     <i class="fas fa-file file_thumb"></i>
-                    <span class="filename"><a href="../../public/uploades/images/posts/document/${postId}/${attachment}" download class="docs_name">${attachment}</a></span>
+                    <span class="filename"><a href="../../public/uploades/images/posts/document/${postId}/${attachment}" download class="docs_name">${handled_filename}</a></span>
                   `;
 
                 }

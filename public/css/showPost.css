@@ -104,7 +104,7 @@
 .post_attachment_div
 {
    position: relative;
-   text-align: center;
+   /* text-align: center; */
    /*width: 300px;*/
    margin-bottom: 8px;
    /* max-width: 600px; */
@@ -265,9 +265,11 @@
     color: #f8f9fa;
 }
 .users_comments_comment_area_date
-{    font-weight: 200;
+{
+    font-weight: 200;
     font-size: 13px;
     font-family: sans-serif;
+    color: #6c757d;
     margin-left: 10px;
 }
 
@@ -334,6 +336,7 @@ cursor: pointer
 .fa-ellipsis-v
 {
      pointer-events: none;
+     color: #fff;
 }
 
 .post_card_header
@@ -436,21 +439,28 @@ cursor: pointer
 /*doc attach */
 .file_thumb_div
 {
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     justify-content: center;
-    width: 120px;
-    text-align: center;
+    /* width: 120px; */
+    /* text-align: center; */
+    color: #000;
+    margin-top: 11px;
 }
 .file_thumb_div .filename
 {
    font-family: serif;
-   color: #fff;
+   color: #6c757d;
+   font-size: 16px;
+}
+.file_thumb_div .filename a
+{
+    color: #6c757d !important;
 }
 .file_thumb
 {
-    color: #fff;
-    font-size: 50px;
+    color: #6c757d;
+    font-size: 26px;
     /* color: var(--bs-gray); */
 }
 .docs_name

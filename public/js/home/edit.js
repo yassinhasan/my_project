@@ -64,7 +64,7 @@ function postEdit() {
                     }
                     
                     let post_text = post_box_details.querySelector(".post_text");
-                    let post = post_text.innerHTML;
+                    let post = post_text.innerText;
                 document.querySelector(".modal-title").innerHTML =    userName;
                 let modal_body = `
                    <div class="card">
