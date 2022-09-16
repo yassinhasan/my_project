@@ -27,6 +27,7 @@
 }
 .follow_btn.unfollow{
      background-color: var(--unfollow_btn);
+     color: #f8f9fa;
 }
 .follower_num
 {

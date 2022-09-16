@@ -19,10 +19,14 @@
 /*attachment*/
 .post_attachment_div
 {
-   position: relative;
-   /*width: 300px;*/
-   margin-bottom: 8px;
-   /* text-align: center; */
+   
+position: relative;
+   
+/*width: 300px;*/
+   
+margin-bottom: 8px;
+   
+/* text-align: center; */
 }
 .post_attachment_div[data-type='video']
 {
@@ -118,7 +122,15 @@
     border-radius: 50%;
     object-fit: cover;
 }
-
+.users_box_name{
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+}
+.users_box_name a
+{
+    color: #795548 !important;
+}
 .shar_post_box , .post_box , .users_box
 {
     position: relative;
@@ -144,9 +156,12 @@
 
 .post_text
 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #fff;
+    
+font-size: 20px;
+    
+font-weight: 600;
+    
+color: #fff;
 }
 .post_date_release
 {
@@ -261,12 +276,15 @@
 .users_comments_comment_area_comment{
     padding: 0;
     margin: 0;
+    color: #f8f9fa;
 }
 .users_comments_comment_area_date
-{    font-weight: 200;
+{
+    font-weight: 200;
     font-size: 8px;
     font-family: sans-serif;
     margin-left: 5px;
+    color: #fff;
 }
 
 
