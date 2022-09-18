@@ -62,9 +62,18 @@ function postEdit() {
                        }
                       
                     }
-                    
-                    let post_text = post_box_details.querySelector(".post_text");
-                    let post = post_text.innerText;
+                    let post ="";
+                    let post_text = post_box_details.querySelector(".cut_post");
+                    let remain_post = post_box_details.querySelector(".remain_post"); 
+                    post = post_text.innerHTML;
+                    let long_text_area = false;
+                    if(remain_post)
+                    {
+                        post += remain_post.innerHTML;
+                        long_text_area = true;
+                       
+                    }
+                   
                 document.querySelector(".modal-title").innerHTML =    userName;
                 let modal_body = `
                    <div class="card">
@@ -76,7 +85,7 @@ function postEdit() {
                                         ${attach_div}
                                     </div>
                                      
-                                        <textarea  name="post" class="form-control textarea_text update_input" id="Write_Post" >${post}</textarea>
+                                        <textarea  name="post" class="form-control textarea_text update_input" id="Write_Post"  ${long_text_area == true ? "style='height:300px;' ": ''}">${post}</textarea>
                                     </div>
                                 </div>
                                 <div class="share_post_attach row ">

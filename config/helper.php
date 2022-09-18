@@ -41,11 +41,18 @@ function deleteDirectory($dir) {
 
 function readMore($post , $postId)
 {
+
+    $cut_post ="";
+    $remian_post ="";
     if(strlen($post) > 300)
     {
-        $post = substr($post,0 ,300);
-        $href = "<a href='/showPost?postId=$postId'> read More... </a>";
-        $post = $post."  ".$href;
+        $cut_post = substr($post,0 ,300);
+        $remian_post = substr($post , 300);
+        $post = "<span class='cut_post'>$cut_post</span><a href='/showPost?postId=$postId'> ... read More </a><p class='remain_post'>$remian_post</p>";
+
+    }else
+    {
+        $post = "<p class='cut_post'>$post</p>";
     }
     return $post;
 }

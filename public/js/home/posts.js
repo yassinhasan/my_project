@@ -160,7 +160,8 @@ function updatePost(){
 function updatePostOnly(data)
 {
     let post_box_details = document.getElementById("post_box_details_"+data.id);
-     post_box_details.querySelector(".post_text").innerHTML = data.postText;
+     let post = readMore(data.postText , data.id)
+     post_box_details.querySelector(".post_text").innerHTML = post;
      post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
     var myModal = document.getElementById('postEditModal');
     let close_modal = myModal.querySelector(".close_modal");
@@ -244,7 +245,9 @@ function preparePostBox(data) {
                 let post = allPosts[i].postText == "null" ? "" : readMore(allPosts[i].postText , postId);
                 if (attachment_type == "image") {
                     attachment_div = `
+                    <div class='img_container'>
                     <img src="../../public/uploades/images/posts/image/${postId}/${attachment} " loading="lazy" class="post_attachment image_attach"/>
+                    </div>
                     `
                     ;
                 }
@@ -302,7 +305,7 @@ function preparePostBox(data) {
                                     <div class="col-8">
                                       <div class="post_attachment_div" data-type="${attachment_type}">
                                             ${attachment_div}
-                                            <p class="card-text post_text">${post}</p>
+                                           <div class="post_text">${post}</div>
                                             <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
                                             ${document_attachment_div}
                                         </div>

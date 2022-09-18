@@ -467,3 +467,18 @@ cursor: pointer
 {
     color: #6c757d !important;
 }
+.img_container
+{
+    text-align: center;
+}
+.remain_post
+{
+    display: none;
+}
+.cut_post {
+    font-size: 20px;
+    color: #fff;
+}
+textarea#Write_Post {
+    height: 120px;
+}

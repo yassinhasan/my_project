@@ -37,8 +37,10 @@ use core\app\user;
                             $attachment_type = $user_posts[$i]->attachmentType;
                              if($attachment_type == "image"){
                               $attachment_div = "<div class='post_attachment_div' data-type='image'>
+                              <div class='img_container'>
                               <img src='../../public/uploades/images/posts/image/$postId/$attachment' loading='lazy' class='post_attachment image_attach' alt=''/>
-                              <p class='card-title post_text'>$post</p>
+                              </div>
+                              <div class='card-title post_text'><p class='cut_post'>$post</p></div>
                               <span class='card-text post_date'><small class='text-muted post_date_release'>$post_date</small></span>
                               </div>";
                              }else if($attachment_type == "video")
@@ -52,7 +54,7 @@ use core\app\user;
                                                   <source src='../../public/uploades/images/posts/video/$postId/$attachment'  type='video/mp4' >
                                                   Your browser does not support the video tag.
                                                 </video>
-                                                <p class='card-title post_text'>$post</p>
+                                                <div class='card-title post_text'><p class='cut_post'>$post</p></div>
                                                 <span class='card-text post_date'><small class='text-muted post_date_release'>$post_date</small></span>
                                            </div>";
                         
@@ -63,12 +65,20 @@ use core\app\user;
                                 
                               $attachment_div = "
                               <div class='post_attachment_div' data-type='document'>
-                              <p class='card-title post_text'>$post</p>
+                              <div class='card-title post_text'><p class='cut_post'>$post</p></div>
                               <span class='card-text post_date'><small class='text-muted post_date_release'>$post_date</small></span>
                               <div class='file_thumb_div'>
                                       <i class='fas fa-file file_thumb'></i>
                                       <span class='filename'><a download href='../../public/uploades/images/posts/document/$postId/$attachment'>$shorted_attachemnt</a></span>
                                   </div>
+                                </div>
+                                  ";
+                            }else
+                            {
+                              $attachment_div = "
+                              <div class='post_attachment_div' data-type='null'>
+                                <div class='card-title post_text'><p class='cut_post'>$post</p></div>
+                                <span class='card-text post_date'><small class='text-muted post_date_release'>$post_date</small></span>
                                 </div>
                                   ";
                             }

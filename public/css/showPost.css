@@ -467,3 +467,10 @@ cursor: pointer
 {
     color: #6c757d !important;
 }
+.img_container
+{
+    text-align: center;
+}
+textarea#Write_Post {
+    height: 120px;
+}

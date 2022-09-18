@@ -92,7 +92,7 @@ $app->router->post("/profile/saveProfile",[ profileController::class , "saveProf
 $app->router->post("/profile/updateProfileImage",[ profileController::class , "updateProfileImage"]);
 $app->router->get("/forgetPassword",[ forgetPasswordController::class ,  "forgetPassword"]);
 $app->router->post("/forgetPassword",[ forgetPasswordController::class ,  "forgetPassword"]);
-$app->router->get("/resetPassword",[ resetPasswordController::class ,  "resetPassword"]);
+// $app->router->get("/resetPassword",[ resetPasswordController::class ,  "resetPassword"]);
 $app->router->post("/resetPassword",[ resetPasswordController::class ,  "resetPassword"]);
 
 // admin 
