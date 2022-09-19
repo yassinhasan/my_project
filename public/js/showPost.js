@@ -1,6 +1,6 @@
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
-
+singlePost.isSinglePost = true;
 
 
 // follow un follow system 

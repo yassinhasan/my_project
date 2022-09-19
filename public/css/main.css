@@ -40,8 +40,7 @@
 {
     width: 50px;
     height: 50px;
-    object-fit: c;
-    object-fit: fill;
+    object-fit: cover;
     margin-left: 10px;
 }
 .custom_load_spinner

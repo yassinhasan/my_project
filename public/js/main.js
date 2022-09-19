@@ -4,7 +4,10 @@
 //                    //
 // var channel = pusher.subscribe('my_project');
 
-
+let singlePost = 
+{
+    isSinglePost : false
+}
 
 document.addEventListener('DOMContentLoaded', function() {
  if (!Notification) {

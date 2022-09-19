@@ -159,8 +159,16 @@ function updatePost(){
 
 function updatePostOnly(data)
 {
+    let post = "";
     let post_box_details = document.getElementById("post_box_details_"+data.id);
-     let post = readMore(data.postText , data.id)
+    if(singlePost.isSinglePost == false)
+    {
+          post = readMore(data.postText , data.id)   
+    }else
+    {
+         post = `<p class="cut_post">${data.postText}</p>`
+    }
+
      post_box_details.querySelector(".post_text").innerHTML = post;
      post_box_details.querySelector(".post_date_release").innerHTML = "Modified at : "+data.postDateModified;
     var myModal = document.getElementById('postEditModal');
@@ -170,6 +178,14 @@ function updatePostOnly(data)
 // docs
 function updateAllPost(data)
 {
+    let post = "";
+    if(singlePost.isSinglePost == false)
+    {
+          post = readMore(data.postText , data.id)   
+    }else
+    {
+         post = `<p class="cut_post">${data.postText}</p>`
+    }
      let post_box_details = document.getElementById("post_box_details_"+data.id);
     let post_attachment_div = post_box_details.querySelector(".post_attachment_div");
     post_attachment_div.innerHTML ="";
@@ -185,7 +201,10 @@ function updateAllPost(data)
        
     }else if(data.attachment && data.attachmentType == "image")
     {
-        post_attachment_div.innerHTML += `<img src="../../public/uploades/images/posts/image/${data.id}/${data.attachment}" loading="lazy" class="post_attachment image_attach">`
+        post_attachment_div.innerHTML += `
+         <div class='img_container'>
+        <img src="../../public/uploades/images/posts/image/${data.id}/${data.attachment}" loading="lazy" class="post_attachment image_attach">
+        </div>`
     
          post_attachment_div.setAttribute("data-type" , "image")
     }
@@ -201,7 +220,7 @@ function updateAllPost(data)
    post_attachment_div.setAttribute("data-type" , "video")
     }
     post_attachment_div.innerHTML +=
-    `<p class="card-text post_text">${data.postText}</p>
+    `<div class="card-text post_text">${post}</div>
     <p class="card-text"><small class="text-muted post_date_release">"Modified at : ${data.postDateModified}</small></p>`;
     if(data.attachment && data.attachmentType == "document")
     {
