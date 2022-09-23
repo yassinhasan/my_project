@@ -15,7 +15,7 @@ class userPostsModel extends abstractModel
             INNER JOIN app_user_profile  ON 
             app_user_profile.userId = app_users.id
             ")->where("app_users.id = ? " , $userId)->select("
-            app_users.id , app_users.firstName , app_users.email ,app_users.lastName , app_user_profile.*  ,
+            app_users.id , app_users.firstName , app_users.email ,app_users.lastName , app_user_profile.*  , app_users.userStatus ,
             ( select followStatus from app_users_follow where sender = $loggedUserId and receiver = $userId ) as follow_status  ,
               ( select COUNT(app_users_follow.receiver) from app_users_follow where receiver = app_users.id AND followStatus = 'approve') as followers   
             ")->fetch();

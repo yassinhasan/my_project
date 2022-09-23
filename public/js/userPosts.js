@@ -28,7 +28,8 @@ postEdit();
 
 
 // must be after uplaod 
-import {showEditBox , postDelete , updatePost} from "./home/posts.js"
+import {showEditBox , postDelete , updatePost , updateUserStatus} from "./home/posts.js"
 showEditBox();
 postDelete();
 updatePost();
+updateUserStatus();

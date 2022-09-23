@@ -253,6 +253,7 @@ function preparePostBox(data) {
         if (allPosts.length > 0) {
          
             for (var i = allPosts.length; i--;) {
+                let userStatus = allPosts[i].userStatus == 1 ? "online" : "offline";
                 let type = allPosts[i].likeType;
                 let postId = allPosts[i].id;
                 let attachment = allPosts[i].attachment == null ? null : allPosts[i].attachment;
@@ -301,7 +302,10 @@ function preparePostBox(data) {
                         <div class="post_box_details"  id="post_box_details_${postId}">
                               <div class="card-header row post_card_header">
                                 <div class="col-11">
+                                    <div class="user_and_status">
                                       <a href="/userPosts?id=${allPosts[i].userId}" class="userPosts_link">${allPosts[i].firstName} ${allPosts[i].lastName}</a>
+                                      <i class="fas fa-circle online_status" data-userId=${allPosts[i].userId} data-status=${userStatus}></i>
+                                    </div>
                                 </div>
                                   <!-- here edit -->
 
@@ -516,4 +520,27 @@ function postDelete() {
         }
     })
 }
-export { fetchPostsUrl, clickedShareBtn, preparePostBox, prepareTextarea, showEditBox , postDelete , updatePost}
+
+
+function updateUserStatus()
+{
+    channel.bind('isLogged', function(data) {
+        
+       
+        let status = data.onlineStatus == 1  ? "online" : "offline";
+        let all_users_status_icons = document.querySelectorAll(".online_status");
+        all_users_status_icons.forEach(user_icon=>
+            {
+                let icon_user_id = user_icon.getAttribute("data-userId");
+                if(icon_user_id == data.userId)
+                {
+                    user_icon.setAttribute("data-status" , status)
+
+                }
+            })
+
+    
+    });
+}
+
+export { fetchPostsUrl, clickedShareBtn, preparePostBox, prepareTextarea, showEditBox , postDelete , updatePost , updateUserStatus}

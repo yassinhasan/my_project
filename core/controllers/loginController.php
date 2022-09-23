@@ -67,7 +67,7 @@ class loginController extends abstractController
                          $this->session->setFlashMsg("success_login" , " you have login succuflly");
                         
                          $Pusherdata["userId"] = $user->id;
-                         $Pusherdata["onlineStatus"] = "online after loggin";
+                         $Pusherdata["onlineStatus"] = STATUS_ONLINE;
                          $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
                         
                     }else

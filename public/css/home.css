@@ -488,3 +488,22 @@ cursor: pointer
 textarea#Write_Post {
     height: 120px;
 }
+
+.online_status
+{
+    /* vertical-align: middle; */
+    font-size: 12px;
+    line-height: 12p;
+    /* line-height: 12px; */
+    /* width: 38px; */
+    /* height: 12px; */
+    /* line-height: 14px; */
+}
+.online_status[data-status="online"]
+{
+    color: #198754;
+}
+.online_status[data-status="offline"]
+{
+    color: #adb5bd;
+}

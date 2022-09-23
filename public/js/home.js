@@ -38,13 +38,15 @@ uploadAttach(share_post_box , doc_attach_elm);
 
 
 // must be after uplaod 
-import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea ,showEditBox , postDelete , updatePost} from "./home/posts.js"
+import {fetchPostsUrl, clickedShareBtn , preparePostBox , prepareTextarea ,showEditBox , postDelete , updatePost ,updateUserStatus} from "./home/posts.js";
+
 clickedShareBtn();
 prepareTextarea();
 showEditBox();
 postDelete();
 updatePost();
-fetchPostsUrl()
+fetchPostsUrl();
+updateUserStatus();
 
 
 //edit posts
@@ -65,10 +67,3 @@ postEdit();
 
 
 // 
-
-channel.bind('isLogged', function(data) {
-      
-     
-        console.log(data);
-      
-});

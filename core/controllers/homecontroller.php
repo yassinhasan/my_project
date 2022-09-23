@@ -31,7 +31,7 @@ class homecontroller extends abstractController
     
         $Pusherdata["userId"] = Application::$app->session->userId;
         $Pusherdata["onlineStatus"] = "iam at home";
-        $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
+     //   $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
         $this->response->renderView("/home" ,$this->data );
     }
     

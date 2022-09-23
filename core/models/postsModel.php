@@ -52,7 +52,7 @@ class postsModel extends abstractModel
             )" 
             
             , $userId)->select("
-             app_posts.*  ,app_users.id as userId , app_users.firstName , app_users.lastName , app_user_profile.profileImage  ,
+             app_posts.*  ,app_users.id as userId , app_users.firstName , app_users.lastName , app_users.userStatus , app_user_profile.profileImage  ,
              posts_attach.attachment , posts_attach.attachmentType  ,
              (SELECT  COUNT(app_post_comments.postId) from app_post_comments where app_post_comments.postId = app_posts.id) as comments ,
              (SELECT  COUNT(app_post_likes.id) from app_post_likes where (app_post_likes.likeType = 'like' AND app_post_likes.postId = app_posts.id )) as liked , 

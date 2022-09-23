@@ -482,3 +482,25 @@ cursor: pointer
 textarea#Write_Post {
     height: 120px;
 }
+
+.online_status[data-status="online"]
+{
+    color: #198754;
+}
+.online_status[data-status="offline"]
+{
+    color: #adb5bd;
+    /* line-height: 54px; */
+    transform: translateY(3px);
+}
+.user_status_div {
+    display: flex;
+    /* transform: translateX(10px); */
+    justify-content: center;
+    align-items: center;
+}
+.online_status
+{
+    margin-left: 12px;
+    transform: translateY(3px);
+}

@@ -5,6 +5,7 @@ use core\app\user;
     $isMe = false;
     $loggedUserId = Application::$app->session->userId;
     $founduser = null;
+    $userStatus = $user->userStatus == 1 ? "online" : "offline";
     if(isset($user))
     {
       $userId = $user->id;
@@ -37,8 +38,14 @@ use core\app\user;
 <div class="container" >
     <!--profile of user-->
         <div class="card profile_user">
-             <h3 class="card-title" style="text-align: center;margin: 8px 0"><?= $userName?></h3>
-            <div class="profile_user_image_box">
+            <div class="user_status_div">
+              <h3 class="card-title" style="text-align: center;margin: 8px 0"><?= $userName?></h3>
+              <div class="online_status_icon_div">
+                    <i class="fas fa-circle online_status" data-userId="<?=$user->id?>" data-status="<?=$userStatus?>"></i>
+
+              </div>
+            </div>
+              <div class="profile_user_image_box">
               <img src="../../public/uploades/images/profile/<?=$image?>" class="card-img-top profile_user_image_box_img" alt="...">
          </div>
           <div class="card-body profile_user_info">

@@ -25,8 +25,8 @@ class logoutController extends abstractController
             if(($this->session->userId))
             {
                 $this->model->updateLoginStatus($this->session->userId);
-                 $Pusherdata["userId"] = $user->id;
-                 $Pusherdata["onlineStatus"] = "offline after logout";
+                 $Pusherdata["userId"] = $this->session->userId;
+                 $Pusherdata["onlineStatus"] = STATUS_OFLINE;
                  $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
                  $this->cookie->kill("loginCode");
                  $this->session->kill();
