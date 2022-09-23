@@ -1,25 +1,19 @@
-// var pusher = new Pusher('24d30dbe202f39f2b07f', {
-//       cluster: 'ap2'
-//  });
-//                    //
-// var channel = pusher.subscribe('my_project');
+var pusher = new Pusher('24d30dbe202f39f2b07f', {
+      cluster: 'ap2'
+ });
+                   
+var channel = pusher.subscribe('my_project');
 
 let singlePost = 
 {
     isSinglePost : false
 }
 
-document.addEventListener('DOMContentLoaded', function() {
- if (!Notification) {
-  alert('Desktop notifications not available in your browser. Try Chromium.');
-  return;
- }
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    // e.returnValue = '';
 
- if (Notification.permission !== 'granted')
-  Notification.requestPermission();
-  return;
 });
-
 
 // when something happen 
 // in notification is granted only 
@@ -33,3 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
 //   notification.onclick = function() {
 //   window.open('http://stackoverflow.com/a/13328397/1269037');
 //   };
+
+
+//document.addEventListener('DOMContentLoaded', function() {
+//  if (!Notification) {
+//   alert('Desktop notifications not available in your browser. Try Chromium.');
+//   return;
+//  }
+
+//  if (Notification.permission !== 'granted')
+//   Notification.requestPermission();
+//   return;
+// });

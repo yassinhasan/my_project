@@ -15,7 +15,7 @@ use core\app\Application;
      </div>
      <div class="mb-3 ">
          <label for="password" class="form-label">Type Your Password </label>
-         <input type="password" class="form-control " id="password" name="password" value="">
+         <input type="password" class="form-control " id="password" name="password" value="" autocomplete="true">
      </div>
      <div class="form-check">
             <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="rememberMe" value="yes">

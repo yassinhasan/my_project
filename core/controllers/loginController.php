@@ -62,8 +62,13 @@ class loginController extends abstractController
                         }else
                         {
                           $this->jData['success'] = "you have login succuflly";  
+                          $this->model->updateLoginStatus($user->id);
                         }
                          $this->session->setFlashMsg("success_login" , " you have login succuflly");
+                        
+                         $Pusherdata["userId"] = $user->id;
+                         $Pusherdata["onlineStatus"] = "online after loggin";
+                         $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
                         
                     }else
                     {

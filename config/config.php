@@ -32,3 +32,7 @@ defined("FIRSTKEY")  ? FIRSTKEY : define("FIRSTKEY" , "dLnHU+CYIyhpvXoRVcgym+XQG
 defined("SECONDKEY")  ? SECONDKEY : define("SECONDKEY" , "sSbcYa1tapc1GwtF4IxDeSoyRxk4OguCIn573c3AY3YFnXYI5MopBqpH7Z//cvN3wlasidkiWvg2ZmZBlY7/ZA==");
 
 const PROJECT_NAME = 'Fayrouz';
+
+const STATUS_ONLINE = 1;
+const STATUS_OFLINE = 0;
+const STATUS_AWAY = 2;

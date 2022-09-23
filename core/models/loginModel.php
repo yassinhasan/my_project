@@ -10,6 +10,8 @@ class loginModel extends abstractModel
     public $email ="";
     public $password = "";
     static public $tableName = "app_users";
+    
+    
     public function rules()
     {
         return [
@@ -29,5 +31,13 @@ class loginModel extends abstractModel
        
        $findUser =  $this->from(self::$tableName)->where( " email  = ? " , $this->email)->select( " * ")->fetch();
        return $findUser;
+    }
+    
+    public function updateLoginStatus($userId)
+    {
+        $this->data([
+            "userStatus" => STATUS_ONLINE
+            ])->where(" id = ? " , $userId)->update(self::$tableName);
+        return true;
     }
 }

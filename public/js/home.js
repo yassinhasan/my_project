@@ -51,14 +51,24 @@ fetchPostsUrl()
 import {postEdit } from "./home/edit.js"
 postEdit();
 
-function notifyMe() {
- if (Notification.permission !== 'granted')
-  Notification.requestPermission();
- else {
-  var notification = new Notification('Notification title', {
-   icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-   body: 'Hey there! You\'ve been notified!',
-  });
- }
-}
-notifyMe()
+// function notifyMe() {
+//  if (Notification.permission !== 'granted')
+//   Notification.requestPermission();
+//  else {
+//   var notification = new Notification('Notification title', {
+//    icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+//    body: 'Hey there! You\'ve been notified!',
+//   });
+//  }
+// }
+// notifyMe()
+
+
+// 
+
+channel.bind('isLogged', function(data) {
+      
+     
+        console.log(data);
+      
+});
