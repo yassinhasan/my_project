@@ -304,7 +304,7 @@ function preparePostBox(data) {
                                 <div class="col-11">
                                     <div class="user_and_status">
                                       <a href="/userPosts?id=${allPosts[i].userId}" class="userPosts_link">${allPosts[i].firstName} ${allPosts[i].lastName}</a>
-                                      <i class="fas fa-circle online_status" data-userId=${allPosts[i].userId} data-status=${userStatus}></i>
+                                      <i class="fas fa-circle online_status online_icon_status" data-userId=${allPosts[i].userId} data-status=${userStatus}></i>
                                     </div>
                                 </div>
                                   <!-- here edit -->
@@ -522,25 +522,6 @@ function postDelete() {
 }
 
 
-function updateUserStatus()
-{
-    channel.bind('isLogged', function(data) {
-        
-       
-        let status = data.onlineStatus == 1  ? "online" : "offline";
-        let all_users_status_icons = document.querySelectorAll(".online_status");
-        all_users_status_icons.forEach(user_icon=>
-            {
-                let icon_user_id = user_icon.getAttribute("data-userId");
-                if(icon_user_id == data.userId)
-                {
-                    user_icon.setAttribute("data-status" , status)
 
-                }
-            })
 
-    
-    });
-}
-
-export { fetchPostsUrl, clickedShareBtn, preparePostBox, prepareTextarea, showEditBox , postDelete , updatePost , updateUserStatus}
+export { fetchPostsUrl, clickedShareBtn, preparePostBox, prepareTextarea, showEditBox , postDelete , updatePost }

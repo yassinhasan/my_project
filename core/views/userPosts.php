@@ -41,7 +41,7 @@ use core\app\user;
             <div class="user_status_div">
               <h3 class="card-title" style="text-align: center;margin: 8px 0"><?= $userName?></h3>
               <div class="online_status_icon_div">
-                    <i class="fas fa-circle online_status" data-userId="<?=$user->id?>" data-status="<?=$userStatus?>"></i>
+                    <i class="fas fa-circle online_status online_icon_status" data-userId="<?=$user->id?>" data-status="<?=$userStatus?>"></i>
 
               </div>
             </div>

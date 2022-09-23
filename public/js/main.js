@@ -17,6 +17,7 @@ window.addEventListener('beforeunload', function (e) {
 
 });
 
+
 // when something happen 
 // in notification is granted only 
 // make new instance then 

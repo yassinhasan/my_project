@@ -1,6 +1,5 @@
-
-
 let users_box = getElm("users_box");
+
 function fetchUsers() {
     showCustomeSpinner(users_box);
     let url = "/fetchUsers";
@@ -8,18 +7,21 @@ function fetchUsers() {
             method: "POST"
         })
         .then(resp => resp.json())
-        .then(data => { prepareUsersBox(data) })
+        .then(data => {
+           
+            prepareUsersBox(data) 
+            
+        })
 
 }
+
 function prepareUsersBox(data) {
     
     if (data.users) {
-       
         let allUsers = data.users;
-     
         if (allUsers.length > 0) {
             users_box.innerHTML = "";
-          
+            
             for (var i = allUsers.length; i--;) 
             {
                 let image = allUsers[i].profileImage == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].profileImage}`;
@@ -74,5 +76,4 @@ function prepareUsersBox(data) {
     }
 }
 
-export {fetchUsers
-, prepareUsersBox}
+export {fetchUsers, prepareUsersBox }

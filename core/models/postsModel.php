@@ -90,7 +90,7 @@ class postsModel extends abstractModel
             INNER JOIN app_user_profile  ON 
             app_user_profile.userId = app_users.id
             ")->where("app_users.id != ? " , $userId)->select("
-            app_users.id , app_users.firstName , app_users.lastName , app_user_profile.profileImage  ,
+            app_users.id , app_users.firstName , app_users.lastName , app_users.userStatus , app_user_profile.profileImage  ,
             ( select followStatus from app_users_follow where sender = $userId and receiver = app_users.id ) as followStatus  ,
               ( select COUNT(app_users_follow.receiver) from app_users_follow where receiver = app_users.id AND followStatus = 'approve') as followers   
             ")->fetchAll();

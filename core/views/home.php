@@ -91,3 +91,53 @@ use core\app\user;
 </div>
 <!--end modal -->
 
+<div class="floadting_btn" data-bs-toggle="modal" data-bs-target="#postChatModal">
+        <i class="far fa-comment-alt"></i>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="postChatModal"   tabindex="-1" aria-labelledby="postChatModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <!--start dialaog-->
+  <div class="modal-dialog chat-dialaog-modal">
+   <!--user area -->
+    <div class="modal-content user_section">
+      <!--start header-->
+      <div class="modal-header">
+        <div class="card-header card_userchat_header  bg-info">
+                    <!--<i class="fas fa-angle-left"></i>-->
+          <p class="mb-0 fw-bold">Live chat</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+      <!--end header-->
+      <!--start body-->
+      <div class="modal-body user_chat_body">
+         <div class="fetch_users_div">
+           
+         </div>
+      </div>
+      <!--end body-->
+    </div>
+   <!--end user area -->
+  <!--start  chat area --> 
+    <div class="modal-content chat_section hide">
+      <!--start header-->
+      <div class="modal-header">
+        <div class="card-header card_chat_header   bg-info">
+                    <!--<i class="fas fa-angle-left"></i>-->
+          <p class="mb-0 fw-bold">Live chat</p>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+      <!--end header-->
+      <!--start body-->
+      <div class="modal-body">
+       here i will fetch chat
+      </div>
+      <!--end body-->
+    </div>
+  <!--end  chat area -->    
+  </div>
+    <!--end dialaog-->
+</div>
+<!--end modal -->
