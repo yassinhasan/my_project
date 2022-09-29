@@ -6,7 +6,7 @@ CONTROOLERS_PATH=$ROOT_PATH"/core/controllers/"
 MODELS_PATH=$ROOT_PATH"/core/models/"
 CSS_PATH=$ROOT_PATH"/public/css/"
 JS_PATH=$ROOT_PATH"/public/js/"
-VIEW_PATH="/core/app/views/"
+VIEW_PATH=$ROOT_PATH"/core/views/"
 
 Model_text='
 <?php
@@ -64,7 +64,7 @@ if [[ -n $filename ]]; then
     echo "Sorry You Must Enter File Name"
 fi
 
-if [[ -e $CONTROOLERS_FILE || -e $MODELS_FILE || -e $CSS_FILE || -e $JS_FILE ]]; then
+if [[ -e $CONTROOLERS_FILE || -e $MODELS_FILE || -e $CSS_FILE || -e $JS_FILE || -e $VIEW_FILE ]]; then
         #statements
         echo "Sorry This Files Files Found Before"
         else

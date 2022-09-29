@@ -34,10 +34,13 @@ class Response
     {
         $path = $this->request->getPath();
         $method = strtolower($this->request->getMethod());
+        
         if($path == "")
         {
             $path = "/";
         }
+        
+      
         if(array_key_exists($path , $this->router->routes[$method]))
         {
               

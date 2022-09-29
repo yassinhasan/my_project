@@ -300,7 +300,7 @@ color: #fff;
     opacity: 70%;
     max-width: 130px;
     position: absolute;
-    right: 50px;
+    right: 55px;
     background: #ddd;
     padding: 2px;
     border-radius: 5px;
@@ -626,7 +626,21 @@ color: #bfbfbf;
 .chat_user_box
 {
     display: flex;
-    margin-bottom: 10px 
+    margin-bottom: 10px ;
+    cursor: pointer;
+    position: relative;
+}
+.chat_user_box > div
+{
+    pointer-events : none;
+}
+.chat_user_right_box 
+{
+   margin-left: 30px 
+}
+.user_section.hide
+{
+    display: none;
 }
 img.chat_user_image {
     /* max-width: 100%; */
@@ -646,7 +660,8 @@ img.chat_user_image {
 
     font-size: 12px;
     position: absolute;
-    left: 14px;
+    top: 0;
+    left: 0px;
 }
 .online_chat_status[data-status="online"]
 {
@@ -655,4 +670,64 @@ img.chat_user_image {
 .online_chat_status[data-status="offline"]
 {
     color: #adb5bd;
+}
+.go_back_chat{
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.fa-paper-plane
+{
+    margin-right: 5px
+}
+
+section.chat_box::-webkit-scrollbar
+{
+    width: 0;
+}
+section.chat_box {
+    max-height: 500px;
+    overflow: scroll;
+}
+
+/*chat box*/
+.from_me
+{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem!important;
+}
+.from_otheruser
+{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem!important;
+}
+.chat_box
+{
+    background-color: #eee;
+}
+.from_me_image img , .from_otheruser_image img
+{
+    width: 45px; 
+    height: 100%;
+    object-fit: contain;
+}
+.from_me_msg
+{
+    border-radius: 15px;
+    background-color: rgba(57, 192, 237,.2);
+    padding: 1rem!important;
+     margin-left: 1rem!important;
+}
+.from_otheruser_msg
+{
+    border-radius: 15px;
+    background-color: #fbfbfb;
+        padding: 1rem!important;
+     margin-right: 1rem!important;
+}
+.from_me_msg p , .from_otheruser_msg p 
+{
+    margin-bottom: 0;
 }

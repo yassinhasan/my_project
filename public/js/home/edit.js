@@ -1,5 +1,5 @@
 import {uploadAttach , attachmentType} from "./uploadattach.js";
-import {user} from "./userinfo.js" 
+import {loggedUser} from "./userinfo.js" 
 let attachNeedUpdate = 
 {
     need : false , 
@@ -15,7 +15,7 @@ function postEdit() {
                     let post_box_details = document.getElementById("post_box_details_"+postId);
                     let postEditModal = document.getElementById("postEditModal");
                     postEditModal.setAttribute("data-postId", postId);
-                    let userName = user.loggedUserName;
+                    let userName = loggedUser.name;
                     
                     let post_attachment_div = post_box_details.querySelector(".post_attachment_div");
                     let attach_div = "";

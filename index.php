@@ -14,7 +14,7 @@ use core\controllers\forgetPasswordController;
 use core\controllers\notfoundController;
 use core\controllers\profileController;
 use core\controllers\resetPasswordController;
-
+use core\controllers\chatController;
 
 require_once "config/config.php";
 require_once "vendor/autoload.php";
@@ -63,6 +63,7 @@ $config = [
 
 $app = new Application($config);
 $app->router->get("/",[ homecontroller::class , "home"]);
+$app->router->post("/",[ homecontroller::class , "home"]);
 $app->router->get("/notfound",[ notfoundController::class , "notfound"]);
 $app->router->get("/home",[ homecontroller::class , "home"]);
 $app->router->post("/sharePosts",[ homecontroller::class , "sharePosts"]);
@@ -80,6 +81,10 @@ $app->router->get("/userPosts",[ userPostsController::class , "userPosts"]);
 $app->router->get("/showPost",[ showPostController::class , "showPost"]);
 $app->router->post("/fetchPostsById",[ userPostsController::class , "fetchPostsById"]);
 
+// chat
+$app->router->post("/chat/loadChat",[ chatController::class , "loadChat"]);
+// $app->router->get("/chat",[ chatController::class , "chat"]);
+//test
 $app->router->get("/register",[ registerController::class , "register"]);
 $app->router->post("/register",[ registerController::class , "register"]);
 $app->router->get("/login",[ loginController::class , "login"]);

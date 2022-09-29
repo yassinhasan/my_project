@@ -1,3 +1,4 @@
+let loggedUser2 ={};
 var pusher = new Pusher('24d30dbe202f39f2b07f', {
       cluster: 'ap2'
  });

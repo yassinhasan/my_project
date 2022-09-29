@@ -16,8 +16,6 @@ login_btn.addEventListener("click",(e)=>
    })
    .then(resp=>resp.json())
    .then(data=>{
-    
-    
     if(data.errors)
     {
      

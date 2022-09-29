@@ -1,4 +1,4 @@
-import {user} from "./userinfo.js" 
+import {loggedUser } from "./userinfo.js" 
 
 
 let share_post_btn = getElm("share_post_btn");
@@ -295,7 +295,7 @@ function preparePostBox(data) {
                 }
                 let image = allPosts[i].profileImage == null ? 'avatar.jpg' : `${allPosts[i].firstName}${allPosts[i].lastName}/${allPosts[i].profileImage}`;
                 // show edit and delete if logged user
-                let edit = (user.loggedUserId != allPosts[i].userId)? '' :`<div class="edit_box_edit" data-postId="${postId}" data-bs-toggle="modal" data-bs-target="#postEditModal">edit</div>
+                let edit = (loggedUser.id != allPosts[i].userId)? '' :`<div class="edit_box_edit" data-postId="${postId}" data-bs-toggle="modal" data-bs-target="#postEditModal">edit</div>
                          <div class="edit_box_delete" data-postId="${postId}">delete</div>`;
                 // start add post
                  post = `

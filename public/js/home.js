@@ -1,11 +1,5 @@
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
-
-
-
-
-
-
 // follow un follow system 
 import {clickedOnFollowBtn} from "./home/follow.js"
 clickedOnFollowBtn();
@@ -54,9 +48,10 @@ postEdit();
 import {fetchUsers , prepareUsersBox} from "./home/users.js"
 fetchUsers();
 // chat 
-import {loadChatAreaOfUsers } from "./home/chat.js"
-loadChatAreaOfUsers();
+import {showChatArea , sendChat} from "./home/chat.js"
 
+showChatArea();
+sendChat();
 function updateUserStatus()
 {
     channel.bind('isLogged', function(data) {

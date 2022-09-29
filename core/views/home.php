@@ -98,7 +98,7 @@ use core\app\user;
 <!-- Modal -->
 <div class="modal fade" id="postChatModal"   tabindex="-1" aria-labelledby="postChatModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
   <!--start dialaog-->
-  <div class="modal-dialog chat-dialaog-modal">
+  <div class="modal-dialog chat-dialaog-modal modal-dialog-centered">
    <!--user area -->
     <div class="modal-content user_section">
       <!--start header-->
@@ -125,14 +125,51 @@ use core\app\user;
       <div class="modal-header">
         <div class="card-header card_chat_header   bg-info">
                     <!--<i class="fas fa-angle-left"></i>-->
-          <p class="mb-0 fw-bold">Live chat</p>
+          <i class="fas fa-arrow-left go_back_chat"></i>
+          <p class="mb-0 fw-bold to_username"></p>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
       </div>
       <!--end header-->
       <!--start body-->
       <div class="modal-body">
-       here i will fetch chat
+        <section class="chat_box">
+            <div class="row d-flex justify-content-center">
+                  <div class="card-body">
+                    <div class="from_me">
+                        <div class="from_me_image">
+                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                            alt="avatar 1">
+                        </div>
+                       <div class="from_me_msg">
+                            <p class="small">Hello and thank you for visiting MDBootstrap. Please click the video
+                          below.</p>
+                      </div>
+                    </div>
+
+                <div class="from_otheruser">
+                  <div class="from_otheruser_msg" >
+                    <p class="small">Thank you, I really like your product.</p>
+                  </div>
+                   <div class="from_otheruser_image">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+                      alt="avatar 1">
+                   </div>
+                </div>
+
+
+            
+            <form class="send_chat">
+                <div class="form-outline">
+                  <textarea class="form-control chat_textarea" id="textAreaExample" rows="4"></textarea>
+                  <label class="form-label" for="textAreaExample">Type your message</label>
+                </div>
+                <button class="btn bg-info btn-sm send_msg"><i class="fas fa-paper-plane"></i>Send</button>
+            </form>
+
+          </div>
+    </div>
+</section>
       </div>
       <!--end body-->
     </div>
