@@ -5,8 +5,9 @@ let floadting_btn = document.querySelector(".floadting_btn");
 let go_back_chat = document.querySelector(".go_back_chat");
 let fetch_users_div = document.querySelector(".fetch_users_div");
 let user_chat_body = document.querySelector(".user_chat_body");
-
-
+let chat_textarea= document.querySelector(".chat_textarea");
+let send_chat = document.querySelector(".send_chat");
+let chat_box = document.querySelector(".chat_box");
 let allusers  = {};
 let toUser= {};
 floadting_btn.addEventListener("click",e=>
@@ -48,7 +49,7 @@ function prepareUsersChatArea(data)
             for (var i = allUsers.length; i--;) 
             {
                 
-                allusers["user_"+i] = allUsers[i];
+                allusers["user_"+allUsers[i].id] = allUsers[i];
                 let userStatus = allUsers[i].userStatus == 1 ? "online" : "offline";
                 let image = allUsers[i].profileImage == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].profileImage}`;
                 fetch_users_div.innerHTML += `
@@ -102,7 +103,9 @@ function loadPrivateChat(data)
     let name = data.querySelector(".chat_user_name_span").innerHTML;
     document.querySelector(".to_username").innerHTML =  name;
    let id = data.getAttribute("data-userId");
+
    toUser = allusers["user_"+id];
+
 }
 function showChat()
 {
@@ -114,18 +117,50 @@ function showUsers()
      user_section.classList.remove("hide");
       chat_section.classList.add("hide");
 }
-
-
+function insertMsg(msg)
+{
+    let inner_chat = document.querySelector(".inner_chat");
+    let msgFromMe = `
+    <div class="from_me">
+        <div class="from_me_image">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+            alt="avatar 1">
+        </div>
+         <div class="from_me_msg">
+                <p class="small">${msg}</p>
+        </div>
+    </div>
+    `;
+    inner_chat.insertAdjacentHTML("beforeend" , msgFromMe);
+}
 function sendChat()
 {
     let send_msg = document.querySelector(".send_msg");
     send_msg.addEventListener("click" , e=>
     {
         e.preventDefault();
-        let chat_textarea= document.querySelector(".chat_textarea");
-       // console.log(chat_textarea.value);
-        console.log(toUser)
-        console.log(loggedUser)
+        removeAnyValidation()
+        let message = chat_textarea.value;
+        if(isEmpty(message))
+        {
+            makeInvalidInput(  "msg" , "soory this can not be empty" )
+        }else
+        {
+            insertMsg(message)
+            csutomPostFetch("/chat/addMsg" , send_chat , sendChatCallable , {
+                "fromId": loggedUser.id, 
+                "toId" : toUser.id
+            })
+        }
     })
 }
+
+
+function sendChatCallable(data)
+{
+    console.log(data);
+    chat_textarea.value ="";
+    chat_textarea.focus();
+}
+prepareTextarea(chat_textarea)
 export {sendChat,showChatArea}

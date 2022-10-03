@@ -135,7 +135,8 @@ use core\app\user;
       <div class="modal-body">
         <section class="chat_box">
             <div class="row d-flex justify-content-center">
-                  <div class="card-body">
+                <div class="card-body">
+                  <div class="inner_chat">
                     <div class="from_me">
                         <div class="from_me_image">
                           <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
@@ -156,12 +157,10 @@ use core\app\user;
                       alt="avatar 1">
                    </div>
                 </div>
-
-
-            
+            </div>            
             <form class="send_chat">
                 <div class="form-outline">
-                  <textarea class="form-control chat_textarea" id="textAreaExample" rows="4"></textarea>
+                  <textarea class="form-control chat_textarea" id="textAreaExample" rows="4" name="msg"></textarea>
                   <label class="form-label" for="textAreaExample">Type your message</label>
                 </div>
                 <button class="btn bg-info btn-sm send_msg"><i class="fas fa-paper-plane"></i>Send</button>

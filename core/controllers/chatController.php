@@ -17,4 +17,28 @@ class chatController extends abstractController
        $this->json();
      //   $this->response->renderView("/chat", $this->data);
     }
+
+    public function addMsg()
+    {
+        // $id = (int)$this->session->userId;
+        $data = $this->request->getBody();
+        $model =  $this->model;
+        $rules = $this->model->rules();
+        if( $this->validate->isValid( $model ,$rules, $data))
+        {
+            $msgId  = $this->model->insertMsg();
+            if($this->model->addAttachMsg($msgId))
+            {  
+                $this->jData['succ'] =  "done";  
+            }else
+            {
+                $this->jData['errors'] =  "error in db";
+            }
+        }else
+        {
+            $this->jData['errors'] =  $this->validate->getErrors();
+          
+        }
+        $this->json();
+    }
 }

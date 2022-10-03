@@ -37,8 +37,6 @@ class Validate extends abstractValidate
                 {  
                     $this->$rule($filed_name , $filed_value );
                 }
-                
-              
             }   
 
         }

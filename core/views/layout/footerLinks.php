@@ -12,9 +12,8 @@
      <script src="<?= $this->request->jsUrl("helper")?>?50"></script>
      <script src="<?= $this->request->jsUrl("main")?>?50"></script>
     <script src="<?= $this->request->jsUrl("customeSpinner")?>?50"></script>
-  
     <script src="<?= $this->request->jsUrl("alert")?>?50"></script>
-   
+    <script src="<?= $this->request->jsUrl("validate")?>?50"></script>
        
     <?php 
 
