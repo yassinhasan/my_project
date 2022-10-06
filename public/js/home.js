@@ -48,15 +48,15 @@ postEdit();
 import {fetchUsers , prepareUsersBox} from "./home/users.js"
 fetchUsers();
 // chat 
-import {showChatArea , sendChat} from "./home/chat.js"
+import {showPrivateChatArea , sendChatMessages} from "./home/chat.js"
 
-showChatArea();
-sendChat();
+showPrivateChatArea();
+sendChatMessages();
 function updateUserStatus()
 {
     channel.bind('isLogged', function(data) {
-        
        
+        
         let status = data.onlineStatus == 1  ? "online" : "offline";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>

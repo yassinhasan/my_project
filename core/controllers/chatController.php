@@ -11,34 +11,51 @@ class chatController extends abstractController
         $this->data["title"] = "chat";
         $this->data["links"] = ["css" => ["chat"], "js" => ["chat"]];
     }
-    public function loadChat()
-    {
-       $this->jData["data"] = "helli";
-       $this->json();
-     //   $this->response->renderView("/chat", $this->data);
-    }
 
     public function addMsg()
     {
         // $id = (int)$this->session->userId;
-        $data = $this->request->getBody();
-        $model =  $this->model;
-        $rules = $this->model->rules();
-        if( $this->validate->isValid( $model ,$rules, $data))
+        if($this->request->getMethod() == "POST")
         {
-            $msgId  = $this->model->insertMsg();
-            if($this->model->addAttachMsg($msgId))
-            {  
-                $this->jData['succ'] =  "done";  
+            $data = $this->request->getBody();
+            $model =  $this->model;
+            $rules = $this->model->rules();
+            if( $this->validate->isValid( $model ,$rules, $data))
+            {
+                $msgId  = $this->model->insertMsg();
+                if($this->model->addAttachMsg($msgId))
+                {  
+                    $this->jData['succ'] =  "done";  
+                }else
+                {
+                    $this->jData['errors'] =  "error in db";
+                }
+              $Pusherdata["msgs"] = [
+                  "fromId" => $data["fromId"] , 
+                  "toId"   => $data["toId"] , 
+                  "msg"   => $data["msg"]
+                  ];
+              $this->pusher->trigger( $_ENV['CHANNEL'], 'updateChate',  $Pusherdata);
             }else
             {
-                $this->jData['errors'] =  "error in db";
+                $this->jData['errors'] =  $this->validate->getErrors();
+              
             }
-        }else
-        {
-            $this->jData['errors'] =  $this->validate->getErrors();
-          
+            $this->json();           
         }
-        $this->json();
+
     }
+    
+    public function fetchPrivateChat()
+    {
+ // $id = (int)$this->session->userId;
+        if($this->request->getMethod() == "POST")
+        {
+            $data = $this->request->getBody();
+            $this->jData['msgs'] = $this->model->fetchPrivateChat($data);
+            $this->json();
+        }
+
+    }
+    
 }

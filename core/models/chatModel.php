@@ -33,4 +33,12 @@ class chatModel extends abstractModel
         ])->insert("app_chat_attach");
         return true;
     }
+    public function fetchPrivateChat($data)
+    {
+        $msgs = $this->from(self::$tableName)
+        ->where(" (fromId = ?  AND  toId = ?) OR (fromId = ?  AND  toId = ?)  " , [
+            $data["fromId"] ,  $data["toId"] ,  $data["toId"] ,  $data["fromId"]
+        ])->select(" *  ")->fetchAll();
+        return $msgs;
+    }
 }

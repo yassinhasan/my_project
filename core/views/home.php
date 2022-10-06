@@ -136,28 +136,30 @@ use core\app\user;
         <section class="chat_box">
             <div class="row d-flex justify-content-center">
                 <div class="card-body">
-                  <div class="inner_chat">
-                    <div class="from_me">
-                        <div class="from_me_image">
-                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                            alt="avatar 1">
-                        </div>
-                       <div class="from_me_msg">
-                            <p class="small">Hello and thank you for visiting MDBootstrap. Please click the video
-                          below.</p>
-                      </div>
-                    </div>
+                    <div class="inner_chat_box">
+                       <div class="inner_chat">
+                    <!--<div class="from_me">-->
+                    <!--    <div class="from_me_image">-->
+                    <!--      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"-->
+                    <!--        alt="avatar 1">-->
+                    <!--    </div>-->
+                    <!--   <div class="from_me_msg">-->
+                    <!--        <p class="small">Hello and thank you for visiting MDBootstrap. Please click the video-->
+                    <!--      below.</p>-->
+                    <!--  </div>-->
+                    <!--</div>-->
 
-                <div class="from_otheruser">
-                  <div class="from_otheruser_msg" >
-                    <p class="small">Thank you, I really like your product.</p>
-                  </div>
-                   <div class="from_otheruser_image">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                      alt="avatar 1">
-                   </div>
-                </div>
-            </div>            
+                    <!--<div class="from_otheruser">-->
+                <!--  <div class="from_otheruser_msg" >-->
+                <!--    <p class="small">Thank you, I really like your product.</p>-->
+                <!--  </div>-->
+                <!--   <div class="from_otheruser_image">-->
+                <!--      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"-->
+                <!--      alt="avatar 1">-->
+                <!--   </div>-->
+                <!--</div>-->
+                        </div>  
+                    </div>
             <form class="send_chat">
                 <div class="form-outline">
                   <textarea class="form-control chat_textarea" id="textAreaExample" rows="4" name="msg"></textarea>

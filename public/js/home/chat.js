@@ -8,6 +8,9 @@ let user_chat_body = document.querySelector(".user_chat_body");
 let chat_textarea= document.querySelector(".chat_textarea");
 let send_chat = document.querySelector(".send_chat");
 let chat_box = document.querySelector(".chat_box");
+let inner_chat =  document.querySelector(".inner_chat");
+let inner_chat_box =  document.querySelector(".inner_chat_box");
+
 let allusers  = {};
 let toUser= {};
 floadting_btn.addEventListener("click",e=>
@@ -22,6 +25,8 @@ go_back_chat.addEventListener("click",e=>
     showUsers();
     loadChatAreaOfUsers();
 })
+
+//  load all users who iam follow them 
 function loadChatAreaOfUsers() {
 
     let url = "/fetchUsers";
@@ -32,13 +37,13 @@ function loadChatAreaOfUsers() {
         .then(data => {
            
              removeCustomSpinner(user_chat_body);
-            prepareUsersChatArea(data);
+            prepareChatAreaOfUsers(data);
 
         })
 
 }
-
-function prepareUsersChatArea(data)
+// preapre area users 
+function prepareChatAreaOfUsers(data)
 {
 
      
@@ -83,30 +88,89 @@ function prepareUsersChatArea(data)
 }
 
 
-function showChatArea()
+// after click on specific user load chat in_between 
+function showPrivateChatArea()
 {
     let chat_user_box = document.querySelectorAll(".chat_user_box");
 
     document.body.addEventListener("click",e=>
     {
-       
+      
         if(e.target.classList.contains("chat_user_box")  )
         {   
+            showCustomeSpinner(inner_chat_box);
+            inner_chat.innerHTML = "";
             showChat();
-            loadPrivateChat(e.target);
+            let name = e.target.querySelector(".chat_user_name_span").innerHTML;
+            document.querySelector(".to_username").innerHTML =  name;
+            let id = e.target.getAttribute("data-userId");
+            toUser = allusers["user_"+id];
+            fetchPrivateChatArea();
         }
     }); 
 }
 
-function loadPrivateChat(data)
+// load chat content 
+function fetchPrivateChatArea()
 {
-    let name = data.querySelector(".chat_user_name_span").innerHTML;
-    document.querySelector(".to_username").innerHTML =  name;
-   let id = data.getAttribute("data-userId");
+    let form = document.createElement("form");
+   csutomPostFetch("/chat/fetchPrivateChat" , form , preparePrivateChat , {
+       "fromId": loggedUser.id, 
+       "toId" : toUser.id
+   })
+   
+}  
 
-   toUser = allusers["user_"+id];
 
-}
+// fetch chat 
+function preparePrivateChat(data)
+{
+      
+      let messages  = data.msgs;
+      let imagesrc = "";
+      if(messages.length > 0)
+      {
+          for(var i = 0;i < messages.length; i++)
+          {
+            let msg = messages[i]["msg"]
+            msg = repairMsg(msg);
+             if(messages[i].fromId == loggedUser.id)
+             {
+                 let name = loggedUser.name.replace(" ","");
+                 imagesrc = loggedUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+loggedUser.image;               
+                 inner_chat.innerHTML+=
+                 `<div class="from_me">
+                         <div class="from_me_image col-1">
+                          <img src="../../public/uploades/images/profile/${imagesrc}"
+                            alt="avatar 1">
+                        </div>
+                       <div class="from_me_msg col-9">
+                            <p class="small">${msg}</p>
+                      </div>
+                 </div>` ;
+             }else
+             {
+                let name = toUser.firstName+toUser.lastName;
+                imagesrc = toUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+toUser.profileImage; 
+               inner_chat.innerHTML+=  `<div class="from_otheruser">
+                  <div class="from_otheruser_msg" >
+                    <p class="small">${messages[i].msg}</p>
+                  </div>
+                   <div class="from_otheruser_image">
+                      <img src="../../public/uploades/images/profile/${imagesrc}"
+                      alt="avatar 1">
+                   </div>
+                </div>`
+             }
+          }
+      }else
+      {
+           inner_chat.innerHTML = "<div class='no_msgs'>Sorry No Chat Yet</div>";
+      }
+       removeCustomSpinner(inner_chat_box);
+       inner_chat.scrollTop = inner_chat.scrollHeight;
+   }
+   
 function showChat()
 {
       user_section.classList.add("hide");
@@ -117,13 +181,45 @@ function showUsers()
      user_section.classList.remove("hide");
       chat_section.classList.add("hide");
 }
-function insertMsg(msg)
+
+function sendChatMessages()
 {
+    let send_msg = document.querySelector(".send_msg");
+    send_msg.addEventListener("click" , e=>
+    {
+        e.preventDefault();
+        removeAnyValidation();
+        let message = chat_textarea.value;
+        chat_textarea.value ="";
+        if(isEmpty(message))
+        {
+            makeInvalidInput(  "msg" , "soory this can not be empty" )
+        }else
+        {
+            let no_msgs =inner_chat.querySelector(".no_msgs");
+            if(no_msgs)no_msgs.remove();
+            insertMsgWithoutFetch(message);
+            let form = document.createElement("form");
+            csutomPostFetch("/chat/addMsg" , form , sendChatCallable , {
+                "msg"   : message,
+                "fromId": loggedUser.id, 
+                "toId" : toUser.id
+            })
+        }
+    })
+}
+
+function insertMsgWithoutFetch(msg)
+{
+    
+    msg = repairMsg(msg)
+    let name = loggedUser.name.replace(" ","");
+    let image = loggedUser.image == "avatar.jpg" ? "../../public/uploades/images/profile/avatar.jpeg" : "../../public/uploades/images/profile/"+name+"/"+loggedUser.image;
     let inner_chat = document.querySelector(".inner_chat");
     let msgFromMe = `
     <div class="from_me">
         <div class="from_me_image">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+        <img src="${image}"
             alt="avatar 1">
         </div>
          <div class="from_me_msg">
@@ -132,35 +228,56 @@ function insertMsg(msg)
     </div>
     `;
     inner_chat.insertAdjacentHTML("beforeend" , msgFromMe);
+    inner_chat.scrollTop = inner_chat.scrollHeight;
 }
-function sendChat()
-{
-    let send_msg = document.querySelector(".send_msg");
-    send_msg.addEventListener("click" , e=>
-    {
-        e.preventDefault();
-        removeAnyValidation()
-        let message = chat_textarea.value;
-        if(isEmpty(message))
-        {
-            makeInvalidInput(  "msg" , "soory this can not be empty" )
-        }else
-        {
-            insertMsg(message)
-            csutomPostFetch("/chat/addMsg" , send_chat , sendChatCallable , {
-                "fromId": loggedUser.id, 
-                "toId" : toUser.id
-            })
-        }
-    })
-}
-
-
 function sendChatCallable(data)
 {
-    console.log(data);
-    chat_textarea.value ="";
     chat_textarea.focus();
+    
 }
+
+
+function updatechat()
+{
+    channel.bind('updateChate', function(data) {
+        
+      let messages  = data.msgs;
+      let imagesrc = "";
+      let msgDiv = "";
+      let msg = messages["msg"];
+      msg =  repairMsg(msg)
+     if(messages["fromId"] == toUser.id)
+     {
+        
+           let name = toUser.firstName+toUser.lastName;
+                imagesrc = toUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+toUser.profileImage; 
+               msgDiv =  `<div class="from_otheruser">
+                  <div class="from_otheruser_msg" >
+                    <p class="small">${msg}</p>
+                  </div>
+                   <div class="from_otheruser_image">
+                      <img src="../../public/uploades/images/profile/${imagesrc}"
+                      alt="avatar 1">
+                   </div>
+                </div>`;
+    }
+    inner_chat.insertAdjacentHTML("beforeend" , msgDiv);
+    inner_chat.scrollTop = inner_chat.scrollHeight;
+ });
+}
+
+function repairMsg(msg)
+{
+    let pattern = /يحمولي|حمولي/gi //no quotes
+    let godword = "حسن المحترم " ;
+  if(msg.includes("حمولي"))
+  {
+ 
+   msg =   msg.replace(pattern , godword);
+  
+ }
+ return msg;
+}
+updatechat();
 prepareTextarea(chat_textarea)
-export {sendChat,showChatArea}
+export {sendChatMessages,showPrivateChatArea}

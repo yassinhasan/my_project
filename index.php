@@ -83,7 +83,9 @@ $app->router->post("/fetchPostsById",[ userPostsController::class , "fetchPostsB
 
 // chat
 $app->router->post("/chat/loadChat",[ chatController::class , "loadChat"]); 
-$app->router->post("/chat/addMsg",[ chatController::class , "addMsg"]); 
+$app->router->post("/chat/addMsg",[ chatController::class , "addMsg"]);
+$app->router->post("/chat/fetchPrivateChat",[ chatController::class , "fetchPrivateChat"]);
+
 // $app->router->get("/chat",[ chatController::class , "chat"]);
 //test
 $app->router->get("/register",[ registerController::class , "register"]);
