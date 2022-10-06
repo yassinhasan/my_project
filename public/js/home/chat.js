@@ -29,7 +29,7 @@ go_back_chat.addEventListener("click",e=>
 //  load all users who iam follow them 
 function loadChatAreaOfUsers() {
 
-    let url = "/fetchUsers";
+    let url = "/fetchChatUsers";
     fetch(url, {
             method: "POST"
         })
@@ -54,6 +54,8 @@ function prepareChatAreaOfUsers(data)
             for (var i = allUsers.length; i--;) 
             {
                 
+               let msg = allUsers[i]["lastMmsg"]
+               msg = repairMsg(msg);
                 allusers["user_"+allUsers[i].id] = allUsers[i];
                 let userStatus = allUsers[i].userStatus == 1 ? "online" : "offline";
                 let image = allUsers[i].profileImage == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].profileImage}`;
@@ -69,7 +71,7 @@ function prepareChatAreaOfUsers(data)
                                  <span class="chat_user_name_span">${allUsers[i].firstName} ${allUsers[i].lastName}</span>
                             </div>
                             <div class="chat_messages">
-                            <p> hello iam message </p>
+                            <p> ${msg} </p>
                             </div>
                         
                         </div>
