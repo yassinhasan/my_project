@@ -1,43 +1,46 @@
 
 let register_btn = getElm("register_btn");
-let form = getElm("form");
+let form = getElm("register_form");
 register_btn.addEventListener("click",(e)=>
 {
     e.preventDefault();
-    showLoadSpinner();
-    removeAnyValidation()
-    let data = new FormData(form);
-    let url = form.action; 
-   fetch(url , {
-       method: "post" , 
-        body: data
-   })
-   .then(resp=>resp.json())
-   .then(data=>{
-   
-    if(data.errors)
+      removeAnyValidation();
+    if(isNotEmptyForFullForm(form)  && validName("firstName") && validName("lastName") && isValidPassword("password") && isMatchedPassword("password", "confirmPassword"))
     {
-        removeLoadSpinner();
-        for(let err in data.errors)
+          showLoadSpinner();
+      let data = new FormData(form);
+      let url = form.action; 
+      fetch(url , {
+          method: "post" , 
+            body: data
+      })
+      .then(resp=>resp.json())
+      .then(data=>{
+       
+        if(data.errors)
         {
-         makeInvalidInput(err , data.errors[err] )
+            removeLoadSpinner();
+            for(let err in data.errors)
+            {
+              makeInvalidInput(err , data.errors[err] )
+            }
+           
+        }else if(data.success)
+        {
+           
+            window.location.href = "/login"
+          
+        }else if(data.sql_error)
+        {
+            removeLoadSpinner();
+            showAlert('error' , 'Error' , data.sql_error)
+        }else if(data.message_error)
+        {
+            removeLoadSpinner();
+            showAlert('error' , 'Error' , data.message_error)
         }
-       
-    }else if(data.success)
-    {
-       
-        window.location.href = "/login"
-      
-    }else if(data.sql_error)
-    {
-        removeLoadSpinner();
-        showAlert('error' , 'Error' , data.sql_error)
-    }else if(data.message_error)
-    {
-        removeLoadSpinner();
-        showAlert('error' , 'Error' , data.message_error)
-    }
-   })
+      })
+}
 })
 
 

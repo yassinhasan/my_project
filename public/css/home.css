@@ -754,3 +754,8 @@ section.chat_box {
     font-size: 600;
     font-weight: 600;
 }
+
+.chat_messages_text.unseen
+{
+    font-weight: bold
+}

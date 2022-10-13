@@ -6,18 +6,20 @@ let body = document.body;
 login_btn.addEventListener("click",(e)=>
 {
     e.preventDefault();
-    showCustomeSpinner(body);
-    removeAnyValidation()
-    let data = new FormData(form);
-    let url = form.action; 
-   fetch(url , {
+    removeAnyValidation();
+   if(isNotEmptyForFullForm(form) )
+   {
+     showCustomeSpinner(body);
+     let data = new FormData(form);
+     let url = form.action; 
+     fetch(url , {
        method: "post" , 
         body: data
    })
-   .then(resp=>resp.json())
-   .then(data=>{
-    if(data.errors)
-    {
+    .then(resp=>resp.json())
+     .then(data=>{
+        if(data.errors)
+        {
      
         for(let err in data.errors)
         {
@@ -49,6 +51,7 @@ login_btn.addEventListener("click",(e)=>
     }
      
    })
+   }
 })
 
 

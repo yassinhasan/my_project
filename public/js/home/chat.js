@@ -53,14 +53,25 @@ function prepareChatAreaOfUsers(data)
         if (allUsers.length > 0) {
             for (var i = allUsers.length; i--;) 
             {
-                
-               let msg = allUsers[i]["lastMmsg"]
-               msg = repairMsg(msg);
+                console.log(allUsers[i]);
+               let msg = allUsers[i]["lastMmsg"]  
+               let me = "";
+               if(msg != null)
+               {
+                    
+                     me = loggedUser.id == allUsers[i].fromId ? " me  " :allUsers[i].firstName ;
+                    msg = repairMsg(msg);
+                  
+               }else
+               {msg =" no chat yet"
+                   
+               }
+               
                 allusers["user_"+allUsers[i].id] = allUsers[i];
                 let userStatus = allUsers[i].userStatus == 1 ? "online" : "offline";
                 let image = allUsers[i].profileImage == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].profileImage}`;
                 fetch_users_div.innerHTML += `
-                    <div class="chat_user_box" data-userId=${allUsers[i].id}>
+                    <div class="chat_user_box chat_user_box_${allUsers[i].id}" data-userId=${allUsers[i].id}>
                         <div class="col-2 chat_user_image_box">
                             <img src="../../public/uploades/images/profile/${image}"  class="chat_user_image" alt="...">
                             <i class="fas fa-circle online_chat_status online_icon_status" data-userId=${allUsers[i].id} data-status=${userStatus}></i>
@@ -71,7 +82,7 @@ function prepareChatAreaOfUsers(data)
                                  <span class="chat_user_name_span">${allUsers[i].firstName} ${allUsers[i].lastName}</span>
                             </div>
                             <div class="chat_messages">
-                            <p> ${msg} </p>
+                            <p class="chat_messages_text">${me} : ${msg} </p>
                             </div>
                         
                         </div>
@@ -107,6 +118,8 @@ function showPrivateChatArea()
             document.querySelector(".to_username").innerHTML =  name;
             let id = e.target.getAttribute("data-userId");
             toUser = allusers["user_"+id];
+            let chat_messages_text = e.target.querySelector(".chat_messages_text");
+            chat_messages_text.classList.remove("unseen")
             fetchPrivateChatArea();
         }
     }); 
@@ -242,12 +255,27 @@ function sendChatCallable(data)
 function updatechat()
 {
     channel.bind('updateChate', function(data) {
-        
+        // changfe status
       let messages  = data.msgs;
+      let toUserId;
+      let me = "";
+      if(loggedUser.id == messages.fromId)
+      {
+          toUserId = messages.toId;
+          me = "me"
+      }else
+      {
+            me =  toUser.firstName;
+           toUserId = messages.fromId;
+      }
+      let chat_user_box = document.querySelector(`.chat_user_box_${toUserId}`);
+      let chat_messages = chat_user_box.querySelector(".chat_messages_text");
+      chat_messages.classList.add("unseen");
+      chat_messages.innerHTML = `${me}:  ${messages["msg"]}`;
       let imagesrc = "";
       let msgDiv = "";
       let msg = messages["msg"];
-      msg =  repairMsg(msg)
+      msg =  repairMsg(msg);
      if(messages["fromId"] == toUser.id)
      {
         
@@ -281,5 +309,8 @@ function repairMsg(msg)
  return msg;
 }
 updatechat();
-prepareTextarea(chat_textarea)
+prepareTextarea(chat_textarea);
+
+
+
 export {sendChatMessages,showPrivateChatArea}

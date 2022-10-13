@@ -52,7 +52,8 @@ class chatModel extends abstractModel
             app_users.id , app_users.firstName , app_users.lastName , app_users.userStatus , app_user_profile.profileImage  ,
             ( select followStatus from app_users_follow where sender = $userId and receiver = app_users.id ) as followStatus  ,
               ( select COUNT(app_users_follow.receiver) from app_users_follow where receiver = app_users.id AND followStatus = 'approve') as followers  ,
-              (SELECT msg from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId ) ORDER BY msgDate DESC limit 1 ) as lastMmsg 
+              (SELECT msg from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId )  ORDER BY msgDate DESC limit 1 ) as lastMmsg ,
+               (SELECT fromId from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId )  ORDER BY msgDate DESC limit 1 ) as fromId
             ")->fetchAll();
 
         return $Users;
