@@ -20,6 +20,7 @@ if(logged_user_name_link)
     
   let username = logged_user_name_link.querySelector(".username").innerHTML;
   loggedUser.name = username.trim();
+  loggedUser.firstName = loggedUser.name.split(" ").shift();
   let srcimage = logged_user_name_link.querySelector(".user_profile_image").src;
   loggedUser.image = srcimage.split("/").pop();
   loggedUser.id = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim()) ;

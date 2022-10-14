@@ -218,7 +218,8 @@ function sendChatMessages()
             csutomPostFetch("/chat/addMsg" , form , sendChatCallable , {
                 "msg"   : message,
                 "fromId": loggedUser.id, 
-                "toId" : toUser.id
+                "toId" : toUser.id , 
+                "firstName" : loggedUser.firstName
             })
         }
     })
@@ -256,6 +257,7 @@ function updatechat()
 {
     channel.bind('updateChate', function(data) {
         // changfe status
+        console.log(data)
       let messages  = data.msgs;
       let toUserId;
       let me = "";
@@ -265,8 +267,9 @@ function updatechat()
           me = "me"
       }else
       {
-            me =  toUser.firstName;
-           toUserId = messages.fromId;
+            me =  messages["firstName"];
+           toUserId = messages.fromId; 
+
       }
       let chat_user_box = document.querySelector(`.chat_user_box_${toUserId}`);
       let chat_messages = chat_user_box.querySelector(".chat_messages_text");

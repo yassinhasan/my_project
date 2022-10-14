@@ -33,7 +33,8 @@ class chatController extends abstractController
               $Pusherdata["msgs"] = [
                   "fromId" => $data["fromId"] , 
                   "toId"   => $data["toId"] , 
-                  "msg"   => $data["msg"]
+                  "msg"   => $data["msg"] , 
+                  "firstName" => $data["firstName"]
                   ];
               $this->pusher->trigger( $_ENV['CHANNEL'], 'updateChate',  $Pusherdata);
             }else
