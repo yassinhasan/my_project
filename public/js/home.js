@@ -48,7 +48,7 @@ postEdit();
 import {fetchUsers , prepareUsersBox} from "./home/users.js"
 fetchUsers();
 // chat 
-import {showPrivateChatArea , sendChatMessages} from "./home/chat.js"
+import { showPrivateChatArea , sendChatMessages} from "./home/chat.js"
 
 showPrivateChatArea();
 sendChatMessages();
@@ -73,17 +73,16 @@ function updateUserStatus()
     });
 }
 updateUserStatus()
-// function notifyMe() {
-//  if (Notification.permission !== 'granted')
-//   Notification.requestPermission();
-//  else {
-//   var notification = new Notification('Notification title', {
-//    icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-//    body: 'Hey there! You\'ve been notified!',
-//   });
-//  }
-// }
-// notifyMe()
+function notifyMe() {
+ if (Notification.permission !== 'granted')
+  Notification.requestPermission();
+ 
+}
+notifyMe();
 
+
+// 
+
+// chatNotification()
 
 // 

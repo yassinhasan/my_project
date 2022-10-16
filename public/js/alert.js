@@ -29,3 +29,29 @@ function realTimeNoti( id ,userName , msg)
     `
      document.body.insertAdjacentHTML("afterbegin" , alertDiV)
 }
+
+function chatNotification(title , image , body ) {
+   
+ let icon = `../../public/uploades/images/profile/${image}`  
+ if (Notification.permission == 'granted')
+ {
+    const greeting = new Notification('Hi, How are you?',{
+      body: 'Have a good day',
+    
+   
+  });
+
+ 
+ } else if (Notification.permission !== "denied") {
+    // We need to ask the user for permission
+    Notification.requestPermission().then((permission) => {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        const notification = new Notification("Hi there!");
+        // …
+      }
+    });
+  }
+
+
+}

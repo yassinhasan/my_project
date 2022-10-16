@@ -11,6 +11,7 @@
     <script src="<?= $this->request->jsUrl("bootstrap.bundle.min")?>?50" charset="utf-8"></script>
      <script src="<?= $this->request->jsUrl("helper")?>?50" charset="utf-8"></script>
      <script src="<?= $this->request->jsUrl("main")?>?50" charset="utf-8"></script>
+   <script src="<?= $this->request->jsUrl("userinfo")?>?50" charset="utf-8"></script>
     <script src="<?= $this->request->jsUrl("customeSpinner")?>?50" charset="utf-8"></script>
     <script src="<?= $this->request->jsUrl("alert")?>?50" charset="utf-8"></script>
     <script src="<?= $this->request->jsUrl("validate")?>?50" charset="utf-8" ></script>

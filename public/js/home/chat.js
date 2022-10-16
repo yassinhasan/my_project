@@ -1,4 +1,4 @@
-import {loggedUser} from "./userinfo.js" 
+// import {loggedUser} from "./userinfo.js" 
 let user_section = document.querySelector(".user_section");
 let chat_section = document.querySelector(".chat_section");
 let floadting_btn = document.querySelector(".floadting_btn");
@@ -11,35 +11,26 @@ let chat_box = document.querySelector(".chat_box");
 let inner_chat =  document.querySelector(".inner_chat");
 let inner_chat_box =  document.querySelector(".inner_chat_box");
 
-let allusers  = {};
 let toUser= {};
 floadting_btn.addEventListener("click",e=>
 {
     showCustomeSpinner(user_chat_body);
-    showUsers();
-    loadChatAreaOfUsers();
+      showUsers();
+      let data = fetchChatusers();
+    loadChatAreaOfUsers(data);
 })
 go_back_chat.addEventListener("click",e=>
 {
     showCustomeSpinner(user_chat_body);
     showUsers();
-    loadChatAreaOfUsers();
+    let data = fetchChatusers();
+    loadChatAreaOfUsers(data);
 })
 
-//  load all users who iam follow them 
 function loadChatAreaOfUsers() {
 
-    let url = "/fetchChatUsers";
-    fetch(url, {
-            method: "POST"
-        })
-        .then(resp => resp.json())
-        .then(data => {
-           
-             removeCustomSpinner(user_chat_body);
-            prepareChatAreaOfUsers(data);
-
-        })
+     removeCustomSpinner(user_chat_body);
+     prepareChatAreaOfUsers(allDataChatuser);
 
 }
 // preapre area users 
@@ -53,7 +44,8 @@ function prepareChatAreaOfUsers(data)
         if (allUsers.length > 0) {
             for (var i = allUsers.length; i--;) 
             {
-                console.log(allUsers[i]);
+               
+               
                let msg = allUsers[i]["lastMmsg"]  
                let me = "";
                if(msg != null)
@@ -66,8 +58,6 @@ function prepareChatAreaOfUsers(data)
                {msg =" no chat yet"
                    
                }
-               
-                allusers["user_"+allUsers[i].id] = allUsers[i];
                 let userStatus = allUsers[i].userStatus == 1 ? "online" : "offline";
                 let image = allUsers[i].profileImage == null ? 'avatar.jpg' : `${allUsers[i].firstName}${allUsers[i].lastName}/${allUsers[i].profileImage}`;
                 fetch_users_div.innerHTML += `
@@ -117,7 +107,7 @@ function showPrivateChatArea()
             let name = e.target.querySelector(".chat_user_name_span").innerHTML;
             document.querySelector(".to_username").innerHTML =  name;
             let id = e.target.getAttribute("data-userId");
-            toUser = allusers["user_"+id];
+            toUser = allChatusers["user_"+id];
             let chat_messages_text = e.target.querySelector(".chat_messages_text");
             chat_messages_text.classList.remove("unseen")
             fetchPrivateChatArea();
@@ -257,34 +247,29 @@ function updatechat()
 {
     channel.bind('updateChate', function(data) {
         // changfe status
-        console.log(data)
       let messages  = data.msgs;
       let toUserId;
       let me = "";
+      let imagesrc = "";
+      let msgDiv = "";
+      let msg = messages["msg"];
+      let name = "";
+      let userStatus;
+      
+      msg =  repairMsg(msg);
       if(loggedUser.id == messages.fromId)
       {
           toUserId = messages.toId;
           me = "me"
       }else
       {
-            me =  messages["firstName"];
-           toUserId = messages.fromId; 
-
-      }
-      let chat_user_box = document.querySelector(`.chat_user_box_${toUserId}`);
-      let chat_messages = chat_user_box.querySelector(".chat_messages_text");
-      chat_messages.classList.add("unseen");
-      chat_messages.innerHTML = `${me}:  ${messages["msg"]}`;
-      let imagesrc = "";
-      let msgDiv = "";
-      let msg = messages["msg"];
-      msg =  repairMsg(msg);
-     if(messages["fromId"] == toUser.id)
-     {
-        
-           let name = toUser.firstName+toUser.lastName;
-                imagesrc = toUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+toUser.profileImage; 
-               msgDiv =  `<div class="from_otheruser">
+           toUserId = messages.fromId;
+           toUser = allChatusers["user_"+toUserId];
+            userStatus = toUser.userStatus == 1 ? "online" : "offline";
+           name = toUser.firstName+toUser.lastName;
+           imagesrc = toUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+toUser.profileImage; 
+           me =  messages["firstName"];
+           msgDiv =  `<div class="from_otheruser">
                   <div class="from_otheruser_msg" >
                     <p class="small">${msg}</p>
                   </div>
@@ -293,7 +278,42 @@ function updatechat()
                       alt="avatar 1">
                    </div>
                 </div>`;
+         let title = `message from ${name}` ;
+         let icon = imagesrc;
+         let body  = msg;
+         chatNotification(title , icon , body)       
     }
+    let chat_user_box = document.querySelector(`.chat_user_box_${toUserId}`);
+    if (chat_user_box)
+    {
+        let chat_messages = chat_user_box.querySelector(".chat_messages_text");
+        chat_messages.classList.add("unseen");
+        chat_messages.innerHTML = `${me}:  ${messages["msg"]}`; 
+       
+    }else
+    {
+       let chat_user_box =`  <div class="chat_user_box chat_user_box_${toUser.id}" data-userId=${toUser.id}>
+                        <div class="col-2 chat_user_image_box">
+                            <img src="../../public/uploades/images/profile/${imagesrc}"  class="chat_user_image" alt="...">
+                            <i class="fas fa-circle online_chat_status online_icon_status" data-userId=${toUser.id} data-status=${userStatus}></i>
+                        </div>
+                        <div class="col-10 chat_user_right_box">
+                            <div class="chat_user_name">
+                                 <!--<a href="/userPosts?id=${toUser.id}" style="color: #795548 ;" class="chat_user_userName"> ${name}</a>-->
+                                 <span class="chat_user_name_span">${name}</span>
+                            </div>
+                            <div class="chat_messages">
+                            <p class="chat_messages_text unseen">${me} : ${msg} </p>
+                            </div>
+                        
+                        </div>
+                   </div>`  ;
+              console.log("no")
+        fetch_users_div.insertAdjacentHTML("afterbegin" , chat_user_box)           
+    }
+      allChatusers["user_"+toUser.id].lastMmsg = msg;
+    
+
     inner_chat.insertAdjacentHTML("beforeend" , msgDiv);
     inner_chat.scrollTop = inner_chat.scrollHeight;
  });

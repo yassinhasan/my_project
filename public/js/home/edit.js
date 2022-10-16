@@ -1,5 +1,5 @@
 import {uploadAttach , attachmentType} from "./uploadattach.js";
-import {loggedUser} from "./userinfo.js" 
+// import {loggedUser} from "./userinfo.js" 
 let attachNeedUpdate = 
 {
     need : false , 

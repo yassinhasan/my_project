@@ -1,4 +1,4 @@
-import {loggedUser } from "./userinfo.js" 
+// import {loggedUser } from "./userinfo.js" 
 
 
 let share_post_btn = getElm("share_post_btn");
