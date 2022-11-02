@@ -70,4 +70,19 @@ class chatController extends abstractController
 
     }
     
+    public function blur()
+    {
+         $id = (int)$this->session->userId;
+        if($this->request->getMethod() == "POST")
+        {
+
+              $Pusherdata["userId"] = $id;
+              $Pusherdata["onlineStatus"] = STATUS_ONLINE;
+              $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
+        }
+
+    }
+    
+    
+    
 }

@@ -22,7 +22,7 @@ class homecontroller extends abstractController
         $this->data['links'] = [
             "css" => [ "home/users","home/mediaquery" ,"home" ] ,
             
-            "js" => ["home"] ,
+            "js" => ["mypusher","home"] ,
         ];
 
     }
@@ -30,17 +30,31 @@ class homecontroller extends abstractController
     {
         if($this->request->method() == "POST")
         {
-            $this->jData["loggedUser"] = user::findUser();
+            $id = Application::$app->session->userId;;
+            $this->jData["loggedUser"] = $id;
+          // echo  $this->pusher->socket_auth($_POST["channel_name"],  $socket_id);
+           $Pusherdata["userId"] = $id;
+           $Pusherdata["onlineStatus"] = STATUS_ONLINE;
+                        //  $this->pusher->socket_auth($_POST["channel_name"],  $socket_id);
+           $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
             $this->json(); 
         }else 
         {
-        $Pusherdata["userId"] = Application::$app->session->userId;
-        $Pusherdata["onlineStatus"] = "iam at home";
-     // $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
         $this->response->renderView("/home" ,$this->data );
         }
     }
     
+    public function presenceAuth()
+    {
+         $presence_data = [];
+         $loggedUser = user::findUser();
+        
+         $socket_id = $_POST["socket_id"];
+         $presence_data = ['user_id' => $loggedUser->id , "info" => $loggedUser];
+         $d = json_encode($presence_data);
+        // $this->pusher->trigger( $_ENV['CHANNEL'], 'subscription_succeeded',  $presence_data);
+         echo $this->pusher->socket_auth($_POST['channel_name'], $_POST['socket_id'] ,   $d);
+    }
     public function fetchPosts()
     {
     
@@ -50,7 +64,6 @@ class homecontroller extends abstractController
         {
 
              $this->jData['posts'] = $this->model->fetchPosts($userId);
-           
              $this->json();
         }else
         {
@@ -333,7 +346,6 @@ class homecontroller extends abstractController
     }
     public function sharePosts()
     {
-        
         $userId = Application::$app->session->userId;
         if($this->request->method() == "POST")
         {
@@ -344,7 +356,7 @@ class homecontroller extends abstractController
             $hasAttach = false;
             $postId = null;
 
-            // no upload or no file selected
+            //  file selected
             if(isset($_FILES['attachment']) && $attachmentType != "null")
             {
                 if(!$_FILES["attachment"]["error"] == 4)
@@ -401,8 +413,13 @@ class homecontroller extends abstractController
             }
             
            
-            $this->jData['lastPost'] = $this->model->fetchlastPost($postId,$userId);
-          
+           $lastPost = $this->model->fetchlastPost($postId,$userId);
+            $this->jData['lastPost'] = $lastPost ;
+             $Pusherdata["post"] = [
+                  "fromId" =>   $userId,
+                  "lastPost" => $lastPost 
+                  ];
+            $this->pusher->trigger( $_ENV['CHANNEL'], 'updatePost',  $Pusherdata);
             $this->json();
         }else
         {

@@ -11,7 +11,7 @@ let progress_div = getElm("progress_div");
 let progress = getElm("progress");
 let attach_input = document.querySelector(".attachment");
 
-import { attachmentType  } from "./uploadattach.js";
+import { attachmentType , attachmentEroors } from "./uploadattach.js";
 import { attachNeedUpdate  } from "./edit.js";
 import {readMore , handleFileName} from "./manageposts.js";
 
@@ -28,11 +28,25 @@ function sharePost(mainSharePox , update = false)
         let attach_input = document.querySelector(".attachment");
         let postId = mainSharePox.getAttribute("data-postId")
         removeAnyValidation();
+
+        if(isEmpty(textarea_text.value) && attachmentEroors.nofile == true )
+        {
+           makeInvalidInput("textarea_text", "Sorry   You shoud write or  upload somthing" ); 
+          
+        }
+        else if (attachmentEroors.type == true)
+        {
+             
+             makeInvalidInput("textarea_text", "Sorry this type not allowed" ); 
+        }else if ( attachmentEroors.size == true)
+        {
+              makeInvalidInput("textarea_text", "Sorry size type not allowed allowed size is "+ attachmentEroors.allowed_size + "MG" ); 
+        }
+        else
+        {
         showCustomeSpinner(shar_post_box);
-        
         let data = new FormData(form);
         data.append("attachmentType",  attachmentType.type);
-     
         if(postId)
         {
               data.append("postId", postId);
@@ -62,11 +76,9 @@ function sharePost(mainSharePox , update = false)
         req.addEventListener('load', function() {
             if (req.status == 200) {
                 let data = JSON.parse(req.response);
-              
                 removeCustomSpinner(shar_post_box);
                 if (data.errors && data.errors.attachment == null) {
                     for (let err in data.errors) {
-                        
                         if(update)
                         {
                              makeInvalidInput("update_input", data.errors[err])
@@ -90,14 +102,6 @@ function sharePost(mainSharePox , update = false)
                     preparePostBox(data);
                     //  showAlert('danger' , 'Error' , data.errors[err]);
                     progress_div.style.display = "none";
-                    let post_image  = getElm("post_image");
-                    if (post_image ) {
-                        post_image .remove();
-                    }
-                    let remove_attach  = getElm("remove_attach");
-                    if (remove_attach ) {
-                        remove_attach .remove()
-                    }
                     // hide modal
                 }
                 else if (data.sql_error) {
@@ -136,6 +140,8 @@ function sharePost(mainSharePox , update = false)
         })
         
         req.send(data);
+}
+    
 }
 
 function clickedShareBtn() {
@@ -252,7 +258,7 @@ function preparePostBox(data) {
         let post = "";
         if (allPosts.length > 0) {
          
-            for (var i = allPosts.length; i--;) {
+            for (var i  = 0 ; i <  allPosts.length; i++) {
                 let userStatus = allPosts[i].userStatus == 1 ? "online" : "offline";
                 let type = allPosts[i].likeType;
                 let postId = allPosts[i].id;

@@ -12,8 +12,7 @@ if(logged_user_name_link)
   let srcimage = logged_user_name_link.querySelector(".user_profile_image").src;
   loggedUser.image = srcimage.split("/").pop();
   loggedUser.id = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim()) ;
-
-
+  loggedUser.status = "online"
 }
 //  load all users who iam follow them
 
@@ -32,9 +31,14 @@ function  fetchChatusers()
             for (var i = users.length; i--;) 
             {
                 allChatusers["user_"+users[i].id] = users[i];
+                
              
             }
         }
         })  
 }
-fetchChatusers();
+
+if(window.location.href.split("/").pop() == "home")
+{
+   fetchChatusers(); 
+}

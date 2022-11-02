@@ -38,7 +38,7 @@ class chatModel extends abstractModel
         $msgs = $this->from(self::$tableName)
         ->where(" (fromId = ?  AND  toId = ?) OR (fromId = ?  AND  toId = ?)  " , [
             $data["fromId"] ,  $data["toId"] ,  $data["toId"] ,  $data["fromId"]
-        ])->select(" *  ")->fetchAll();
+        ])->order( " ORDER BY  msgDate DESC ")->limit( " LIMIT 5 ")->select(" *  ")->fetchAll();
         return $msgs;
     }
     

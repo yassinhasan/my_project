@@ -72,7 +72,7 @@ function prepareChatAreaOfUsers(data)
                                  <span class="chat_user_name_span">${allUsers[i].firstName} ${allUsers[i].lastName}</span>
                             </div>
                             <div class="chat_messages">
-                            <p class="chat_messages_text">${me} : ${msg} </p>
+                            <p class="chat_messages_text unseen">${me} : ${msg} </p>
                             </div>
                         
                         </div>
@@ -123,7 +123,6 @@ function fetchPrivateChatArea()
        "fromId": loggedUser.id, 
        "toId" : toUser.id
    })
-   
 }  
 
 
@@ -135,14 +134,15 @@ function preparePrivateChat(data)
       let imagesrc = "";
       if(messages.length > 0)
       {
-          for(var i = 0;i < messages.length; i++)
+          for(var i = messages.length  ; i-- ;)
           {
             let msg = messages[i]["msg"]
             msg = repairMsg(msg);
              if(messages[i].fromId == loggedUser.id)
              {
+                
                  let name = loggedUser.name.replace(" ","");
-                 imagesrc = loggedUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+loggedUser.image;               
+                 imagesrc = loggedUser.image == null ? "avatar.jpg" : name+"/"+loggedUser.image;               
                  inner_chat.innerHTML+=
                  `<div class="from_me">
                          <div class="from_me_image col-1">
@@ -155,8 +155,9 @@ function preparePrivateChat(data)
                  </div>` ;
              }else
              {
+                
                 let name = toUser.firstName+toUser.lastName;
-                imagesrc = toUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+toUser.profileImage; 
+                imagesrc = toUser.profileImage == null ? "avatar.jpg" : name+"/"+toUser.profileImage; 
                inner_chat.innerHTML+=  `<div class="from_otheruser">
                   <div class="from_otheruser_msg" >
                     <p class="small">${messages[i].msg}</p>
@@ -243,81 +244,7 @@ function sendChatCallable(data)
 }
 
 
-function updatechat()
-{
-    channel.bind('updateChate', function(data) {
-        // changfe status
-      let messages  = data.msgs;
-      let toUserId;
-      let me = "";
-      let imagesrc = "";
-      let msgDiv = "";
-      let msg = messages["msg"];
-      let name = "";
-      let userStatus;
-      
-      msg =  repairMsg(msg);
-      if(loggedUser.id == messages.fromId)
-      {
-          toUserId = messages.toId;
-          me = "me"
-      }else
-      {
-           toUserId = messages.fromId;
-           toUser = allChatusers["user_"+toUserId];
-            userStatus = toUser.userStatus == 1 ? "online" : "offline";
-           name = toUser.firstName+toUser.lastName;
-           imagesrc = toUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+toUser.profileImage; 
-           me =  messages["firstName"];
-           msgDiv =  `<div class="from_otheruser">
-                  <div class="from_otheruser_msg" >
-                    <p class="small">${msg}</p>
-                  </div>
-                   <div class="from_otheruser_image">
-                      <img src="../../public/uploades/images/profile/${imagesrc}"
-                      alt="avatar 1">
-                   </div>
-                </div>`;
-         let title = `message from ${name}` ;
-         let icon = imagesrc;
-         let body  = msg;
-         chatNotification(title , icon , body)       
-    }
-    let chat_user_box = document.querySelector(`.chat_user_box_${toUserId}`);
-    if (chat_user_box)
-    {
-        let chat_messages = chat_user_box.querySelector(".chat_messages_text");
-        chat_messages.classList.add("unseen");
-        chat_messages.innerHTML = `${me}:  ${messages["msg"]}`; 
-       
-    }else
-    {
-       let chat_user_box =`  <div class="chat_user_box chat_user_box_${toUser.id}" data-userId=${toUser.id}>
-                        <div class="col-2 chat_user_image_box">
-                            <img src="../../public/uploades/images/profile/${imagesrc}"  class="chat_user_image" alt="...">
-                            <i class="fas fa-circle online_chat_status online_icon_status" data-userId=${toUser.id} data-status=${userStatus}></i>
-                        </div>
-                        <div class="col-10 chat_user_right_box">
-                            <div class="chat_user_name">
-                                 <!--<a href="/userPosts?id=${toUser.id}" style="color: #795548 ;" class="chat_user_userName"> ${name}</a>-->
-                                 <span class="chat_user_name_span">${name}</span>
-                            </div>
-                            <div class="chat_messages">
-                            <p class="chat_messages_text unseen">${me} : ${msg} </p>
-                            </div>
-                        
-                        </div>
-                   </div>`  ;
-              console.log("no")
-        fetch_users_div.insertAdjacentHTML("afterbegin" , chat_user_box)           
-    }
-      allChatusers["user_"+toUser.id].lastMmsg = msg;
-    
 
-    inner_chat.insertAdjacentHTML("beforeend" , msgDiv);
-    inner_chat.scrollTop = inner_chat.scrollHeight;
- });
-}
 
 function repairMsg(msg)
 {
@@ -331,7 +258,9 @@ function repairMsg(msg)
  }
  return msg;
 }
-updatechat();
+
+
+
 prepareTextarea(chat_textarea);
 
 

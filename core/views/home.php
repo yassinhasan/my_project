@@ -30,12 +30,6 @@ use core\app\user;
                                  <div class="add_attach col-1">
                                  <i class="fa-solid fa-photo-film"></i>
                                 </div>
-                                <div class="add_docs col-1">
-                                    <i class="fas fa-file" aria-hidden="true"></i>
-                                </div>
-                                <div class="add_audio col-1">
-                                    <i class="fa-solid fa-volume-high"></i>
-                                </div>
                             </div>
                             <div class="mt-10">
                                 <button type="submit" name="sharePost" value="Share" class="btn btn-primary share_post_btn">

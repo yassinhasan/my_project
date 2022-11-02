@@ -1,22 +1,14 @@
 let loggedUser2 ={};
-var pusher = new Pusher('24d30dbe202f39f2b07f', {
-      cluster: 'ap2'
- });
-                   
-var channel = pusher.subscribe('my_project');
-
-
-
 let singlePost = 
 {
     isSinglePost : false
 }
 
-window.addEventListener('beforeunload', function (e) {
-    e.preventDefault();
-    // e.returnValue = '';
+// window.addEventListener('beforeunload', function (e) {
+//     e.preventDefault();
+//     // e.returnValue = '';
 
-});
+// });
 
 
 // when something happen 

@@ -85,7 +85,7 @@ function prepareTextarea(textarea) {
 
 }
 
-function csutomPostFetch(url , form ,  callback , appendData = {} , parentElement = null ,)
+function csutomPostFetch(url , form ,  callback , appendData = {} , parentElement = null)
 {   
     if(parentElement != null)
     {

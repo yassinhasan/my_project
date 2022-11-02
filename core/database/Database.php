@@ -13,7 +13,10 @@ class Database
     public $where = null;
     public $stmt = null;
     public $join = null;
+    public $limit = null;
+    public $order = null;
     public static $lastId = null;
+    
     public function __construct(array $config)
     {
         
@@ -101,6 +104,20 @@ class Database
         return $this;
 
     }
+        // join 
+    public function limit($limit)
+    {
+        
+        $this->limit = $limit;
+        return $this;
+    }
+            // join 
+    public function order($order)
+    {
+        
+        $this->order = $order;
+        return $this;
+    }
     public function query($sql, $bindings)
     {
         // pre($bindings);die;
@@ -180,7 +197,14 @@ class Database
         {
             $sql .= $this->where;
         }
-        
+        if($this->order)
+        {
+            $sql .= $this->order;
+        }
+        if($this->limit)
+        {
+            $sql .= $this->limit;
+        }
         $this->stmt = $this->query($sql, $this->bindings) ;
         return $this; 
     }

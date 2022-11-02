@@ -1,3 +1,7 @@
+
+
+
+
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
 // follow un follow system 
@@ -23,10 +27,9 @@ import { clickedOnAddLiketBtn } from "./home/likes.js"
 import {uploadAttach} from "./home/uploadattach.js";
 
 let share_post_box = getElm("shar_post_box");
-let image_video_attach_elm  = share_post_box.querySelector(".fa-photo-film"); 
-let doc_attach_elm  = share_post_box.querySelector(".fa-file");
-uploadAttach(share_post_box , image_video_attach_elm);
-uploadAttach(share_post_box , doc_attach_elm);
+let attach_elm  = share_post_box.querySelector(".fa-photo-film"); 
+uploadAttach(share_post_box , attach_elm);
+
 
 
 // must be after uplaod 
@@ -48,31 +51,12 @@ postEdit();
 import {fetchUsers , prepareUsersBox} from "./home/users.js"
 fetchUsers();
 // chat 
-import { showPrivateChatArea , sendChatMessages} from "./home/chat.js"
+
+import { showPrivateChatArea , sendChatMessages } from "./home/chat.js"
 
 showPrivateChatArea();
 sendChatMessages();
-function updateUserStatus()
-{
-    channel.bind('isLogged', function(data) {
-       
-        
-        let status = data.onlineStatus == 1  ? "online" : "offline";
-        let all_users_status_icons = document.querySelectorAll(".online_icon_status");
-        all_users_status_icons.forEach(user_icon=>
-            {
-                let icon_user_id = user_icon.getAttribute("data-userId");
-                if(icon_user_id == data.userId)
-                {
-                    user_icon.setAttribute("data-status" , status)
 
-                }
-            })
-
-    
-    });
-}
-updateUserStatus()
 function notifyMe() {
  if (Notification.permission !== 'granted')
   Notification.requestPermission();
@@ -81,8 +65,12 @@ function notifyMe() {
 notifyMe();
 
 
-// 
+// import {Newpost} from "./home/newpost.js"
 
-// chatNotification()
+// let ha = new Newpost();
+// ha.setPostId("1");
+// ha.setPost("helllasd iam hasan")
+// let st = ha.getPost();
+// console.log(st);
 
-// 
+

@@ -75,6 +75,8 @@ $app->router->post("/addComment",[ homecontroller::class , "addComment"]);
 $app->router->post("/addLike",[ homecontroller::class , "addLike"]);
 $app->router->post("/fetchLikes",[ homecontroller::class , "fetchLikes"]);
 $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
+$app->router->post("/presenceAuth",[ homecontroller::class , "presenceAuth"]);
+
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
 //  userPotsts
 $app->router->get("/userPosts",[ userPostsController::class , "userPosts"]);
@@ -86,6 +88,7 @@ $app->router->post("/chat/loadChat",[ chatController::class , "loadChat"]);
 $app->router->post("/chat/addMsg",[ chatController::class , "addMsg"]);
 $app->router->post("/chat/fetchPrivateChat",[ chatController::class , "fetchPrivateChat"]);
 $app->router->post("/fetchChatUsers",[ chatController::class , "fetchChatUsers"]);
+$app->router->post("/chat/blur",[ chatController::class , "blur"]);
 // $app->router->get("/chat",[ chatController::class , "chat"]);
 //test
 $app->router->get("/register",[ registerController::class , "register"]);
@@ -93,6 +96,7 @@ $app->router->post("/register",[ registerController::class , "register"]);
 $app->router->get("/login",[ loginController::class , "login"]);
 $app->router->get("/logout",[ logoutController::class , "logout"]);
 $app->router->post("/login",[ loginController::class , "login"]);
+
 $app->router->get("/contact",[ contactController::class , "contact"]);
 $app->router->post("/contact",[ contactController::class , "contact"]);
 $app->router->get("/profile",[ profileController::class , "profile"]);

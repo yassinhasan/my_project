@@ -1,4 +1,4 @@
-import {uploadAttach , attachmentType} from "./uploadattach.js";
+import {uploadAttach , attachmentType , attachmentEroors} from "./uploadattach.js";
 // import {loggedUser} from "./userinfo.js" 
 let attachNeedUpdate = 
 {
@@ -139,6 +139,10 @@ function remove_attach()
              attachmentType.type = null;
              attachNeedUpdate.need = true;
              remove_attach.parentElement.innerHTML = "";
+             attachmentEroors.nofile = true ;
+            attachmentEroors.type= false ;
+            attachmentEroors.size= false;
+            attachmentEroors.allowed_size = null;
           })
     }
 }

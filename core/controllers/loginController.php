@@ -26,6 +26,7 @@ class loginController extends abstractController
     // check if post then check data else if view this page 
     public function login()
     {
+
         $isLogged = authenticateController::isLogged();
         if($isLogged)
         {
@@ -38,7 +39,6 @@ class loginController extends abstractController
             $data = $this->request->getBody();
             if ( $this->validate->isValid( $this->model , $rules , $data) )
             {
-              
                 $user = $this->model->findUser();
                 if ($user) 
                 {
@@ -66,10 +66,8 @@ class loginController extends abstractController
                         }
                          $this->session->setFlashMsg("success_login" , " you have login succuflly");
                         
-                         $Pusherdata["userId"] = $user->id;
-                         $Pusherdata["onlineStatus"] = STATUS_ONLINE;
-                         $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
-                        
+        
+
                     }else
                     {
                         $this->validate->addCustomError("password" , "sorry this Password is not matched");
@@ -101,7 +99,8 @@ class loginController extends abstractController
 
 
     }
-
+    
+    
     // check valid data vs rules for this model 
 
 
