@@ -9,16 +9,16 @@
          <label for="lastName" class="form-label">Last Name </label>
          <input type="text" class="form-control " id="lastName" name="lastName" value="">
        </div>
-       <div class="mb-3 ">
+       <div class="mb-3 col-12">
          <label for="email" class="form-label">Type Your Email </label>
          <input type="email" class="form-control " id="email" name="email" value="" pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
        </div>
-       <div class="mb-3 ">
+       <div class="mb-3 col-6">
          <label for="password" class="form-label">Type Your Password </label>
          <input type="password" class="form-control " id="password" name="password" value="" autocomplete="true">
          <small class="password_hint">please enter password contain at least Captial letter min 8 letters</small>
       </div> 
-      <div class="mb-3 form-group">
+      <div class="mb-3 form-group col-6">
         <label for="confirmPassword" class="form-label">Confirm Your Password </label>
         <input type="password" class="form-control " id="confirmPassword" name="confirmPassword" value="" autocomplete="true">
   

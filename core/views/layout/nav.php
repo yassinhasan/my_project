@@ -16,27 +16,23 @@ $user = user::findUser();
              <div class="navbar_wraper row">
                 <?php
                 if(!$user): ?>
-                <li class="nav-item nav-register ">
-                <a class="nav-link nav-register" href="/register">register</a>
-                </li>
-                <li class="nav-item nav-register">
-                <a class="nav-link" href="#">|</a>
-            </li>
-                <li class="nav-item nav-register">
-                <a class="nav-link" href="/login">login</a>
-            </li>
+                <div class="nav-item nav-register-wraper">
+                     <a class="nav-link nav-register" href="/register">register  </a>
+                      <span style="color: white;">|</span>
+                     <a class="nav-link nav-register" href="/login">login</a>
+                </div>
                 <?php  endif ;?>
-                <li class="noti_wraper nav-item dropdown">
+                <div class="noti_wraper nav-item dropdown">
                             <i class="fas fa-bell noti_icon dropdown-toggle" id="notiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                              <span class="noti_count" >0</span>
                             </i>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notiDropdown">
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-wraper" aria-labelledby="notiDropdown">
                                   <div class="notfication_box">
                                       <span class="no_notification_span"> no notification</span>
                                   </div>
                             </div>
-                 </li>
-                <li class="nav-item dropdown">
+                 </div>
+                 <div class="nav-item dropdown">
                       <?php
                     if($user): ?>
                         <a  class="nav-link dropdown-toggle logged_user_name" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-loggedUserId=<?= Application::$app->session->userId?>>
@@ -56,9 +52,9 @@ $user = user::findUser();
                         <li><a class="dropdown-item" href="/logout">logout</a></li>
                     </ul>
                     <?php endif;?>
-            </li>
+                 </div>
                   <!-- Avatar -->                 
-             </div>
+                </div>
 
          </div>
       </div>
