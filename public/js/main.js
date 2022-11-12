@@ -4,6 +4,20 @@ let singlePost =
     isSinglePost : false
 }
 
+let noti_count = document.querySelector(".noti_count");
+if(noti_count)
+{
+   
+    if(noti_count.innerHTML == "0")
+    {
+        noti_count.style.display = "none";
+    }else
+    {
+        noti_count.style.display = "block";
+    }
+    
+}
+
 // window.addEventListener('beforeunload', function (e) {
 //     e.preventDefault();
 //     // e.returnValue = '';

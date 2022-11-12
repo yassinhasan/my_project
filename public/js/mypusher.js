@@ -16,19 +16,23 @@ pusher = new Pusher('24d30dbe202f39f2b07f', {
 presenceChannel = pusher.subscribe("presence-chat");
 presenceChannel.bind('pusher:subscription_succeeded', function(member) {
 
-     console.log(member)
+   //  console.log(member)
     })
 presenceChannel.bind('pusher:member_removed', function(member) {
 
-        let status =  "offline";
+        let onlinestatus =  "offline";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
             {
                 let icon_user_id = user_icon.getAttribute("data-userId");
                 if(icon_user_id == member.id)
                 {
-                    user_icon.setAttribute("data-status" , status);
-                    allChatusers["user_"+icon_user_id].status = status;
+
+                    user_icon.setAttribute("data-status" , onlinestatus);
+                    user_icon.setAttribute("data-status" , onlinestatus);
+                    allChatusers["user_"+icon_user_id] = {
+                        status : onlinestatus
+                    };
 
                 }
             })
@@ -36,19 +40,22 @@ presenceChannel.bind('pusher:member_removed', function(member) {
 })
 presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
   // For example
-  console.log(members.count);
+ // console.log(members.count);
 
   members.each((member) => {
     // For example
-        let status =  "online";
+        let onlinestatus =  "online";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
             {
                 let icon_user_id = user_icon.getAttribute("data-userId");
                 if(icon_user_id == member.id)
                 {
-                    user_icon.setAttribute("data-status" , status);
-                    allChatusers["user_"+icon_user_id].status = status;
+
+                    user_icon.setAttribute("data-status" , onlinestatus);
+                    allChatusers["user_"+icon_user_id] = {
+                        status : onlinestatus
+                    };
 
                 }
             })
@@ -56,15 +63,18 @@ presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
 });
 presenceChannel.bind('pusher:member_added', function(member ) {
 
-        let status =  "online";
+        let onlinestatus =  "online";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
             {
                 let icon_user_id = user_icon.getAttribute("data-userId");
                 if(icon_user_id == member.id)
                 {
-                    user_icon.setAttribute("data-status" , status);
-                    allChatusers["user_"+icon_user_id].status = status;
+                    user_icon.setAttribute("data-status" , onlinestatus);
+                    allChatusers["user_"+icon_user_id] = {
+                        status : onlinestatus
+                    };
+                
 
                 }
             })
@@ -180,13 +190,44 @@ function updatePost()
     channel.bind('updatePost', function(data) {
       
       let id  = data.post.fromId;
-      let post = data.post.lastPost;
-      console.log(post)
-      if(loggedUser.id !== id)
+      let post = data.post.lastPost[0];
+      if(loggedUser.id != id)
       {
          realTimeNoti( post.userId , post.firstName+" "+post.lastName , " added new Post ");
       }  
  });
 }
 
-updatePost()
+
+
+updatePost() ;
+
+
+function updateAddComment()
+{
+    channel.bind('addComment', function(data) {
+      let id  = data.userId;
+      let userName = data.userName;
+      let postUserId = data.postUserId;
+      let postId = data.postId;
+      let noti_count = document.querySelector(".noti_count");
+      let noti_count_number = parseInt(noti_count.innerHTML);
+      if(loggedUser.id != id && loggedUser.id == postUserId)
+      {
+            noti_count_number ++;
+            noti_count.innerHTML = noti_count_number;
+            noti_count.style.display = "block" ;
+           let notfication_box = document.querySelector(".notfication_box");
+           notfication_box.classList.remove(".no_notification");
+           let no_notification_span = notfication_box.querySelector(".no_notification_span");
+            no_notification_span.innerHTML = "";
+           let notication_string = `
+           <div class="notcation_details" > <span class="comment_username">${userName}</span> has added comment at you post <a href="/showPost?postId=${postId}" class="comment_link">click here</a> to show comment
+           </div>`;
+           notfication_box.insertAdjacentHTML("afterbegin", notication_string);
+           
+      } 
+
+    });
+}
+updateAddComment();

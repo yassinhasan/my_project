@@ -10,7 +10,7 @@ let post_image = getElm("post_image");
 let progress_div = getElm("progress_div");
 let progress = getElm("progress");
 let attach_input = document.querySelector(".attachment");
-
+let comments_post = {};
 import { attachmentType , attachmentEroors } from "./uploadattach.js";
 import { attachNeedUpdate  } from "./edit.js";
 import {readMore , handleFileName} from "./manageposts.js";
@@ -99,7 +99,7 @@ function sharePost(mainSharePox , update = false)
                     textarea_text.value = "";
                     makevalidInput("post", data.success);
                     textarea_text.innerHTML = "";
-                    preparePostBox(data);
+                    preparePostBox(data , 0);
                     //  showAlert('danger' , 'Error' , data.errors[err]);
                     progress_div.style.display = "none";
                     // hide modal
@@ -243,16 +243,20 @@ function updateAllPost(data)
     let close_modal = myModal.querySelector(".close_modal");
     close_modal.click()    
 }
-function preparePostBox(data) {
+
+function preparePostBox(data , offset) {
+       
        let allPosts;
        if(data.lastPost)
        {
-                 
              allPosts = data.lastPost; 
-        }else if(data.posts)
+        }else if(data.posts && offset == 0)
         {
               post_box.innerHTML = "";
               allPosts = data.posts;
+        }else
+        {
+           allPosts = data.posts; 
         }
         
         let post = "";
@@ -267,7 +271,7 @@ function preparePostBox(data) {
                 let attachment_div = "";
                 let document_attachment_div = "";
                 let attachment_type = allPosts[i].attachmentType;
-                
+                comments_post["post_"+postId] = allPosts[i].allcomments;
                 let post = allPosts[i].postText == "null" ? "" : readMore(allPosts[i].postText , postId);
                 if (attachment_type == "image") {
                     attachment_div = `
@@ -303,6 +307,7 @@ function preparePostBox(data) {
                 // show edit and delete if logged user
                 let edit = (loggedUser.id != allPosts[i].userId)? '' :`<div class="edit_box_edit" data-postId="${postId}" data-bs-toggle="modal" data-bs-target="#postEditModal">edit</div>
                          <div class="edit_box_delete" data-postId="${postId}">delete</div>`;
+
                 // start add post
                  post = `
                         <div class="post_box_details"  id="post_box_details_${postId}">
@@ -351,7 +356,7 @@ function preparePostBox(data) {
                                         </div>
                                </div>
                                 <!-- here form of comments -->
-                                 <div class="comments_form_box hidden" id="comments_form_box_${postId}" data-postId=${postId}>
+                                 <div class="comments_form_box hidden" id="comments_form_box_${postId}" data-postId=${postId} data-postUserId=${allPosts[i].userId}>
                                  </div>
                                 <!-- end form of comments -->
                                 <!-- end here comments -->
@@ -380,18 +385,33 @@ function preparePostBox(data) {
                 {
                     post_box.insertAdjacentHTML("afterbegin" , post)
                 }
-                else if(data.posts)
+                else if(data.posts && offset == 0)
                 {
-                    post_box.innerHTML += post;
-                }        
+                     post_box.innerHTML += post;
+                }else if(data.posts && offset != 0)
+                {
+                      post_box.insertAdjacentHTML("beforeend" , post)
+                }
             }
             
 
         }
+         else if (allPosts.length == 0 && offset > 0) 
+         {
+             let no_post_div = document.querySelector(".no-more-posts");
+             if(!no_post_div)
+             {
+                   post_box.innerHTML += "<div class='no-more-posts'> no more posts</div>";
+                   
+             }
+             
+           
+            
+         }
         else
 
         {
-            post_box.innerHTML = "";
+            post_box.innerHTML = " no posts";
         }
         
         
@@ -401,17 +421,20 @@ function preparePostBox(data) {
 }
 
 
-function fetchPostsUrl() {
+function fetchPostsUrl(offset = 0) {
    
     showCustomeSpinner(post_box);
+   let form = new FormData();
+     form.append("offset", offset);
     let url = "/fetchPosts";
     fetch(url, {
-            method: "POST"
+            method: "POST"  , 
+            body: form
         })
         .then(resp => resp.json())
         .then(data => {
-          
-            preparePostBox(data)
+           
+            preparePostBox(data , offset)
 
         })
 

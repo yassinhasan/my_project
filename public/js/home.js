@@ -73,4 +73,29 @@ notifyMe();
 // let st = ha.getPost();
 // console.log(st);
 
+window.addEventListener("scroll", function(e) { 
+ 
+    let post_box = document.querySelector(".post_box");
+    let offset = post_box.childElementCount;
+    let reach = false;
+    if ((window.innerHeight +  Math.round(window.scrollY)) >= document.body.offsetHeight  ) {
+        // you're at the bottom of the page
+        
+          // showCustomeSpinner(post_box);
+          reach = true;
+          let form = new FormData();
+          form.append("offset", offset);
+         let url = "/fetchPosts";
+         fetch(url, {
+            method: "POST" , 
+            body: form
+         })
+        .then(resp => resp.json())
+        .then(data => {
+          
+            preparePostBox(data , offset)
+
+        })
+    }
+});
 

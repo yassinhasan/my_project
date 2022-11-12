@@ -1,9 +1,9 @@
-// import {loggedUser} from "./userinfo.js" 
 
 
 
 function clickedOnCommentsDiv()
 {
+   
    document.body.addEventListener("click",e=>
     {
        
@@ -37,12 +37,10 @@ function loadCommentsForm(div ,postId) {
     div.insertAdjacentHTML("beforeend",form);
 }
 
-function loadComments(data , postId)
+function loadComments(commentsData , postId)
 {
    let comments_form_box = document.getElementById("comments_form_box_"+postId);
    comments_form_box.innerHTML = "";
-   
-   let commentsData = data.comment;
    let comments = `<div class="user_comments_box">`;
    
      if(commentsData.length > 0)
@@ -77,7 +75,7 @@ function loadComments(data , postId)
          
      }else
      {
-        comments +=  ` <span> Posts Has No Comments </pan> </div>`; 
+        comments +=  ` <span class="post_han_no_comment"> Posts Has No Comments </pan> </div>`; 
      }
      
     comments_form_box.insertAdjacentHTML("afterbegin",comments);
@@ -98,6 +96,7 @@ function clickedOnAddCommentBtn()
         let comments_form_textarea = add_comment_btn.parentElement.querySelector(".comments_form_textarea");
         let comment = comments_form_textarea.value;
         let postId = comments_form_box.getAttribute("data-postId");
+        let postUserId = comments_form_box.getAttribute("data-postUserId");
         // 
         
          showCustomeSpinner(comments_form_box);
@@ -106,6 +105,7 @@ function clickedOnAddCommentBtn()
             let formData = new FormData();
             formData.append('comment', comment);
             formData.append('postId', postId);
+            formData.append('postUserId', postUserId);
             let url = "/addComment";
             fetch(url, {
                     method: "POST",
@@ -145,7 +145,6 @@ function clickedOnCommentTextarea()
 function fetchComments(div ,postId)
 {
 
- 
     let formData = new FormData();
     formData.append('postId', postId);
     let url = "/fetchComments";
@@ -169,7 +168,8 @@ function fetchComments(div ,postId)
             comments_num_span.innerHTML = 0;
       }
       
-      loadComments(data ,postId)
+      
+      loadComments(data.comment ,postId)
       removeCustomSpinner(div);
     //   channel.bind('addComment', function(data) {
       

@@ -205,6 +205,7 @@ class Database
         {
             $sql .= $this->limit;
         }
+        
         $this->stmt = $this->query($sql, $this->bindings) ;
         return $this; 
     }
@@ -274,7 +275,7 @@ class Database
         {
             // pre($bindings);die;
             $stmt = $this->pdo->prepare($sql);
-            
+           
             if(! empty($bindings))
             {
                 foreach($bindings as $key => $value)

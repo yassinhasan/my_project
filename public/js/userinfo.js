@@ -42,3 +42,5 @@ if(window.location.href.split("/").pop() == "home")
 {
    fetchChatusers(); 
 }
+
+

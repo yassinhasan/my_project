@@ -1,0 +1,66 @@
+<?php
+
+use core\app\Application;
+use core\app\user;
+$user = user::findUser();
+
+?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home"><?= PROJECT_NAME ?></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <?php
+            if(!$user): ?>
+            <li class="nav-item">
+            <a class="nav-link" href="/register">register</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">|</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/login">login</a>
+            </li>
+            <?php  endif ;?>
+        </ul>
+        <ul class="d-flex" style="list-style: none;">
+            <li class="noti_wraper nav-item dropdown">
+                <i class="fas fa-bell noti_icon dropdown-toggle" id="notiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                 <span class="noti_count" >0</span>
+                </i>
+                <div class="dropdown-menu" aria-labelledby="notiDropdown">
+                      <div class="notfication_box">
+                          <span class="no_notification_span"> no notification</span>
+                      </div>
+                </div>
+            <li class="nav-item dropdown">
+
+            <?php
+            if($user): ?>
+                <a class="nav-link dropdown-toggle logged_user_name" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-loggedUserId=<?= Application::$app->session->userId?>>
+                    
+                    <span class="username"><?= $user->firstName." ".$user->lastName?></span>
+                  <img
+                    src="<?= user::displayImage(); ?>"
+                    class="rounded-circle user_profile_image"
+                    height="22"
+                    alt="Black and White Portrait of a Man"
+                  />
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="/profile">profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout">logout</a></li>
+                </ul>
+            <?php endif;?>
+
+            </li>
+        </ul>
+        </div>
+    </div>
+    </nav>
+    

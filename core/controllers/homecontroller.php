@@ -59,11 +59,12 @@ class homecontroller extends abstractController
     {
     
         $userId = Application::$app->session->userId;
-        
+         $data = $this->request->getBody();
+        $offset = $data['offset'];
         if($this->request->method() == "POST")
         {
 
-             $this->jData['posts'] = $this->model->fetchPosts($userId);
+             $this->jData['posts'] = $this->model->fetchPosts($userId , $offset);
              $this->json();
         }else
         {
@@ -114,14 +115,17 @@ class homecontroller extends abstractController
         $data = $this->request->getBody();
         $userId = Application::$app->session->userId;
         $postId = $data['postId'];
+        $postUserId = $data['postUserId'];
         $comment = $data['comment'];
         if($this->request->method() == "POST")
         {
              if($this->model->addComment($userId , $postId , $comment) )
              {
-               $xdata['userId'] = $userId;
-               $xdata["userName"] = user::displayName();
-              // $this->pusher->trigger( $_ENV['CHANNEL'], 'addComment',  $xdata);
+               $pusherData['userId'] = $userId;
+               $pusherData["userName"] = user::displayName();
+               $pusherData["postUserId"] = $postUserId;
+               $pusherData["postId"] = $postId;
+               $this->pusher->trigger( $_ENV['CHANNEL'], 'addComment',  $pusherData);
                $this->jData["comment"] = $this->model->fetchComments( $postId);
              }
       

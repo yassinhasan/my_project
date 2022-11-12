@@ -38,7 +38,7 @@ class postsModel extends abstractModel
         ])->insert("posts_attach");
         return true;
     }
-    public function fetchPosts($userId)
+    public function fetchPosts($userId , $offset)
     {
         $posts = $this->from(" app_posts " )->join(" 
             INNER JOIN app_users  ON 
@@ -51,9 +51,9 @@ class postsModel extends abstractModel
             where app_users_follow.sender = $userId and app_users_follow.receiver = app_users.id and followStatus = 'approve'
             )" 
             
-            , $userId)->order( " ORDER BY  postDate DESC ")->limit( " LIMIT 2 ")->select("
+            , $userId)->order( " ORDER BY  postDate DESC ")->limit( " LIMIT 2  OFFSET  $offset ")->select("
              app_posts.*  ,app_users.id as userId , app_users.firstName , app_users.lastName , app_users.userStatus , app_user_profile.profileImage  ,
-             posts_attach.attachment , posts_attach.attachmentType  ,
+             posts_attach.attachment , posts_attach.attachmentType  , 
              (SELECT  COUNT(app_post_comments.postId) from app_post_comments where app_post_comments.postId = app_posts.id) as comments ,
              (SELECT  COUNT(app_post_likes.id) from app_post_likes where (app_post_likes.likeType = 'like' AND app_post_likes.postId = app_posts.id )) as liked , 
              (SELECT  COUNT(app_post_likes.id) from app_post_likes where ( app_post_likes.likeType = 'unlike' AND app_post_likes.postId = app_posts.id ) )as disliked ,
