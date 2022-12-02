@@ -146,11 +146,31 @@ class postsModel extends abstractModel
                 app_users.id  = app_post_comments.userId
                  INNER JOIN app_posts on
                 app_posts.id  = app_post_comments.postId
-                ")->where("app_posts.id = ? " , $postId)->select(" app_post_comments.* , app_user_profile.profileImage ,app_users.firstName ,app_users.lastName , 
-                 (SELECT  COUNT(app_post_comments.postId) from app_post_comments where app_post_comments.postId = $postId) as comments
+                ")->where("app_posts.id = ? " , $postId)->order("ORDER BY app_post_comments.commentDate DESC")->select(" app_post_comments.* , app_user_profile.profileImage ,app_users.firstName ,app_users.lastName , 
+                 (SELECT  COUNT(app_post_comments.postId) from app_post_comments where app_post_comments.postId = $postId) as comments ,
+                  (SELECT  GROUP_CONCAT(DISTINCT(app_post_comments.userId)) from app_post_comments where app_post_comments.postId = $postId) as allcommentsUsers 
+                
                 ")->fetchAll();
     }
     
+    public function deleteComment($id)
+    {
+        $count =  $this->from(" app_post_comments " )
+         ->where("app_post_comments.id = ? " , $id)
+         ->delete();
+
+        return $count > 0;
+    }
+    public function updateComment($id , $comment)
+    {
+
+        
+        if ($this->data([
+        "comment" => $comment , 
+        ])->where("  id = ? " , $id)->update(" app_post_comments "))
+
+        return true;
+    }
     // likes
     
     // select from likes if user make like if true

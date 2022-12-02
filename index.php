@@ -2,7 +2,8 @@
 ini_set("display_errors" , 1);
 use core\app\Application;
 use core\controllers\accessController;
-use core\controllers\homecontroller;
+use core\controllers\homecontroller; 
+use core\controllers\notificationController;
 use core\controllers\userPostsController;
 use core\controllers\showPostController;
 use core\controllers\registerController;
@@ -72,10 +73,14 @@ $app->router->post("/postEdit",[ homecontroller::class , "postEdit"]);
 $app->router->post("/fetchPosts",[ homecontroller::class , "fetchPosts"]);
 $app->router->post("/fetchUsers",[ homecontroller::class , "fetchUsers"]);
 $app->router->post("/addComment",[ homecontroller::class , "addComment"]);
+$app->router->post("/deleteComment",[ homecontroller::class , "deleteComment"]);
+$app->router->post("/updateComment",[ homecontroller::class , "updateComment"]);
 $app->router->post("/addLike",[ homecontroller::class , "addLike"]);
 $app->router->post("/fetchLikes",[ homecontroller::class , "fetchLikes"]);
 $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
 $app->router->post("/presenceAuth",[ homecontroller::class , "presenceAuth"]);
+$app->router->post("/getNotifications",[ homecontroller::class , "getNotifications"]);
+$app->router->post("/updateNotification",[ homecontroller::class , "updateNotification"]);
 
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
 //  userPotsts
@@ -97,6 +102,7 @@ $app->router->get("/login",[ loginController::class , "login"]);
 $app->router->get("/logout",[ logoutController::class , "logout"]);
 $app->router->post("/login",[ loginController::class , "login"]);
 
+// load notifications
 $app->router->get("/contact",[ contactController::class , "contact"]);
 $app->router->post("/contact",[ contactController::class , "contact"]);
 $app->router->get("/profile",[ profileController::class , "profile"]);

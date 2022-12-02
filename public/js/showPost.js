@@ -32,3 +32,7 @@ import {showEditBox , postDelete , updatePost} from "./home/posts.js"
 showEditBox();
 postDelete();
 updatePost();
+
+// import notifications  getNotifications
+import {getNotifications} from "./home/notifications.js"
+getNotifications();

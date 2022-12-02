@@ -3,6 +3,7 @@ namespace core\controllers;
 
 use core\app\Application;
 use core\models\postsModel;
+use core\models\notificationModel;
 use core\app\user;
 use core\app\uploadImage;
 use core\app\uploadVideo;
@@ -43,7 +44,16 @@ class homecontroller extends abstractController
         $this->response->renderView("/home" ,$this->data );
         }
     }
-    
+    public function getNotifications()
+    {
+        $userId = Application::$app->session->userId;
+        if($this->request->method() == "POST")
+        {
+           $notificationModel = new notificationModel();
+          $this->jData["notification"] = $notificationModel->getNotifications($userId);
+          $this->json(); 
+        }
+    }
     public function presenceAuth()
     {
          $presence_data = [];
@@ -116,23 +126,54 @@ class homecontroller extends abstractController
         $userId = Application::$app->session->userId;
         $postId = $data['postId'];
         $postUserId = $data['postUserId'];
+        $addnotfication = $data['addnotfication'];
         $comment = $data['comment'];
+        $userName = $data['userName'];
         if($this->request->method() == "POST")
         {
              if($this->model->addComment($userId , $postId , $comment) )
              {
-               $pusherData['userId'] = $userId;
-               $pusherData["userName"] = user::displayName();
-               $pusherData["postUserId"] = $postUserId;
-               $pusherData["postId"] = $postId;
-               $this->pusher->trigger( $_ENV['CHANNEL'], 'addComment',  $pusherData);
+
                $this->jData["comment"] = $this->model->fetchComments( $postId);
+               if($addnotfication == "true")
+               {
+                   $pusherData['userId'] = $userId;
+                   $pusherData["userName"] = user::displayName();
+                   $pusherData["postUserId"] = $postUserId;
+                   $pusherData["postId"] = $postId;
+                   $to = [];
+                   $allcommentsUsers = $data['allcommentsUsers'];
+                   $to = explode(",",$allcommentsUsers);
+                   $pusherData["to"] = $to;
+                   $notificationModel = new notificationModel();
+                   $notificationId = $notificationModel->addNotification($userId ,$to ,$postUserId , $postId ,$userName);
+                   $pusherData["notificationId"] = $notificationId;
+                   $this->pusher->trigger( $_ENV['CHANNEL'], 'addComment',  $pusherData);
+               }
+
              }
       
              $this->json();
         }else
         {
                 $this->response->renderView("home",$this->data );
+        }
+
+    }
+    
+    public function updateNotification()
+    {
+        $data = $this->request->getBody();
+        $userId = Application::$app->session->userId;
+        $notificationId = $data['notificationId'];
+        $notificationModel = new notificationModel();
+        if($this->request->method() == "POST")
+        {
+          if($notificationModel->updateNotification($notificationId , $userId))
+          {
+              $this->jData["update"] = "success";
+          }
+          $this->json();
         }
 
     }
@@ -152,6 +193,41 @@ class homecontroller extends abstractController
 
     }
     
+    // delete comment
+   public function deleteComment()
+    {
+        $data = $this->request->getBody();
+        $id = $data['id'];
+        if($this->request->method() == "POST")
+        {
+
+          if($this->model->deleteComment($id))
+          {
+              $this->jData["delete"] = "success";
+              
+          }
+          $this->json();
+        }
+
+    }
+    // delete comment
+   public function updateComment()
+    {
+        $data = $this->request->getBody();
+        $comment =  $data['comment'];
+        $id = $data['id'];
+        if($this->request->method() == "POST")
+        {
+
+          if($this->model->updateComment($id , $comment))
+          {
+              $this->jData["update"] = "success";
+              
+          }
+          $this->json();
+        }
+
+    }
     // likes
         public function addLike()
     {

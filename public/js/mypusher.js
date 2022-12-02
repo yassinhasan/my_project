@@ -206,13 +206,19 @@ updatePost() ;
 function updateAddComment()
 {
     channel.bind('addComment', function(data) {
-      let id  = data.userId;
+      let whoAddComment  = data.userId;
       let userName = data.userName;
-      let postUserId = data.postUserId;
+      let ownerOfPOST = data.postUserId;
       let postId = data.postId;
+      let to     = data.to;
+      let notificationId = data.notificationId;
       let noti_count = document.querySelector(".noti_count");
       let noti_count_number = parseInt(noti_count.innerHTML);
-      if(loggedUser.id != id && loggedUser.id == postUserId)
+      // if someone add comment on my post and not me (loggedUser.id != whoAddComment && loggedUser.id == postUserId) 
+      //  
+      // if iam owner of post put iam not who write comment
+      // i need if iam owner and 
+      if((loggedUser.id != whoAddComment && loggedUser.id == ownerOfPOST) || (loggedUser.id != whoAddComment &&  whoAddComment== ownerOfPOST && to.length > 1 ))
       {
             noti_count_number ++;
             noti_count.innerHTML = noti_count_number;
@@ -220,9 +226,11 @@ function updateAddComment()
            let notfication_box = document.querySelector(".notfication_box");
            notfication_box.classList.remove(".no_notification");
            let no_notification_span = notfication_box.querySelector(".no_notification_span");
-            no_notification_span.innerHTML = "";
+           if(no_notification_span)
+          { no_notification_span.innerHTML = "";}
+            
            let notication_string = `
-           <div class="notcation_details" > <span class="comment_username">${userName}</span> has added comment at you post <a href="/showPost?postId=${postId}" class="comment_link">click here</a> to show comment
+           <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> has added comment at you post <a href="/showPost?postId=${postId}" class="comment_link" data-postId=${postId}>click here</a> to show comment
            </div>`;
            notfication_box.insertAdjacentHTML("afterbegin", notication_string);
            
@@ -231,3 +239,34 @@ function updateAddComment()
     });
 }
 updateAddComment();
+
+function onClickNotification()
+{
+    window.addEventListener("click",(e)=>
+    {
+       
+        if(e.target.classList.contains("notcation_details") )
+        {
+            let notificationId = e.target.getAttribute("data-notificationId");
+            let comment_link = e.target.querySelector(".comment_link");
+            let postId = comment_link.getAttribute("data-postId");
+            let url = "/updateNotification";
+            let form = new FormData();
+            form.append("notificationId", notificationId);
+            fetch(url, {
+                  method: "POST" ,
+                   body: form
+                  })
+            .then(resp => resp.json())
+            .then(data => {
+            if(data.update == "success")
+              {
+                   window.location.href =`/showPost?postId=${postId}`
+              }
+          })  
+        }
+    })
+
+
+}
+onClickNotification()

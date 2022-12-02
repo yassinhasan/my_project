@@ -14,7 +14,7 @@ class Application
     public $view;
     public $cookie;
     public $migrations;
-    public  $db;
+    public  $db = null;
     public $customExceptions;
     public static $app;
     public $Pusher;
@@ -31,8 +31,11 @@ class Application
         $this->request = new Rrequest();
         $this->response = new Response();
         $databse = $config["database"];
+        if($this->db == null)
+        {
+           $this->db = new Database($databse);  
+        }
        
-        $this->db      = new Database($databse);
         $this->migrations = new MigrationsClass();
         $this->customExceptions  = new customExceptions();
         $this->pusher = $config["pusher"][0];

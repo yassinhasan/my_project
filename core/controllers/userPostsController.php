@@ -12,7 +12,7 @@ class userPostsController extends abstractController
         $this->data["title"] = "userPosts";
         $this->data['links'] = [
             "css" => ["userPosts"] ,
-            "js" => ["userPosts"] ,
+            "js" => ["mypusher","userPosts"] ,
         ];
 
     }

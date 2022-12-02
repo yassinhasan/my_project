@@ -11,7 +11,7 @@ class showPostController extends abstractController
         $this->data["title"] = "showPost";
         $this->data["links"] = [
             "css" => ["showPost"],
-            "js" => ["showPost"]
+            "js" => ["mypusher","showPost"]
             ];
     }
     public function showPost()

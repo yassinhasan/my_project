@@ -4,9 +4,7 @@
 
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
-// follow un follow system 
-import {clickedOnFollowBtn} from "./home/follow.js"
-clickedOnFollowBtn();
+
 
 
 // comments area
@@ -22,6 +20,10 @@ clickedOnAddCommentBtn();
 import { clickedOnAddLiketBtn } from "./home/likes.js"
  clickedOnAddLiketBtn();
 
+
+// import notifications  getNotifications
+import {getNotifications} from "./home/notifications.js"
+getNotifications();
  // realTimeNoti( 1 ,"hasn meady" , "is online now");
 
 import {uploadAttach} from "./home/uploadattach.js";
@@ -72,7 +74,9 @@ notifyMe();
 // ha.setPost("helllasd iam hasan")
 // let st = ha.getPost();
 // console.log(st);
-
+// follow un follow system 
+import {clickedOnFollowBtn} from "./home/follow.js"
+clickedOnFollowBtn();
 window.addEventListener("scroll", function(e) { 
  
     let post_box = document.querySelector(".post_box");

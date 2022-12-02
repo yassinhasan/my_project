@@ -35,6 +35,7 @@ use core\app\user;
                             $attachment = $user_posts[$i]->attachment == null ? null  : $user_posts[$i]->attachment;
                             $attachment_div= "";
                             $attachment_type = $user_posts[$i]->attachmentType;
+                            $postuserId = $user_posts[$i]->userId;
                              if($attachment_type == "image"){
                               $attachment_div = "<div class='post_attachment_div' data-type='image'>
                               <div class='img_container'>
@@ -86,6 +87,39 @@ use core\app\user;
                     ?>
                     
                          <div class="post_box_details"  id="post_box_details_<?=$postId?>">
+                              <div class="card-header row post_card_header">
+                             <?php 
+                             if($isMe)
+                             {
+                                 echo "
+                                 <div class='edit_big_box col-1 showt_edit_div' data-show=$i>
+                                                <i class='fas fa-ellipsis-v'></i>
+                                                <div class='edit_box' id='edit_box_$i'>
+                                                    <div class='edit_box_edit' data-postId='$postId' data-bs-toggle='modal' data-bs-target='#postEditModal'>edit</div>
+                                                    <div class='edit_box_delete' data-postId='$postId'>delete</div>
+                                                </div>
+                                </div>
+                                 ";
+                             }
+                             ?>
+                            <!-- likes -->
+                               <div class="likes_box">
+                                        <div data-postId="<?=$postId?>" id="likes_box_<?=$postId?>">
+                                            <div class="is_like">
+                                                 <span class="likes_num no_of_likes"><?=$user_posts[$i]->liked ?></span>
+                                                 <i class="fas fa-thumbs-up like_btn  <?= $type == 'like' ? 'active' : ''?>" data-type="like"></i>
+                                            </div>
+                                             <div class="i_dislike">
+                                                 <span class="dislikes_num no_of_likes"><?= $user_posts[$i]->disliked ?> </span>                                 
+                                                 <i class="fas fa-thumbs-down dislike_btn 
+                                                 <?= $type == 'unlike' ? 'active' : '' ?> "    data-type="unlike"></i> 
+                                             </div>
+                                        </div>
+
+                                </div>
+                            <!-- end likes -->
+                            <!--edit-->
+                              </div>
                               <div class="card-body big_card_body">
                                     <div class="card-body post_text_box">
                                         <?=   $attachment_div ?>
@@ -102,43 +136,16 @@ use core\app\user;
                                         </div>
                                </div>
                                 <!-- here form of comments -->
-                                 <div class="comments_form_box hidden" id="comments_form_box_<?=$postId?>" data-postId="<?= $postId ?>">
+                                 <div class="comments_form_box hidden" id="comments_form_box_<?=$postId?>" data-postId="<?= $postId ?>" data-postUserId="<?= $postuserId ?>">
+                                    <div class='allcomments_div'>
+                                    </div>
+                                    <div class="comments_form_wraper">
+                                    </div>
                                  </div>
                                 <!-- end form of comments -->
                                 <!-- end here comments -->
                             </div>
-                            
-                            <!-- likes -->
-                                    <div class="likes_box">
-                                        <div data-postId="<?=$postId?>" id="likes_box_<?=$postId?>">
-                                            <div class="is_like">
-                                                 <span class="likes_num no_of_likes"><?=$user_posts[$i]->liked ?></span>
-                                                 <i class="fas fa-thumbs-up like_btn  <?= $type == 'like' ? 'active' : ''?>" data-type="like"></i>
-                                            </div>
-                                             <div class="i_dislike">
-                                                 <span class="dislikes_num no_of_likes"><?= $user_posts[$i]->disliked ?> </span>                                 
-                                                 <i class="fas fa-thumbs-down dislike_btn 
-                                                 <?= $type == 'unlike' ? 'active' : '' ?> "    data-type="unlike"></i> 
-                                             </div>
-                                        </div>
 
-                                </div>
-                            <!-- end likes -->
-                            <!--edit-->
-                             <?php 
-                             if($isMe)
-                             {
-                                 echo "
-                                 <div class='edit_big_box col-1 showt_edit_div' data-show=$i>
-                                                <i class='fas fa-ellipsis-v'></i>
-                                                <div class='edit_box' id='edit_box_$i'>
-                                                    <div class='edit_box_edit' data-postId='$postId' data-bs-toggle='modal' data-bs-target='#postEditModal'>edit</div>
-                                                    <div class='edit_box_delete' data-postId='$postId'>delete</div>
-                                                </div>
-                                </div>
-                                 ";
-                             }
-                             ?>
                             <!--end edit-->
                         </div> 
                         

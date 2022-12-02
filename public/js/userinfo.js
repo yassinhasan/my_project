@@ -14,6 +14,8 @@ if(logged_user_name_link)
   loggedUser.id = parseInt((logged_user_name_link.getAttribute("data-loggedUserId")).trim()) ;
   loggedUser.status = "online"
 }
+
+
 //  load all users who iam follow them
 
 function  fetchChatusers()

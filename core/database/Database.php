@@ -205,7 +205,7 @@ class Database
         {
             $sql .= $this->limit;
         }
-        
+       
         $this->stmt = $this->query($sql, $this->bindings) ;
         return $this; 
     }
@@ -302,6 +302,8 @@ class Database
         $this->select = null;
         $this->sql = null;
         $this->join = null;
+        $this->limit = null;
+        $this->offset = null;
     }
 
 

@@ -12,7 +12,7 @@ let attachmentEroors =
 }
 function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
     let video_type = "video/";
-    let limit_video_size = 30;
+    let limit_video_size = 100;
     const image_type = "image/";
     const docs_type = [
         "text/plain" ,
@@ -22,7 +22,7 @@ function uploadAttach(main_box ,default_clicked_elm  , edit =false) {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         ];
     const limit_document_size = 40;
-    const limit_image_size = .1;
+    const limit_image_size = 40;
     let allowed_type = [
         "text/plain" ,
         "application/vnd.ms-excel",

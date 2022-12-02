@@ -33,3 +33,7 @@ showEditBox();
 postDelete();
 updatePost();
 
+// import notifications  getNotifications
+import {getNotifications} from "./home/notifications.js"
+getNotifications();
+

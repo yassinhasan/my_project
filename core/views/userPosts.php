@@ -93,6 +93,7 @@ use core\app\user;
                             $post = readMore($user_posts[$i]->postText , $postId);
                             $post_date =  $user_posts[$i]->postDate ;
                             $attachment_div= "";
+                            $postuserId = $user_posts[$i]->userId;
                             $attachment_type = $user_posts[$i]->attachmentType;
                              if($attachment_type == "image"){
                                    $attachment_div = "<div class='post_attachment_div' data-type='image'>
@@ -151,28 +152,17 @@ use core\app\user;
                     ?>
                     
                          <div class="post_box_details"  id="post_box_details_<?=$postId?>">
-                              <div class="card-body big_card_body">
-                                    <div class="card-body post_text_box">
-                                        <?=   $attachment_div ?>
-                                    </div>
-                                
-                               </div>
-                                <!-- here comments -->
-                               
-                               <div class="card-body comments_box"> 
-                                    <div class="comments" data-postId=<?=$postId?> id="comments_<?=$postId?>">
-                                        <div class="comments-stats">
-                                             <span class="comments_num"><?=$user_posts[$i]->comments?></span>
-                                             <span> comments</span>
-                                        </div>
-                               </div>
-                                <!-- here form of comments -->
-                                 <div class="comments_form_box hidden" id="comments_form_box_<?=$postId?>" data-postId="<?= $postId ?>">
-                                 </div>
-                                <!-- end form of comments -->
-                                <!-- end here comments -->
+                             <div class="card-header row post_card_header">
+                            <!--edit-->
+                            <div class="edit_big_box col-1 showt_edit_div" data-show="<?=$i?>">
+                                       <i class="fas fa-ellipsis-v"></i>
+                                       <div class="edit_box" id="edit_box_<?=$i?>">
+                                          <div class="edit_box_showPost" data-postid="<?=$postId?>"><a href="/showPost?postId=<?=$postId?>">Show Post</a>
+                                          </div>
+                                          <?= $edit ?>
+                                     </div>
                             </div>
-                            
+                            <!--end edit-->
                             <!-- likes -->
                                     <div class="likes_box">
                                         <div data-postId="<?=$postId?>" id="likes_box_<?=$postId?>">
@@ -189,16 +179,33 @@ use core\app\user;
 
                                 </div>
                             <!-- end likes -->
-                            <!--edit-->
-                            <div class="edit_big_box col-1 showt_edit_div" data-show="<?=$i?>">
-                                       <i class="fas fa-ellipsis-v"></i>
-                                       <div class="edit_box" id="edit_box_<?=$i?>">
-                                          <div class="edit_box_showPost" data-postid="<?=$postId?>"><a href="/showPost?postId=<?=$postId?>">Show Post</a>
-                                          </div>
-                                          <?= $edit ?>
-                                     </div>
+                              </div>
+                              <div class="card-body big_card_body">
+                                    <div class="card-body post_text_box">
+                                        <?=   $attachment_div ?>
+                                    </div>
+                                
+                               </div>
+                                <!-- here comments -->
+                               
+                               <div class="card-body comments_box"> 
+                                    <div class="comments" data-postId=<?=$postId?> id="comments_<?=$postId?>">
+                                        <div class="comments-stats">
+                                             <span class="comments_num"><?=$user_posts[$i]->comments?></span>
+                                             <span> comments</span>
+                                        </div>
+                               </div>
+                                <!-- here form of comments -->
+                                 <div class="comments_form_box hidden" id="comments_form_box_<?=$postId?>" data-postId="<?= $postId ?>" data-postUserId="<?= $postuserId ?>">
+                                    <div class='allcomments_div'>
+                                    </div>
+                                    <div class="comments_form_wraper">
+                                    </div>
+                                 </div>
+                                <!-- end form of comments -->
+                                <!-- end here comments -->
                             </div>
-                            <!--end edit-->
+                            
                         </div> 
                         
                         <?php    }

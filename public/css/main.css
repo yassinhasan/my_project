@@ -191,6 +191,20 @@ padding: 10px;
     padding: 5px;
     min-width: 300px;
     /* margin-top: 7px; */
+    max-height: 250px;
+    overflow: auto;
+}
+.notfication_box::-webkit-scrollbar
+{
+    width: 0
+}
+.notcation_details
+{
+    transition: all 0.5s ease-in-out;
+}
+.notcation_details:hover
+{
+    background-color: #ccc;
 }
 .dropdown-menu-wraper
 {

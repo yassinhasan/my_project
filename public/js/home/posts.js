@@ -310,7 +310,7 @@ function preparePostBox(data , offset) {
 
                 // start add post
                  post = `
-                        <div class="post_box_details"  id="post_box_details_${postId}">
+                        <div class="post_box_details"  id="post_box_details_${postId}" >
                               <div class="card-header row post_card_header">
                                 <div class="col-11">
                                     <div class="user_and_status">
@@ -348,7 +348,7 @@ function preparePostBox(data , offset) {
                                </div>
                                 <!-- here comments -->
                                
-                               <div class="card-body comments_box"> 
+                               <div class="card-body comments_box" data-postuserId=${allPosts[i].userId}> 
                                     <div class="comments" data-postId=${postId} id="comments_${postId}">
                                         <div class="comments-stats">
                                              <span class="comments_num">${allPosts[i].comments}</span>
@@ -357,6 +357,10 @@ function preparePostBox(data , offset) {
                                </div>
                                 <!-- here form of comments -->
                                  <div class="comments_form_box hidden" id="comments_form_box_${postId}" data-postId=${postId} data-postUserId=${allPosts[i].userId}>
+                                    <div class='allcomments_div'>
+                                    </div>
+                                    <div class="comments_form_wraper">
+                                    </div>
                                  </div>
                                 <!-- end form of comments -->
                                 <!-- end here comments -->
