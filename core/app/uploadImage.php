@@ -4,7 +4,7 @@ namespace core\app;
 class uploadImage extends upload
 {
 
-    const ALLOWD_FILE_SIZE = 2;
+    const ALLOWD_FILE_SIZE = 50;
     private $allowed_Extension = [
         "gif","jpeg", "png","jpg" 
     ];

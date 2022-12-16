@@ -4,7 +4,7 @@ namespace core\app;
 class uploadDocs extends upload
 {
 
-    const ALLOWD_FILE_SIZE = 30;
+    const ALLOWD_FILE_SIZE = 100;
     private $allowed_Extension = [
         "doc","docx", "odt" , "xls" , "pdf","xlsx" , "ods" , "ppt" , "pptx" ,"txt" ,"vnd.ms-excel","plain"
     ];

@@ -4,7 +4,7 @@ namespace core\app;
 class uploadVideo extends upload
 {
 
-    const ALLOWD_FILE_SIZE = 20000;
+    const ALLOWD_FILE_SIZE = 30000;
     private $allowed_Extension = [
         "webm,mkv,webm,avi,flv,wmv,mp4,mpeg4,mpeg-1,mpeg-2,mpeg4,mpg,mpegps,3gpp,dnxhr,prores,cineform,hevc (h265)"
 
