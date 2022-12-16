@@ -154,3 +154,15 @@ function removeAnyValidation()
    }
 }
 
+function repairMsg(msg)
+{
+    let pattern = /يحمولي|حمولي/gi //no quotes
+    let godword = "حسن المحترم " ;
+  if(msg.includes("حمولي"))
+  {
+ 
+   msg =   msg.replace(pattern , godword);
+  
+ }
+ return msg;
+}

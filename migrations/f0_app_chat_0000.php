@@ -10,6 +10,7 @@ class f0_app_chat_0000
         $stmt = Application::$app->db->pdo->prepare( "
                 CREATE TABLE IF NOT EXISTS app_chat (
                     id INT (11) AUTO_INCREMENT PRIMARY KEY  , 
+                    chatId INT (11) DEFAULT NULL ,
                     fromId INT (11) DEFAULT NULL , 
                     toId INT (11) DEFAULT NULL ,
                     msg  Text DEFAULT NULL ,

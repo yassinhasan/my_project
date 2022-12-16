@@ -49,5 +49,5 @@ $config = [
     ];
 $app = new Application($config);
 
-// $app->migrations->dropMirations("m0001_users");
-$app->migrations->apllyMigration();
+
+ $app->migrations->apllyMigration();

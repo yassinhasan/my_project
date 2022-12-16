@@ -127,7 +127,7 @@ use core\app\user;
       <!--end header-->
       <!--start body-->
       <div class="modal-body">
-        <section class="chat_box">
+        <section class="chat_box" >
             <div class="row d-flex justify-content-center">
                 <div class="card-body">
                     <div class="inner_chat_box">

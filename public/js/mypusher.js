@@ -16,7 +16,7 @@ pusher = new Pusher('24d30dbe202f39f2b07f', {
 presenceChannel = pusher.subscribe("presence-chat");
 presenceChannel.bind('pusher:subscription_succeeded', function(member) {
 
-   //  console.log(member)
+     //console.log(member)
     })
 presenceChannel.bind('pusher:member_removed', function(member) {
 
@@ -74,8 +74,6 @@ presenceChannel.bind('pusher:member_added', function(member ) {
                     allChatusers["user_"+icon_user_id] = {
                         status : onlinestatus
                     };
-                
-
                 }
             })
  
@@ -110,29 +108,46 @@ function updatechat()
 {
     channel.bind('updateChate', function(data) {
         // changfe status
+       
       let messages  = data.msgs;
-      let toUserId;
-      let me = "";
+      let toUserId ;
+      let toUser ={};
+    
       let imagesrc = "";
       let msgDiv = "";
-      let msg = messages["msg"];
+      let msg = repairMsg(messages["msg"]);
       let name = "";
       let userStatus;
-      
-      msg =  repairMsg(msg);
+      // if iam wwho send this message
       if(loggedUser.id == messages.fromId)
       {
           toUserId = messages.toId;
-          me = "me"
-      }else
+          toUser = allChatusers["user_"+toUserId];
+         let me = "me" ;
+        // update chat user box present in list of users after reciever or send message
+         toUser.lastMmsg = msg;
+         toUser.ChatId = messages.ChatId;
+         let chat_user_box = document.querySelector('.chat_user_box_'+toUserId);
+         if (chat_user_box)
+        {
+            let chat_messages = chat_user_box.querySelector(".chat_messages_text");
+            chat_messages.innerHTML = `${me}:  ${msg}`; 
+        }
+      }else if(loggedUser.id != messages.fromId && loggedUser.id == messages.toId)
       {
-           toUserId = messages.fromId;
-           toUser = allChatusers["user_"+toUserId];
-            userStatus = toUser.userStatus == 1 ? "online" : "offline";
-           name = toUser.firstName+toUser.lastName;
-           imagesrc = toUser.image == "avatar.jpg" ? "avatar.jpeg" : name+"/"+toUser.profileImage; 
-           me =  messages["firstName"];
-           msgDiv =  `<div class="from_otheruser">
+          // if iam not who send message
+            
+             toUserId = messages.fromId;
+             toUser = allChatusers["user_"+toUserId];
+             
+             toUser.ChatId = messages.ChatId;
+             userStatus = toUser.userStatus == 1 ? "online" : "offline";
+             let ChatId = toUser.ChatId;
+             toUser.lastMmsg = msg;
+             name = toUser.firstName+toUser.lastName;
+             imagesrc = toUser.profileImage == null ? "avatar.jpg" : name+"/"+toUser.profileImage; 
+             let me =  messages["firstName"];
+               msgDiv =  `<div class="from_otheruser">
                   <div class="from_otheruser_msg" >
                     <p class="small">${msg}</p>
                   </div>
@@ -141,44 +156,33 @@ function updatechat()
                       alt="avatar 1">
                    </div>
                 </div>`;
-         let title = `message from ${name}` ;
-         let icon = imagesrc;
-         let body  = msg;
-         chatNotification(title , icon , body)       
-    }
-    let chat_user_box = document.querySelector(`.chat_user_box_${toUserId}`);
-    if (chat_user_box)
-    {
-        let chat_messages = chat_user_box.querySelector(".chat_messages_text");
-        chat_messages.classList.add("unseen");
-        chat_messages.innerHTML = `${me}:  ${messages["msg"]}`; 
-       
-    }else
-    {
-       let chat_user_box =`  <div class="chat_user_box chat_user_box_${toUser.id}" data-userId=${toUser.id}>
-                        <div class="col-2 chat_user_image_box">
-                            <img src="../../public/uploades/images/profile/${imagesrc}"  class="chat_user_image" alt="...">
-                            <i class="fas fa-circle online_chat_status online_icon_status" data-userId=${toUser.id} data-status=${userStatus}></i>
-                        </div>
-                        <div class="col-10 chat_user_right_box">
-                            <div class="chat_user_name">
-                                 <!--<a href="/userPosts?id=${toUser.id}" style="color: #795548 ;" class="chat_user_userName"> ${name}</a>-->
-                                 <span class="chat_user_name_span">${name}</span>
-                            </div>
-                            <div class="chat_messages">
-                            <p class="chat_messages_text unseen">${me} : ${msg} </p>
-                            </div>
-                        
-                        </div>
-                   </div>`  ;
-              console.log("no")
-        fetch_users_div.insertAdjacentHTML("afterbegin" , chat_user_box)           
-    }
-      allChatusers["user_"+toUser.id].lastMmsg = msg;
-    
+        let chat_box = document.querySelector('.chat_box[data-touserid="'+toUserId+'"]');
+        if (chat_box)
+        {
+            let no_msgs = chat_box.querySelector(".no_msgs");
+            let inner_chat = chat_box.querySelector(".inner_chat");
+            if(no_msgs)
+            {
+                no_msgs.remove();
+                inner_chat.innerHTML  =  msgDiv ;
+            }else
+            {
+                inner_chat.insertAdjacentHTML("beforeend" , msgDiv);
+            }
+           inner_chat.scrollTop = inner_chat.scrollHeight ;
+        }
+       let chat_user_box = document.querySelector('.chat_user_box_'+toUserId);
+       if(chat_user_box)
+        {
+           let chat_messages = chat_user_box.querySelector(".chat_messages_text");
+           chat_messages.classList.add("unseen");
+           chat_messages.innerHTML = `${me}:  ${msg}`;             
+        }
 
-    inner_chat.insertAdjacentHTML("beforeend" , msgDiv);
-    inner_chat.scrollTop = inner_chat.scrollHeight;
+    }
+
+
+   
  });
 }
 
@@ -210,10 +214,20 @@ function updateAddComment()
       let userName = data.userName;
       let ownerOfPOST = data.postUserId;
       let postId = data.postId;
+ 
       let to     = data.to;
       let notificationId = data.notificationId;
       let noti_count = document.querySelector(".noti_count");
-      let noti_count_number = parseInt(noti_count.innerHTML);
+      let noti_count_number ;
+      if(noti_count.innerHTML == "")
+      {
+          noti_count_number = 0 ;
+      }else
+      {
+          noti_count_number = parseInt(noti_count.innerHTML);
+      }
+     
+        
       // if someone add comment on my post and not me (loggedUser.id != whoAddComment && loggedUser.id == postUserId) 
       //  
       // if iam owner of post put iam not who write comment
@@ -249,7 +263,7 @@ function onClickNotification()
         {
             let notificationId = e.target.getAttribute("data-notificationId");
             let comment_link = e.target.querySelector(".comment_link");
-            let postId = comment_link.getAttribute("data-postId");
+
             let url = "/updateNotification";
             let form = new FormData();
             form.append("notificationId", notificationId);
@@ -261,7 +275,7 @@ function onClickNotification()
             .then(data => {
             if(data.update == "success")
               {
-                   window.location.href =`/showPost?postId=${postId}`
+                   window.location.href = comment_link.href;
               }
           })  
         }

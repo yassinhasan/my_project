@@ -20,21 +20,19 @@ class chatController extends abstractController
             $data = $this->request->getBody();
             $model =  $this->model;
             $rules = $this->model->rules();
+            $ChatId = $data["ChatId"] ;
             if( $this->validate->isValid( $model ,$rules, $data))
             {
-                $msgId  = $this->model->insertMsg();
-                if($this->model->addAttachMsg($msgId))
-                {  
-                    $this->jData['succ'] =  "done";  
-                }else
-                {
-                    $this->jData['errors'] =  "error in db";
-                }
-              $Pusherdata["msgs"] = [
+             
+                $ChatId  = $this->model->insertMsg($ChatId);
+                $this->jData['ChatId'] =  $ChatId; 
+                $this->jData['succ'] =  "done";  
+                $Pusherdata["msgs"] = [
                   "fromId" => $data["fromId"] , 
                   "toId"   => $data["toId"] , 
                   "msg"   => $data["msg"] , 
-                  "firstName" => $data["firstName"]
+                  "firstName" => $data["firstName"] , 
+                  "ChatId" => $ChatId
                   ];
               $this->pusher->trigger( $_ENV['CHANNEL'], 'updateChate',  $Pusherdata);
             }else

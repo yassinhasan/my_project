@@ -43,7 +43,7 @@ class notificationModel extends abstractModel
                 
                 INNER JOIN app_notifications_comments on 
                 app_notifications_comments.notificationId = app_notifications.id
-                ")->where("app_notifications_comments.fromId != ?  AND app_notifications_comments.toId = ? AND app_notifications_comments.isSeen  = ? " , [$userId , $userId , "false"] )->select("  app_notifications.*  , app_notifications_comments.* 
+                ")->where("app_notifications_comments.fromId != ?  AND app_notifications_comments.toId = ? AND app_notifications_comments.isSeen  = ? " , [$userId , $userId , "false"] )->order( " ORDER BY  app_notifications.notificationDate DESC ")->limit( " LIMIT 10 ")->select("  app_notifications.*  , app_notifications_comments.* 
                 " )->fetchAll();
     }
    public function updateNotification($notificationId , $userId)
@@ -53,8 +53,6 @@ class notificationModel extends abstractModel
          ->delete();
 
         return $count > 0;
-        
-
     }
     
 }

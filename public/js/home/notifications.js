@@ -6,6 +6,7 @@ function getNotifications() {
         .then(resp => resp.json())
         .then(data => {
           let notification = data.notification;
+        
           let notfication_box = document.querySelector(".notfication_box");
           // if has notification
           if(notification .length > 0 )

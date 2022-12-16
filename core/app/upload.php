@@ -64,10 +64,10 @@ class upload
                 mkdir($destionaion, 0777, true);
             }
           //  $filename = \time().sha1(rand(0,1000)).".".$this->file_extension;        
-            $filename = \date("dnYHisa").".".$this->file_extension;    
-            if(move_uploaded_file($this->file_temp_name,$destionaion.$filename))
+          //  $filename = \date("dnYHisa").".".$this->file_extension;    
+            if(move_uploaded_file($this->file_temp_name,$destionaion.$this->file_name))
             {
-                $this->file_saved_name_in_db = $filename;
+                $this->file_saved_name_in_db = $this->file_name;
                 return true;
             }
            

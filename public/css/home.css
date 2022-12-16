@@ -819,3 +819,14 @@ section.chat_box {
     font-size: 20px ;
     color: #fff;
 }
+
+.fetch_users_div {
+  
+    max-height: 300px;
+    padding: 5px;
+    overflow-y: scroll
+}
+.fetch_users_div::-webkit-scrollbar 
+{
+    width: 0;
+}

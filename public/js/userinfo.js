@@ -29,9 +29,11 @@ function  fetchChatusers()
         .then(data => {
           allDataChatuser = data;
           let users = data.users;
+          console.log(users)
         if (users.length > 0) {
             for (var i = users.length; i--;) 
             {
+                
                 allChatusers["user_"+users[i].id] = users[i];
                 
              

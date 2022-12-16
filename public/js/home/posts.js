@@ -295,8 +295,12 @@ function preparePostBox(data , offset) {
 
                 }
                 else if (attachment_type == "document") {
-                    
-                    let handled_filename = handleFileName(attachment);
+                    let handled_filename ;
+                    if(attachment != null)
+                    {
+                          handled_filename = handleFileName(attachment);
+                    }
+                   
                     document_attachment_div = `
                     <i class="fas fa-file file_thumb"></i>
                     <span class="filename"><a href="../../public/uploades/images/posts/document/${postId}/${attachment}" download class="docs_name">${handled_filename}</a></span>
@@ -340,8 +344,9 @@ function preparePostBox(data , offset) {
                                       <div class="post_attachment_div" data-type="${attachment_type}">
                                             ${attachment_div}
                                            <div class="post_text">${post}</div>
+                                             ${document_attachment_div}
                                             <p class="card-text"><small class="text-muted post_date_release">${allPosts[i].postDate}</small></p>
-                                            ${document_attachment_div}
+                                          
                                         </div>
                                     </div>
                                 </div>
