@@ -21,10 +21,7 @@ floadting_btn.addEventListener("click",e=>
 })
 go_back_chat.addEventListener("click",e=>
 {
-    showCustomeSpinner(user_chat_body);
-   
-    let data = fetchChatusers();
-    loadChatAreaOfUsers(data);
+
     showUsers();
 })
 
@@ -260,7 +257,7 @@ function sendChatCallable(data)
     {
         toUser.ChatId= data.ChatId;
     }
-    chat_textarea.focus();
+   // chat_textarea.focus();
     
 }
 
