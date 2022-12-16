@@ -112,7 +112,6 @@ function updatechat()
       let messages  = data.msgs;
       let toUserId ;
       let toUser ={};
-    
       let imagesrc = "";
       let msgDiv = "";
       let msg = repairMsg(messages["msg"]);
@@ -121,10 +120,15 @@ function updatechat()
       // if iam wwho send this message
       if(loggedUser.id == messages.fromId)
       {
+          
+          console.log(messages)
+         
           toUserId = messages.toId;
           toUser = allChatusers["user_"+toUserId];
-         let me = "me" ;
+          console.log(toUser)
+          let me = "me" ;
         // update chat user box present in list of users after reciever or send message
+        console.log(msg)
          toUser.lastMmsg = msg;
          toUser.ChatId = messages.ChatId;
          let chat_user_box = document.querySelector('.chat_user_box_'+toUserId);
