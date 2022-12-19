@@ -81,6 +81,7 @@ $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
 $app->router->post("/presenceAuth",[ homecontroller::class , "presenceAuth"]);
 $app->router->post("/getNotifications",[ homecontroller::class , "getNotifications"]);
 $app->router->post("/updateNotification",[ homecontroller::class , "updateNotification"]);
+$app->router->post("/updateLastActivity",[ homecontroller::class , "updateLastActivity"]);
 
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
 //  userPotsts

@@ -67,7 +67,7 @@ class chatController extends abstractController
         }
 
     }
-    
+   
     public function blur()
     {
          $id = (int)$this->session->userId;

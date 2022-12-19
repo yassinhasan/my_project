@@ -16,10 +16,13 @@ pusher = new Pusher('24d30dbe202f39f2b07f', {
 presenceChannel = pusher.subscribe("presence-chat");
 presenceChannel.bind('pusher:subscription_succeeded', function(member) {
 
-     //console.log(member)
+       
     })
 presenceChannel.bind('pusher:member_removed', function(member) {
-
+        fetchChatusers();
+         console.log("removed")
+        console.log(allChatusers)
+         console.log("removed")
         let onlinestatus =  "offline";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
@@ -30,39 +33,20 @@ presenceChannel.bind('pusher:member_removed', function(member) {
 
                     user_icon.setAttribute("data-status" , onlinestatus);
                     user_icon.setAttribute("data-status" , onlinestatus);
-                    allChatusers["user_"+icon_user_id] = {
-                        status : onlinestatus
-                    };
 
                 }
             })
  
 })
 presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
-  // For example
- // console.log(members.count);
 
-  members.each((member) => {
-    // For example
-        let onlinestatus =  "online";
-        let all_users_status_icons = document.querySelectorAll(".online_icon_status");
-        all_users_status_icons.forEach(user_icon=>
-            {
-                let icon_user_id = user_icon.getAttribute("data-userId");
-                if(icon_user_id == member.id)
-                {
-
-                    user_icon.setAttribute("data-status" , onlinestatus);
-                    allChatusers["user_"+icon_user_id] = {
-                        status : onlinestatus
-                    };
-
-                }
-            })
-  });
 });
 presenceChannel.bind('pusher:member_added', function(member ) {
 
+         fetchChatusers();
+         console.log("pusher:member_added added")
+         console.log(allChatusers)
+         console.log("pusher:member_added added")
         let onlinestatus =  "online";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
@@ -71,9 +55,6 @@ presenceChannel.bind('pusher:member_added', function(member ) {
                 if(icon_user_id == member.id)
                 {
                     user_icon.setAttribute("data-status" , onlinestatus);
-                    allChatusers["user_"+icon_user_id] = {
-                        status : onlinestatus
-                    };
                 }
             })
  
@@ -102,7 +83,6 @@ function updateUserStatus()
 }
 updateUserStatus();
 
-
 // update chat
 function updatechat()
 {
@@ -121,20 +101,18 @@ function updatechat()
       if(loggedUser.id == messages.fromId)
       {
           
-          console.log(messages)
-         
           toUserId = messages.toId;
           toUser = allChatusers["user_"+toUserId];
           console.log(toUser)
           let me = "me" ;
         // update chat user box present in list of users after reciever or send message
-        console.log(msg)
          toUser.lastMmsg = msg;
          toUser.ChatId = messages.ChatId;
          let chat_user_box = document.querySelector('.chat_user_box_'+toUserId);
          if (chat_user_box)
         {
             let chat_messages = chat_user_box.querySelector(".chat_messages_text");
+            chat_messages.classList.remove("unseen");
             chat_messages.innerHTML = `${me}:  ${msg}`; 
         }
       }else if(loggedUser.id != messages.fromId && loggedUser.id == messages.toId)
@@ -143,7 +121,6 @@ function updatechat()
             
              toUserId = messages.fromId;
              toUser = allChatusers["user_"+toUserId];
-             
              toUser.ChatId = messages.ChatId;
              userStatus = toUser.userStatus == 1 ? "online" : "offline";
              let ChatId = toUser.ChatId;
@@ -173,7 +150,7 @@ function updatechat()
             {
                 inner_chat.insertAdjacentHTML("beforeend" , msgDiv);
             }
-           inner_chat.scrollTop = inner_chat.scrollHeight ;
+         //  inner_chat.scrollTop = inner_chat.scrollHeight ;
         }
        let chat_user_box = document.querySelector('.chat_user_box_'+toUserId);
        if(chat_user_box)
@@ -189,9 +166,7 @@ function updatechat()
    
  });
 }
-
 updatechat()
-
 
 function updatePost()
 {
@@ -205,11 +180,7 @@ function updatePost()
       }  
  });
 }
-
-
-
 updatePost() ;
-
 
 function updateAddComment()
 {
@@ -287,4 +258,12 @@ function onClickNotification()
 
 
 }
-onClickNotification()
+onClickNotification();
+function registerNewUser()
+{
+    channel.bind('registerNewUser', function(data) {
+        let newUser = data.register;
+      allChatusers.push(newUser);
+    });
+}
+registerNewUser();

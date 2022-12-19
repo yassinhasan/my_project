@@ -32,20 +32,16 @@ class registerModel extends abstractModel
     //create users
     public function saveUser()
     {
-       if ( $this->data([
+        $this->data([
             "firstName" => $this->firstName ,
             "lastName" => $this->lastName ,
             "email" => $this->email ,
             "password" =>  password_hash($this->password , PASSWORD_DEFAULT),
-        ])->insert(self::$tableName) ) 
-        {
-            $this->data([
-                    "userId" => Application::$app->db::lastId() 
-
+        ])->insert(self::$tableName) ;
+        $userId =  Application::$app->db::lastId() ;
+        $this->data([
+                    "userId" =>$userId 
             ])->table("app_user_profile")->insert(); 
-        }
-        
-
         return true;
     }
 }

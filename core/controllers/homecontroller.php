@@ -44,6 +44,22 @@ class homecontroller extends abstractController
         $this->response->renderView("/home" ,$this->data );
         }
     }
+    public function updateLastActivity()
+    {
+      if($this->request->method() == "POST")
+        {
+            $userId = Application::$app->session->userId;
+            if($this->model->updateLastActivity($userId))
+            {
+                $this->jData["succ"] = "updated";
+            }
+
+            $this->json(); 
+        }else 
+        {
+        $this->response->renderView("/home" ,$this->data );
+        }
+    }
     public function getNotifications()
     {
         $userId = Application::$app->session->userId;

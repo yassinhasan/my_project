@@ -19,7 +19,8 @@ class logoutModel extends abstractModel
     public function updateLoginStatus($userId)
     {
         $this->data([
-            "userStatus" => STATUS_OFLINE
+            "userStatus" => STATUS_OFLINE ,
+            "lastActivity" => date( 'Y-m-d H:i:s', time() )
             ])->where(" id = ? " , $userId)->update(self::$tableName);
         return true;
     }

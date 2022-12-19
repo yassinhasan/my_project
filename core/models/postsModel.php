@@ -240,7 +240,15 @@ class postsModel extends abstractModel
             return true;
         }
     }
-        
+    public function updateLastActivity($userId)
+    {
+        if($this->data([
+            "lastActivity" => date( 'Y-m-d H:i:s', time() )
+        ])->where(" id = ? " , $userId)->update("app_users"))
+        {
+            return true;
+        }
+    }   
     public function updatePostWithAttach($postId ,$attachment , $type)
     {
        if($this->data([
