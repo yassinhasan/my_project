@@ -15,9 +15,10 @@ let toUser= {};
 floadting_btn.addEventListener("click",e=>
 {
     showCustomeSpinner(user_chat_body);
-    let data = fetchChatusers();
-    loadChatAreaOfUsers(data);
+     fetchChatusers();
+    loadChatAreaOfUsers(allChatusers);
     showUsers();
+   
 })
 go_back_chat.addEventListener("click",e=>
 {
@@ -25,24 +26,22 @@ go_back_chat.addEventListener("click",e=>
     showUsers();
 })
 
-function loadChatAreaOfUsers() {
+function loadChatAreaOfUsers(allChatusers) {
 
      removeCustomSpinner(user_chat_body);
-     prepareChatAreaOfUsers(allDataChatuser);
+     prepareChatAreaOfUsers(allChatusers);
 
 }
 // preapre area users 
-function prepareChatAreaOfUsers(data)
+function prepareChatAreaOfUsers(users)
 {
 
-     
       fetch_users_div.innerHTML = "";
-      if (data.users) {
-        let allUsers = data.users;
-        if (allUsers.length > 0) {
-            for (var i = allUsers.length; i--;) 
+   
+        let allUsers = users;
+        if (allUsers != null) {
+            for (let [i , value] of Object.entries(allUsers)) 
             {
-               
                
                let msg = allUsers[i]["lastMmsg"]  
                let me = "";
@@ -92,7 +91,7 @@ function prepareChatAreaOfUsers(data)
         }
 
 
-    }
+    
 }
 
 
@@ -142,8 +141,8 @@ function preparePrivateChat(data)
 {
       
       let messages  = data.msgs;
-      let loggedUserName = loggedUser.name.replace(" ","");
-      let loggedUserImage = loggedUser.image == "avatar.jpg" ? "avatar.jpg" : loggedUserName+"/"+loggedUser.image;   
+      let loggedUserName = loggedUser.firstName+loggedUser.lastName;
+      let loggedUserImage = loggedUser.profileImage == "avatar.jpg" ? "avatar.jpg" : loggedUserName+"/"+loggedUser.profileImage;   
       let touserName = toUser.firstName+toUser.lastName;
       let touserImagesrc = toUser.profileImage == null ? "avatar.jpg" : touserName+"/"+toUser.profileImage; 
       if(messages.length > 0)
@@ -234,8 +233,8 @@ function insertMsgWithoutFetch(msg)
 {
     
     msg = repairMsg(msg)
-    let name = loggedUser.name.replace(" ","");
-    let image = loggedUser.image == "avatar.jpg" ? "../../public/uploades/images/profile/avatar.jpg" : "../../public/uploades/images/profile/"+name+"/"+loggedUser.image;
+    let name = loggedUser.firstName+loggedUser.lastName;
+    let image = loggedUser.profileImage == "avatar.jpg" ? "../../public/uploades/images/profile/avatar.jpg" : "../../public/uploades/images/profile/"+name+"/"+loggedUser.profileImage;
     let inner_chat = chat_box.querySelector(".inner_chat");
     let msgFromMe = `
     <div class="from_me">

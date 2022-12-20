@@ -688,7 +688,9 @@ color: #bfbfbf;
 }
 .chat_user_right_box 
 {
-   margin-left: 30px 
+   /* margin-left: 30px; */
+   padding-left: 30px;
+   /* padding-right: 65px; */
 }
 .user_section.hide
 {
@@ -741,6 +743,14 @@ section.chat_box {
     max-height: 500px;
     overflow: hidden;
 }
+p.chat_messages_text
+{
+    overflow: hidden;
+    max-width: 320px;
+    /* background: red; */
+    max-height: 53px;
+    width: fit-content;
+}
 
 /*chat box*/
 .from_me
@@ -771,14 +781,18 @@ section.chat_box {
     border-radius: 15px;
     background-color: rgba(57, 192, 237,.2);
     padding: 1rem!important;
-     margin-left: 1rem!important;
+    margin-left: 1rem!important;
+    max-width: 300px;
+    width: fit-content;
 }
 .from_otheruser_msg
 {
     border-radius: 15px;
     background-color: #ffc107;
     padding: 1rem!important;
-     margin-right: 1rem!important;
+    max-width: 300px;
+    margin-right: 1rem!important;
+    width: fit-content;
 }
 .from_me_msg p , .from_otheruser_msg p 
 {

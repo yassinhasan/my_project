@@ -61,8 +61,9 @@ class loginController extends abstractController
                             $this->jData['success_admin'] = "you have login succuflly";
                         }else
                         {
-                          $this->jData['success'] = "you have login succuflly";  
                           $this->model->updateLoginStatus($user->id);
+                          $this->jData['success'] = "you have login succuflly";  
+                          
                         }
                          $this->session->setFlashMsg("success_login" , " you have login succuflly");
                         

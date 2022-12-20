@@ -19,10 +19,8 @@ presenceChannel.bind('pusher:subscription_succeeded', function(member) {
        
     })
 presenceChannel.bind('pusher:member_removed', function(member) {
-        fetchChatusers();
-         console.log("removed")
-        console.log(allChatusers)
-         console.log("removed")
+       
+        updateLastActivityById(member.id , "offline")
         let onlinestatus =  "offline";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
@@ -31,8 +29,11 @@ presenceChannel.bind('pusher:member_removed', function(member) {
                 if(icon_user_id == member.id)
                 {
 
+                    
                     user_icon.setAttribute("data-status" , onlinestatus);
                     user_icon.setAttribute("data-status" , onlinestatus);
+                    allChatusers["user_"+icon_user_id].userStatus = onlinestatus;
+                    allChatusers["user_"+icon_user_id].lastActivity = new Date();
 
                 }
             })
@@ -43,10 +44,8 @@ presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
 });
 presenceChannel.bind('pusher:member_added', function(member ) {
 
-         fetchChatusers();
-         console.log("pusher:member_added added")
-         console.log(allChatusers)
-         console.log("pusher:member_added added")
+        updateLastActivityById(member.id , "online");
+        
         let onlinestatus =  "online";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
@@ -55,6 +54,7 @@ presenceChannel.bind('pusher:member_added', function(member ) {
                 if(icon_user_id == member.id)
                 {
                     user_icon.setAttribute("data-status" , onlinestatus);
+                    console.log(  allChatusers["user_"+icon_user_id])
                 }
             })
  
@@ -66,17 +66,15 @@ function updateUserStatus()
 {
     channel.bind('isLogged', function(data) {
 
-      
-        let status = data.onlineStatus == 1  ? "online" : "offline";
+        
+        let  onlinestatus = data.onlineStatus == 1  ? "online" : "offline";
         let all_users_status_icons = document.querySelectorAll(".online_icon_status");
         all_users_status_icons.forEach(user_icon=>
             {
                 let icon_user_id = user_icon.getAttribute("data-userId");
                 if(icon_user_id == data.userId)
                 {
-                    user_icon.setAttribute("data-status" , status);
-                    allChatusers["user_"+icon_user_id].status = status;
-
+                    user_icon.setAttribute("data-status" ,  onlinestatus);
                 }
             })
     });

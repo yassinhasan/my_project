@@ -29,15 +29,17 @@ class homecontroller extends abstractController
     }
     public function home()
     {
+        // here must return logged user full data
         if($this->request->method() == "POST")
         {
             $id = Application::$app->session->userId;;
-            $this->jData["loggedUser"] = $id;
+            $this->jData["loggedUserId"] = $id;
           // echo  $this->pusher->socket_auth($_POST["channel_name"],  $socket_id);
            $Pusherdata["userId"] = $id;
            $Pusherdata["onlineStatus"] = STATUS_ONLINE;
                         //  $this->pusher->socket_auth($_POST["channel_name"],  $socket_id);
            $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
+           $this->jData['users'] = $this->model->fetchChatUsers($id);
             $this->json(); 
         }else 
         {
@@ -50,6 +52,22 @@ class homecontroller extends abstractController
         {
             $userId = Application::$app->session->userId;
             if($this->model->updateLastActivity($userId))
+            {
+                $this->jData["succ"] = "updated";
+            }
+
+            $this->json(); 
+        }else 
+        {
+        $this->response->renderView("/home" ,$this->data );
+        }
+    }
+    public function updateLastActivityById()
+    {
+      if($this->request->method() == "POST")
+        {
+            $data = $this->request->getBody();
+            if($this->model->updateLastActivityById($data['id'] , $data["userSatus"]))
             {
                 $this->jData["succ"] = "updated";
             }

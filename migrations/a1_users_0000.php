@@ -8,7 +8,7 @@ class a1_users_0000
     {
 
         $stmt = Application::$app->db->pdo->prepare( "
-        ALTER TABLE app_users ADD COLUMN lastActivity  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ALTER TABLE app_users ADD COLUMN lastActivity  TIMESTAMP DEFAULT NOW()
         
         ");
         $stmt->execute();

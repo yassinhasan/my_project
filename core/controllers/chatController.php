@@ -56,17 +56,19 @@ class chatController extends abstractController
         }
 
     }
-    public function fetchChatUsers()
-    {
-       $userId = Application::$app->session->userId;
-        if($this->request->getMethod() == "POST")
-        {
-            $data = $this->request->getBody();
-            $this->jData['users'] = $this->model->fetchChatUsers($userId);
-            $this->json();
-        }
+    // public function fetchChatUsers()
+    // {
+    //    $userId = Application::$app->session->userId;
+    //     if($this->request->getMethod() == "POST")
+    //     {
+    //         $data = $this->request->getBody();
+    //         $this->jData['users'] = $this->model->fetchChatUsers($userId);
+    //         $this->jData["loggedUserId"] = $userId;
+    //         $this->json();
+            
+    //     }
 
-    }
+    // }
    
     public function blur()
     {
