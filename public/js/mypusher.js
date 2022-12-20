@@ -16,70 +16,53 @@ pusher = new Pusher('24d30dbe202f39f2b07f', {
 presenceChannel = pusher.subscribe("presence-chat");
 presenceChannel.bind('pusher:subscription_succeeded', function(member) {
 
-       
+        console.log( member )
     })
 presenceChannel.bind('pusher:member_removed', function(member) {
        
-        updateLastActivityById(member.id , "offline")
-        let onlinestatus =  "offline";
-        let all_users_status_icons = document.querySelectorAll(".online_icon_status");
-        all_users_status_icons.forEach(user_icon=>
-            {
-                let icon_user_id = user_icon.getAttribute("data-userId");
-                if(icon_user_id == member.id)
-                {
+        updateLastActivityById(member.id , "offline");
+        fetchChatusers();
+          console.log(allChatusers["user_"+member.id])
+        updateUserStatsInRealtime(allChatusers["user_"+member.id] , "offline")
 
-                    
-                    user_icon.setAttribute("data-status" , onlinestatus);
-                    user_icon.setAttribute("data-status" , onlinestatus);
-                    allChatusers["user_"+icon_user_id].userStatus = onlinestatus;
-                    allChatusers["user_"+icon_user_id].lastActivity = new Date();
-
-                }
-            })
  
 })
 presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
-
+ console.log("pusher_internal:subscription_succeeded" ) 
 });
 presenceChannel.bind('pusher:member_added', function(member ) {
+        console.log("member added" + member.id )
+       updateLastActivityById(member.id , "online");
+       fetchChatusers();
+       console.log(allChatusers["user_"+member.id])
+       updateUserStatsInRealtime(allChatusers["user_"+member.id] , "online")
 
-        updateLastActivityById(member.id , "online");
         
-        let onlinestatus =  "online";
-        let all_users_status_icons = document.querySelectorAll(".online_icon_status");
-        all_users_status_icons.forEach(user_icon=>
-            {
-                let icon_user_id = user_icon.getAttribute("data-userId");
-                if(icon_user_id == member.id)
-                {
-                    user_icon.setAttribute("data-status" , onlinestatus);
-                    console.log(  allChatusers["user_"+icon_user_id])
-                }
-            })
  
 })
 
 channel = pusher.subscribe('my_project');
 
-function updateUserStatus()
-{
-    channel.bind('isLogged', function(data) {
+// function updateUserStatus()
+// {
+   
+//     channel.bind('isLogged', function(data) {
 
-        
-        let  onlinestatus = data.onlineStatus == 1  ? "online" : "offline";
-        let all_users_status_icons = document.querySelectorAll(".online_icon_status");
-        all_users_status_icons.forEach(user_icon=>
-            {
-                let icon_user_id = user_icon.getAttribute("data-userId");
-                if(icon_user_id == data.userId)
-                {
-                    user_icon.setAttribute("data-status" ,  onlinestatus);
-                }
-            })
-    });
-}
-updateUserStatus();
+//         let user;
+//         let  onlinestatus = data.onlineStatus == 1  ? "online" : "offline";
+//         if(allUsers != null)
+//         {
+//           let user = allUsers["user_"+data.userId];
+//           if(user != null)
+//             {
+                  
+//               updateUserStatsInRealtime(user ,onlinestatus)
+//             }
+//         }
+
+//     })
+// }
+// updateUserStatus();
 
 // update chat
 function updatechat()
@@ -101,7 +84,6 @@ function updatechat()
           
           toUserId = messages.toId;
           toUser = allChatusers["user_"+toUserId];
-          console.log(toUser)
           let me = "me" ;
         // update chat user box present in list of users after reciever or send message
          toUser.lastMmsg = msg;
@@ -265,3 +247,5 @@ function registerNewUser()
     });
 }
 registerNewUser();
+
+

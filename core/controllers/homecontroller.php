@@ -32,15 +32,31 @@ class homecontroller extends abstractController
         // here must return logged user full data
         if($this->request->method() == "POST")
         {
-            $id = Application::$app->session->userId;;
-            $this->jData["loggedUserId"] = $id;
-          // echo  $this->pusher->socket_auth($_POST["channel_name"],  $socket_id);
-           $Pusherdata["userId"] = $id;
-           $Pusherdata["onlineStatus"] = STATUS_ONLINE;
-                        //  $this->pusher->socket_auth($_POST["channel_name"],  $socket_id);
-           $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
-           $this->jData['users'] = $this->model->fetchChatUsers($id);
-            $this->json(); 
+           $id = Application::$app->session->userId;
+           $this->model->updateLastActivity($id);
+        //   $Pusherdata["userId"] = $id;
+        //   $Pusherdata["onlineStatus"] = 1;
+        //   $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);
+
+           $this->json(); 
+
+        }else 
+        {
+        $this->response->renderView("/home" ,$this->data );
+        }
+    }
+    public function fetchChatusers()
+    {
+        // here must return logged user full data
+        if($this->request->method() == "POST")
+        {
+           $id = Application::$app->session->userId;
+
+            $this->jData['loggedUserId'] = $id;
+            $users = $this->model->fetchChatUsers($id);
+              $this->jData['users'] = $users;
+           $this->json(); 
+
         }else 
         {
         $this->response->renderView("/home" ,$this->data );
@@ -68,6 +84,22 @@ class homecontroller extends abstractController
         {
             $data = $this->request->getBody();
             if($this->model->updateLastActivityById($data['id'] , $data["userSatus"]))
+            {
+                $this->jData["succ"] = "updated";
+            }
+
+            $this->json(); 
+        }else 
+        {
+        $this->response->renderView("/home" ,$this->data );
+        }
+    }
+    public function updateLastStatusById()
+    {
+      if($this->request->method() == "POST")
+        {
+            $data = $this->request->getBody();
+            if($this->model->updateLastStatusById($data['id'] , $data["userSatus"]))
             {
                 $this->jData["succ"] = "updated";
             }

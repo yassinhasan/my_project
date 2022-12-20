@@ -15,7 +15,7 @@ let toUser= {};
 floadting_btn.addEventListener("click",e=>
 {
     showCustomeSpinner(user_chat_body);
-     fetchChatusers();
+    fetchChatusers();
     loadChatAreaOfUsers(allChatusers);
     showUsers();
    
@@ -74,6 +74,7 @@ function prepareChatAreaOfUsers(users)
                             <div class="chat_user_name">
                                  <!--<a href="/userPosts?id=${allUsers[i].id}" style="color: #795548 ;" class="chat_user_userName"> ${allUsers[i].firstName} ${allUsers[i].lastName}</a>-->
                                  <span class="chat_user_name_span">${allUsers[i].firstName} ${allUsers[i].lastName}</span>
+                                 <small class="lastseen" data-userId=${allUsers[i].id}>${allUsers[i].lastSeen}</small>
                             </div>
                             <div class="chat_messages">
                             <p class="chat_messages_text">${me} : ${msg} </p>

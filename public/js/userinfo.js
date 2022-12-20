@@ -1,13 +1,14 @@
 let loggedUser = {};
 let allDataChatuser = {};
 let allChatusers  = {};
-let allChatusersId = {};
+let allUsers = {};
+
 
 //  load all users who iam follow them
 
 function  fetchChatusers()
 {
-    let url = "/home";
+    let url = "/fetchChatusers";
     fetch(url, {
             method: "POST"
         })
@@ -16,30 +17,27 @@ function  fetchChatusers()
          
           let users = data.users;
           let loggedUserId = data.loggedUserId;
-            
         if (users.length > 0) {
             for (var i = users.length; i--;) 
             {
-
-            
                 if(users[i].id ==  loggedUserId)
                 {
                     loggedUser = users[i];
+                    allUsers["user_"+users[i].id] = users[i]
                 } else
                 {
+                    
                     allChatusers["user_"+users[i].id] = users[i];
                     let diff = isOffline(users[i].lastActivity);
-                    if( diff > 3 && allChatusers["user_"+users[i].id].userStatus == 1)
+                    let lastSeen = handleLastSeen(diff);
+                    allUsers["user_"+users[i].id] = users[i];
+                    allChatusers["user_"+users[i].id].lastSeen = lastSeen;
+                    if( diff > 2)
                     {
-                        console.log("yes : " +  users[i].firstName + " --- " + diff)   
+                        updateLastStatusById(users[i].id , "offline")
                         allChatusers["user_"+users[i].id].userStatus = 0;
-                        allChatusers["user_"+users[i].id].lastSeen = diff;
-                       
-                    }  
-                    console.log(allChatusers["user_"+users[i].id].firstName + "--" + allChatusers["user_"+users[i].id].lastActivity)
-                    console.log(allChatusers["user_"+users[i].id].firstName + "--" +allChatusers["user_"+users[i].id].userStatus)
-                    console.log(allChatusers["user_"+users[i].id].firstName + "--" + diff)
-                                   
+                        updateUserStatsInRealtime(allChatusers["user_"+users[i].id] , "offline")
+                    }
                 } 
             }
         }
@@ -93,7 +91,26 @@ fetch(url, {
     })
 
 }
+function updateLastStatusById(id , userStatus)
+{
+    
+    let url = "/updateLastStatusById";
+    let form = new FormData();
+    form.append("id" , id);
+    form.append("userSatus", userStatus)
+fetch(url, {
+        method: "POST" , 
+        body: form
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        if(data.succ)
+        {
+          
+        }
+    })
 
+}
 function isOffline(lastActivity)
 {
     let n = new Date();
@@ -110,6 +127,50 @@ function isOffline(lastActivity)
     
 }
 
-setInterval(updateLastActivity, 60000);
+function handleLastSeen(diff)
+{
+    let lastSeen = "";
+    if (diff == 0) {
+        lastSeen = "Just now";
+    }
+    else if (diff == 1) {
+        lastSeen = "1 minute ago";
+    }
+
+    if (diff > 1 && diff < 60) {
+        lastSeen = diff + " minutes ago";
+    }
+    else if (diff >= 60 && diff < 3600) {
+        lastSeen = Math.round(diff / 60) + " hours ago";
+    }
+    else if (diff >= 3600 && diff < 86400) {
+    
+        lastSeen = Math.round(diff / 3600) + " days ago";
+        }
+    
+    return lastSeen;
+    
+
+}
+function updateUserStatsInRealtime(user , userStatus)
+{
+        
+        let users_status_icons = document.querySelectorAll(".online_icon_status[data-userId = '"+user.id+"']");
+        if(users_status_icons)
+        {
+            users_status_icons.forEach(users_status_icon =>{
+                users_status_icon.setAttribute("data-status" , userStatus);
+            })
+        }
+        let lastSeenSpans = document.querySelectorAll(".lastseen[data-userId = '"+user.id+"']"); 
+        if(lastSeenSpans)
+        {  
+            lastSeenSpans.forEach(lastSeenSpan =>{
+               lastSeenSpan.innerHTML = user.lastSeen;
+            })
+        }
+
+}
+// setInterval(updateLastActivity, 60000);
 
 

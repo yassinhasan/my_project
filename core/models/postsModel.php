@@ -243,7 +243,8 @@ class postsModel extends abstractModel
     public function updateLastActivity($userId)
     {
         if($this->data([
-            "lastActivity" => date( 'Y-m-d H:i:s', time() )
+            "lastActivity" => date( 'Y-m-d H:i:s', time() )  ,
+            "userStatus" => 1
         ])->where(" id = ? " , $userId)->update("app_users"))
         {
             return true;
@@ -251,11 +252,23 @@ class postsModel extends abstractModel
     }  
     public function updateLastActivityById($userId , $userSatus)
     {
-        $userSatus == "online" ? 1 : 0; 
+        $userSatus = $userSatus == "online" ? 1 : 0; 
+        
         if($this->data([
             
             "lastActivity" => date( 'Y-m-d H:i:s', time() ) ,
-            "status" => $userSatus
+            "userStatus" => $userSatus
+        ])->where(" id = ? " , $userId)->update("app_users"))
+        {
+            return true;
+        }
+    } 
+    public function updateLastStatusById($userId , $userSatus)
+    {
+        $userSatus = $userSatus == "online" ? 1 : 0; 
+        
+        if($this->data([
+            "userStatus" => $userSatus
         ])->where(" id = ? " , $userId)->update("app_users"))
         {
             return true;

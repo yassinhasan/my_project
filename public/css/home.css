@@ -673,7 +673,14 @@ color: #bfbfbf;
     border-radius: 20px 0 20px!important;
     padding: 10px 20px;
 }
-
+.chat_user_name {
+    text-transform: capitalize;
+}
+.lastseen
+{
+        font-size: 10px;
+    color: #6c757d;
+}
 /*char area users*/
 .chat_user_box
 {

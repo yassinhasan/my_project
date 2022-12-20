@@ -1,6 +1,5 @@
 <?php
 ini_set("display_errors" , 1);
-date_default_timezone_set('Asia/Riyadh');
 use core\app\Application;
 use core\controllers\accessController;
 use core\controllers\homecontroller; 
@@ -68,7 +67,6 @@ $app->router->get("/",[ homecontroller::class , "home"]);
 $app->router->post("/",[ homecontroller::class , "home"]);
 $app->router->get("/notfound",[ notfoundController::class , "notfound"]);
 $app->router->get("/home",[ homecontroller::class , "home"]);
-$app->router->post("/home",[ homecontroller::class , "home"]);
 $app->router->post("/sharePosts",[ homecontroller::class , "sharePosts"]);
 $app->router->post("/postDelete",[ homecontroller::class , "postDelete"]);
 $app->router->post("/postEdit",[ homecontroller::class , "postEdit"]);
@@ -83,8 +81,13 @@ $app->router->post("/fetchComments",[ homecontroller::class , "fetchComments"]);
 $app->router->post("/presenceAuth",[ homecontroller::class , "presenceAuth"]);
 $app->router->post("/getNotifications",[ homecontroller::class , "getNotifications"]);
 $app->router->post("/updateNotification",[ homecontroller::class , "updateNotification"]);
+
+
+$app->router->post("/fetchChatusers",[ homecontroller::class , "fetchChatusers"]);
+
 $app->router->post("/updateLastActivity",[ homecontroller::class , "updateLastActivity"]);
 $app->router->post("/updateLastActivityById",[ homecontroller::class , "updateLastActivityById"]);
+$app->router->post("/updateLastStatusById",[ homecontroller::class , "updateLastStatusById"]);
 
 $app->router->post("/fetchUpdateUserFollowSystem",[ homecontroller::class , "fetchUpdateUserFollowSystem"]);
 //  userPotsts

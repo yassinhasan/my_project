@@ -74,7 +74,24 @@ class chatModel extends abstractModel
     }
     
     
+    public function fetchChatUsers($userId)
+    {
+        $Users = $this->from(" app_users " )->join(" 
+            INNER JOIN app_user_profile  ON 
+            app_user_profile.userId = app_users.id
+            ")->where("app_users.id != ? " , $userId)->select("
+            app_users.id , app_users.firstName , app_users.lastName , app_users.userStatus , app_users.lastActivity , app_users.email , app_user_profile.profileImage  ,
+            ( select followStatus from app_users_follow where sender = $userId and receiver = app_users.id ) as followStatus  ,
+              ( select COUNT(app_users_follow.receiver) from app_users_follow where receiver = app_users.id AND followStatus = 'approve') as followers  ,
+              (SELECT msg from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId )  ORDER BY msgDate DESC limit 1 ) as lastMmsg ,
+              (SELECT isSeen from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId )  ORDER BY msgDate DESC limit 1 ) as isSeen ,
+              (SELECT id from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId )  ORDER BY msgDate DESC limit 1 ) as lastMmsgId ,
+              (SELECT ChatId from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId )  ORDER BY msgDate DESC limit 1 ) as ChatId ,
+               (SELECT fromId from app_chat WHERE (fromId = $userId AND toId = app_users.id) or ( fromId = app_users.id AND toId = $userId )  ORDER BY msgDate DESC limit 1 ) as fromId
+            ")->fetchAll();
 
+        return $Users;
+    }
     
 
 }
