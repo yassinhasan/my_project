@@ -836,7 +836,13 @@ p.chat_messages_text
 {
     font-weight: bold
 }
-
+i.fa-solid.fa-check.send {
+    font-size: 12px;
+}
+i.fa-solid.fa-check.send.done {
+    font-size: 12px;
+    color: #198754;
+}
 .no-more-posts
 {
     background-color: #055160 ;

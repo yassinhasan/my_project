@@ -140,10 +140,10 @@ function fetchPrivateChatArea( ChatId)
 // fetch chat 
 function preparePrivateChat(data)
 {
-      
+     
       let messages  = data.msgs;
       let loggedUserName = loggedUser.firstName+loggedUser.lastName;
-      let loggedUserImage = loggedUser.profileImage == "avatar.jpg" ? "avatar.jpg" : loggedUserName+"/"+loggedUser.profileImage;   
+      let loggedUserImage = loggedUser.profileImage == null ? "avatar.jpg" : loggedUserName+"/"+loggedUser.profileImage;   
       let touserName = toUser.firstName+toUser.lastName;
       let touserImagesrc = toUser.profileImage == null ? "avatar.jpg" : touserName+"/"+toUser.profileImage; 
       if(messages.length > 0)
@@ -163,6 +163,7 @@ function preparePrivateChat(data)
                         </div>
                        <div class="from_me_msg col-9">
                             <p class="small">${msg}</p>
+                           
                       </div>
                  </div>` ;
              }else
@@ -235,7 +236,7 @@ function insertMsgWithoutFetch(msg)
     
     msg = repairMsg(msg)
     let name = loggedUser.firstName+loggedUser.lastName;
-    let image = loggedUser.profileImage == "avatar.jpg" ? "../../public/uploades/images/profile/avatar.jpg" : "../../public/uploades/images/profile/"+name+"/"+loggedUser.profileImage;
+    let image = loggedUser.profileImage == null ? "../../public/uploades/images/profile/avatar.jpg" : "../../public/uploades/images/profile/"+name+"/"+loggedUser.profileImage;
     let inner_chat = chat_box.querySelector(".inner_chat");
     let msgFromMe = `
     <div class="from_me">
@@ -245,6 +246,7 @@ function insertMsgWithoutFetch(msg)
         </div>
          <div class="from_me_msg">
                 <p class="small">${msg}</p>
+                <i class="fa-solid fa-check send"></i>
         </div>
     </div>
     `;
