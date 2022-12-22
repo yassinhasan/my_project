@@ -19,6 +19,7 @@ class chatModel extends abstractModel
     {
      
      $insertNewUniqueId  = false;
+     $msgId;
      if($ChatId == "null" || $ChatId == 0 || $ChatId == 0)
      {
          
@@ -37,6 +38,7 @@ class chatModel extends abstractModel
             "toId"  =>$this->toId , 
             "ChatId" => $ChatId
              ])->insert(self::$tableName);
+           $msgId =  Application::$app->db::lastId();
         
          
      }else
@@ -46,9 +48,10 @@ class chatModel extends abstractModel
             "fromId"  => $this->fromId ,
             "toId"  =>$this->toId , 
             "ChatId" => $ChatId
-             ])->insert(self::$tableName);   
+             ])->insert(self::$tableName); 
+          $msgId =  Application::$app->db::lastId();
      }
-      return  $ChatId ;
+      return  [$ChatId , $msgId];
     }
     public function addAttachMsg($msgId , $attachment = null , $attachmentType =null)
     {

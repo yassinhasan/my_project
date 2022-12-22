@@ -15,7 +15,6 @@ pusher = new Pusher('24d30dbe202f39f2b07f', {
      var socketId = null;
 presenceChannel = pusher.subscribe("presence-chat");
 presenceChannel.bind('pusher:subscription_succeeded', function(member) {
-            console.log("make refresh")
             updateLastActivityById(member.me.id , "online");
             fetchChatusers(true)
             updateUserStatsInRealtime( loggedUser, loggedUser.userStatus);
@@ -26,7 +25,6 @@ presenceChannel.bind('pusher:member_removed', function(member) {
         updateLastActivityById(member.id , "offline");
         fetchChatusers();
         updateUserStatsInRealtime(allChatusers["user_"+member.id] , "offline")
-       console.log("removed")
        console.log(allChatusers["user_"+member.id])
  
 })
@@ -36,7 +34,6 @@ presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
 presenceChannel.bind('pusher:member_added', function(member ) {
        updateLastActivityById(member.id , "online");
        fetchChatusers();
-        console.log("added")
        console.log(allChatusers["user_"+member.id])
        updateUserStatsInRealtime(allChatusers["user_"+member.id] , "online")
         

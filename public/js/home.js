@@ -54,11 +54,8 @@ import {fetchUsers , prepareUsersBox} from "./home/users.js"
 fetchUsers();
 // chat 
 
-import { showPrivateChatArea , sendChatMessages } from "./home/chat.js"
-
+import { showPrivateChatArea  } from "./home/chat.js"
 showPrivateChatArea();
-sendChatMessages();
-
 function notifyMe() {
  if (Notification.permission !== 'granted')
   Notification.requestPermission();
