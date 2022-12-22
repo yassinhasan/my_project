@@ -33,7 +33,6 @@ class homecontroller extends abstractController
         if($this->request->method() == "POST")
         {
            $id = Application::$app->session->userId;
-           $this->model->updateLastActivity($id);
         //   $Pusherdata["userId"] = $id;
         //   $Pusherdata["onlineStatus"] = 1;
         //   $this->pusher->trigger( $_ENV['CHANNEL'], 'isLogged',  $Pusherdata);

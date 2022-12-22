@@ -569,6 +569,10 @@ textarea#Write_Post {
     /* transform: rotateX(355deg); */
     transform: rotateY(180deg);
 }
+.floadting_btn.hidden
+{
+    display: none;
+}
 
 
 

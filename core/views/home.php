@@ -85,7 +85,7 @@ use core\app\user;
 </div>
 <!--end modal -->
 
-<div class="floadting_btn" data-bs-toggle="modal" data-bs-target="#postChatModal">
+<div class="floadting_btn hidden" data-bs-toggle="modal" data-bs-target="#postChatModal">
         <i class="far fa-comment-alt"></i>
 </div>
 

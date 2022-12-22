@@ -3,10 +3,9 @@ let allDataChatuser = {};
 let allChatusers  = {};
 let allUsers = {};
 
-
 //  load all users who iam follow them
 
-function  fetchChatusers()
+function  fetchChatusers(showButton = false)
 {
     let url = "/fetchChatusers";
     fetch(url, {
@@ -17,8 +16,9 @@ function  fetchChatusers()
          
           let users = data.users;
           let loggedUserId = data.loggedUserId;
-        if (users.length > 0) {
-            for (var i = users.length; i--;) 
+          let completeFetch = false;
+          if (users.length > 0) {
+            for (let  i = 0 ;  i < users.length; i++) 
             {
                 if(users[i].id ==  loggedUserId)
                 {
@@ -32,25 +32,27 @@ function  fetchChatusers()
                     let lastSeen = handleLastSeen(diff);
                     allUsers["user_"+users[i].id] = users[i];
                     allChatusers["user_"+users[i].id].lastSeen = lastSeen;
-                    if( diff > 2)
+                    if( diff > 10)
                     {
                         updateLastStatusById(users[i].id , "offline")
                         allChatusers["user_"+users[i].id].userStatus = 0;
                         updateUserStatsInRealtime(allChatusers["user_"+users[i].id] , "offline")
                     }
                 } 
+
             }
+            if(showButton)
+            {
+                let floadting_btn  = document.querySelector(".floadting_btn");
+                floadting_btn.classList.remove("hidden")                
+            }
+
+
         }
-      
-        })  
+        
+        }) 
+        
 }
-
-if(window.location.href.split("/").pop() == "home")
-{
-   fetchChatusers(); 
-  
-}
-
 
 
 function updateLastActivity()
@@ -86,7 +88,8 @@ fetch(url, {
     .then(data => {
         if(data.succ)
         {
-           fetchChatusers();
+             console.log("updateLastActivityById" + " id = " + id)
+          
         }
     })
 
@@ -106,7 +109,7 @@ fetch(url, {
     .then(data => {
         if(data.succ)
         {
-          
+            console.log("updateLastStatusById" + " id = " + id)
         }
     })
 

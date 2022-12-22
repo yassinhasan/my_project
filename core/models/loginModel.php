@@ -36,7 +36,7 @@ class loginModel extends abstractModel
     public function updateLoginStatus($userId)
     {
         $this->data([
-            "userStatus" => STATUS_ONLINE ,
+            "userStatus" => 0 ,
            "lastActivity" => date( 'Y-m-d H:i:s', time() )
             ])->where(" id = ? " , $userId)->update(self::$tableName);
         return true;
