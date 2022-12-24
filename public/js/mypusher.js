@@ -247,4 +247,50 @@ function registerNewUser()
 }
 registerNewUser();
 
+// add notification when someone sent message to me
+function sendMessageNotification()
+{
+    channel.bind('addComment', function(data) {
+      let whoAddComment  = data.userId;
+      let userName = data.userName;
+      let ownerOfPOST = data.postUserId;
+      let postId = data.postId;
+ 
+      let to     = data.to;
+      let notificationId = data.notificationId;
+      let noti_count = document.querySelector(".noti_count");
+      let noti_count_number ;
+      if(noti_count.innerHTML == "")
+      {
+          noti_count_number = 0 ;
+      }else
+      {
+          noti_count_number = parseInt(noti_count.innerHTML);
+      }
+     
+        
+      // if someone add comment on my post and not me (loggedUser.id != whoAddComment && loggedUser.id == postUserId) 
+      //  
+      // if iam owner of post put iam not who write comment
+      // i need if iam owner and 
+      if((loggedUser.id != whoAddComment && loggedUser.id == ownerOfPOST) || (loggedUser.id != whoAddComment &&  whoAddComment== ownerOfPOST && to.length > 1 ))
+      {
+            noti_count_number ++;
+            noti_count.innerHTML = noti_count_number;
+            noti_count.style.display = "block" ;
+           let notfication_box = document.querySelector(".notfication_box");
+           notfication_box.classList.remove(".no_notification");
+           let no_notification_span = notfication_box.querySelector(".no_notification_span");
+           if(no_notification_span)
+          { no_notification_span.innerHTML = "";}
+            
+           let notication_string = `
+           <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> has added comment at you post <a href="/showPost?postId=${postId}" class="comment_link" data-postId=${postId}>click here</a> to show comment
+           </div>`;
+           notfication_box.insertAdjacentHTML("afterbegin", notication_string);
+           
+      } 
 
+    });
+}
+updateAddComment();

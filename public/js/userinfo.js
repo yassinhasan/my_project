@@ -44,7 +44,11 @@ function  fetchChatusers(showButton = false)
             if(showButton)
             {
                 let floadting_btn  = document.querySelector(".floadting_btn");
-                floadting_btn.classList.remove("hidden")                
+                if(floadting_btn)
+                {
+                       floadting_btn.classList.remove("hidden")    
+                }
+                         
             }
 
 
@@ -88,7 +92,7 @@ fetch(url, {
     .then(data => {
         if(data.succ)
         {
-             console.log("updateLastActivityById" + " id = " + id)
+           //  console.log("updateLastActivityById" + " id = " + id)
           
         }
     })

@@ -15,12 +15,15 @@ function getNotifications() {
              let no_notification_span = notfication_box.querySelector(".no_notification_span");
              no_notification_span.innerHTML = "";
              let notication_string = "";
+             let postId;
+             let chatId;
             for(let i = 0;
           i < notification.length;
             i++) {
 
               let userName = notification[i].fromUsername;
-              let postId = notification[i].postId;
+              postId = notification[i].postId;
+              chatId = notification[i].ChatId;
               let notificationId = notification[i].notificationId;
               let noti_count = document.querySelector(".noti_count");
               let noti_count_number = notification.length;
@@ -31,6 +34,10 @@ function getNotifications() {
                    notication_string += `
                        <div class="notcation_details" data-notificationId=${notificationId}> <span class="comment_username">${userName}</span> has added comment at you post <a href="/showPost?postId=${postId}" class="comment_link">click here</a> to show comment
                        </div>`;                  
+              }else if(notification[i].type == "chat")
+              {
+                      notication_string += `
+                       <div class="notcation_details" data-notificationId=${notificationId}> <span class="comment_username">${userName}</span> sent you message <a href="/showPost?chatId=${chatId}" `;  
               }
 
              
