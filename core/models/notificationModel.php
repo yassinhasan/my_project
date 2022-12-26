@@ -54,5 +54,26 @@ class notificationModel extends abstractModel
 
         return $count > 0;
     }
+    public function addChatNotification($fromId , $to  , $chatId , $userName)
+    {
+        $notificationId = null;
+        if ($this->data([
+            "type"   => "chat" 
+            ])->insert("app_notifications"))
+            {
+               
+               $notificationId =  Application::$app->db::lastId();
+               $this->data([
+                    "notificationId" => $notificationId ,
+                    "fromId" => $fromId , 
+                    "fromUsername" => $userName , 
+                    "toId"  => $to ,
+                    "isSeen" => "false" ,
+                    "ChatId" => $chatId  
+                    ])->insert("app_notifications_chat");
+               }
+            return  $notificationId;
+            
+    }
     
 }

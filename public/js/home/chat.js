@@ -19,11 +19,35 @@ floadting_btn.addEventListener("click", e => {
     showUsers();
 
 })
-go_back_chat.addEventListener("click", e => {
 
+let close_private_chat = document.querySelector(".close_private_chat");
+close_private_chat.addEventListener("click", e => {
+     blurEvent();
+});
+
+go_back_chat.addEventListener("click", e => {
+    blurEvent();
     showUsers();
 })
-
+function blurEvent()
+{
+    
+    let form = new FormData();
+    form.append("ChatId", toUser.ChatId);
+    form.append("loggedUser", loggedUser.id);
+    form.append("toId", toUser.id);
+    let url = "/chat/blurEvent";
+    fetch(url, {
+            method: "POST",
+            body: form
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            if (data) {
+             
+            }
+        })
+}
 function loadChatAreaOfUsers(allChatusers) {
 
     removeCustomSpinner(user_chat_body);
@@ -107,13 +131,19 @@ function showPrivateChatArea() {
             let send_msg = document.querySelector(".send_msg");
             send_msg.setAttribute("data-touserId", id);
             send_msg.setAttribute("data-ChatId", chatid);
+            // let btn_close = document.querySelector(".btn-close");
+            // btn_close.setAttribute("data-touserId", id);
+            // btn_close.setAttribute("data-ChatId", chatid);
+            // let go_back_chat = document.querySelector(".go_back_chat");
+            // go_back_chat.setAttribute("data-touserId", id);
+            // go_back_chat.setAttribute("data-ChatId", chatid);
             showChat();
             showCustomeSpinner(inner_chat_box);
             let name = e.target.querySelector(".chat_user_name_span").innerHTML;
             document.querySelector(".to_username").innerHTML = name;
             let chat_user_box = document.querySelector(".chat_user_box_" + id);
-            let chat_messages = chat_user_box.querySelector(".chat_messages");
-            chat_messages.classList.remove("unseen");
+            let chat_messages_text  = chat_user_box.querySelector(".chat_messages_text");
+            chat_messages_text.classList.remove("unseen");
             fetchPrivateChatArea(chatid, private_chat_box);
         }
     });

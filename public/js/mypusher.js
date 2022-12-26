@@ -25,7 +25,7 @@ presenceChannel.bind('pusher:member_removed', function(member) {
         updateLastActivityById(member.id , "offline");
         fetchChatusers();
         updateUserStatsInRealtime(allChatusers["user_"+member.id] , "offline")
-       console.log(allChatusers["user_"+member.id])
+   //    console.log(allChatusers["user_"+member.id])
  
 })
 presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
@@ -34,7 +34,7 @@ presenceChannel.bind("pusher_internal:subscription_succeeded", (members) => {
 presenceChannel.bind('pusher:member_added', function(member ) {
        updateLastActivityById(member.id , "online");
        fetchChatusers();
-       console.log(allChatusers["user_"+member.id])
+      // console.log(allChatusers["user_"+member.id])
        updateUserStatsInRealtime(allChatusers["user_"+member.id] , "online")
         
  
@@ -129,7 +129,7 @@ function updatechat()
             {
                 inner_chat.insertAdjacentHTML("beforeend" , msgDiv);
             }
-         //  inner_chat.scrollTop = inner_chat.scrollHeight ;
+           inner_chat.scrollTop = inner_chat.scrollHeight ;
         }
        let chat_user_box = document.querySelector('.chat_user_box_'+toUserId);
        if(chat_user_box)
@@ -250,14 +250,14 @@ registerNewUser();
 // add notification when someone sent message to me
 function sendMessageNotification()
 {
-    channel.bind('addComment', function(data) {
-      let whoAddComment  = data.userId;
-      let userName = data.userName;
-      let ownerOfPOST = data.postUserId;
-      let postId = data.postId;
- 
-      let to     = data.to;
+      channel.bind('isHereInChat', function(returnData) {
+      let data = returnData.data ;
+      let whoSendMsg  = data.userId;
+      let userName = data.firstName;
+      let ChatId = data.ChatId;
+      let to     = data.toId;
       let notificationId = data.notificationId;
+      let msg = data.msg;
       let noti_count = document.querySelector(".noti_count");
       let noti_count_number ;
       if(noti_count.innerHTML == "")
@@ -273,7 +273,7 @@ function sendMessageNotification()
       //  
       // if iam owner of post put iam not who write comment
       // i need if iam owner and 
-      if((loggedUser.id != whoAddComment && loggedUser.id == ownerOfPOST) || (loggedUser.id != whoAddComment &&  whoAddComment== ownerOfPOST && to.length > 1 ))
+      if(true)
       {
             noti_count_number ++;
             noti_count.innerHTML = noti_count_number;
@@ -285,7 +285,7 @@ function sendMessageNotification()
           { no_notification_span.innerHTML = "";}
             
            let notication_string = `
-           <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> has added comment at you post <a href="/showPost?postId=${postId}" class="comment_link" data-postId=${postId}>click here</a> to show comment
+           <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> sent youm message ( ${msg}  )
            </div>`;
            notfication_box.insertAdjacentHTML("afterbegin", notication_string);
            
@@ -293,4 +293,25 @@ function sendMessageNotification()
 
     });
 }
-updateAddComment();
+function showIsUserInChat()
+{
+      channel.bind('isHereInChat', function(returnData) {
+      let data = returnData.data ;
+      let whoOpenChat  = data.userId;
+      let chatWith = data.toId;
+      let ChatId = data.ChatId;
+      let blur = data.blur;
+      console.log(data)
+      if(blur == true)
+      {
+          console.log(whoOpenChat + " close private chat with " + chatWith);
+      }else
+      {
+            console.log(whoOpenChat + " open private chat with " + chatWith);
+      }
+    
+      
+    });
+}
+showIsUserInChat()
+// sendMessageNotification();

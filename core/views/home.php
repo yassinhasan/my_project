@@ -121,7 +121,7 @@ use core\app\user;
                     <!--<i class="fas fa-angle-left"></i>-->
           <i class="fas fa-arrow-left go_back_chat"></i>
           <p class="mb-0 fw-bold to_username"></p>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close close_private_chat" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
       </div>
       <!--end header-->

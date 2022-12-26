@@ -17,6 +17,7 @@ class chatController extends abstractController
         // $id = (int)$this->session->userId;
         if($this->request->getMethod() == "POST")
         {
+            $notificationId  = null;
             $data = $this->request->getBody();
             $model =  $this->model;
             $rules = $this->model->rules();
@@ -32,13 +33,17 @@ class chatController extends abstractController
                 $this->jData['msgId'] =  $msgId; 
                 $this->jData["f_time"] = $f_time;
                 $this->jData['succ'] =  "done";  
-                $Pusherdata["msgs"] = [
+            // $notificationModel = new notificationModel();
+            // $notificationId = $notificationModel->addNotification($userId ,$to , $ChatId  ,  $data["firstName"]);
+            //  $pusherData["notificationId"] = $notificationId;
+               $Pusherdata["msgs"] = [
                   "fromId" => $data["fromId"] , 
                   "toId"   => $data["toId"] , 
                   "msg"   => $data["msg"] , 
                   "firstName" => $data["firstName"] , 
                   "ChatId" => $ChatId ,
-                  "msgId"  =>$msgId
+                  "msgId"  =>$msgId , 
+                  "notificationId" => $notificationId
                   ];
               $this->pusher->trigger( $_ENV['CHANNEL'], 'updateChate',  $Pusherdata);
             }else
@@ -51,13 +56,39 @@ class chatController extends abstractController
 
     }
     
-    public function fetchPrivateChat()
+    public function fetchPrivateChat() 
     {
  // $id = (int)$this->session->userId;
         if($this->request->getMethod() == "POST")
         {
             $data = $this->request->getBody();
             $this->jData['msgs'] = $this->model->fetchPrivateChat($data);
+             $Pusherdata["data"] = [
+                 "userId" => Application::$app->session->userId ,
+                 "chatId" =>  $data["ChatId"] , 
+                 "toId" => $data["toId"] ,
+                "blur" => false
+                 ];
+          
+            $this->pusher->trigger( $_ENV['CHANNEL'], 'isHereInChat',  $Pusherdata);
+            $this->json();
+        }
+
+    }
+    public function blurEvent() 
+    {
+      if($this->request->getMethod() == "POST")
+        {
+            $data = $this->request->getBody();
+            $this->jData['msgs'] = $this->model->fetchPrivateChat($data);
+             $Pusherdata["data"] = [
+                 "userId" => Application::$app->session->userId ,
+                 "chatId" =>  $data["ChatId"] , 
+                 "toId" => $data["toId"] ,
+                 "blur" => true
+                 ];
+          
+            $this->pusher->trigger( $_ENV['CHANNEL'], 'isHereInChat',  $Pusherdata);
             $this->json();
         }
 

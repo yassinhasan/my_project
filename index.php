@@ -100,8 +100,9 @@ $app->router->post("/fetchPostsById",[ userPostsController::class , "fetchPostsB
 $app->router->post("/chat/loadChat",[ chatController::class , "loadChat"]); 
 $app->router->post("/chat/addMsg",[ chatController::class , "addMsg"]);
 $app->router->post("/chat/fetchPrivateChat",[ chatController::class , "fetchPrivateChat"]);
+$app->router->post("/chat/blurEvent",[ chatController::class , "blurEvent"]);
 $app->router->post("/fetchChatUsers",[ chatController::class , "fetchChatUsers"]);
-$app->router->post("/chat/blur",[ chatController::class , "blur"]);
+$app->router->post("/chat/blur",[ chatController::class , "blur"]); 
 // $app->router->get("/chat",[ chatController::class , "chat"]);
 //test
 $app->router->get("/register",[ registerController::class , "register"]);
