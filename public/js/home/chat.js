@@ -1,4 +1,4 @@
-// import {loggedUser} from "./userinfo.js" 
+import {showIsUserInChat , sendMessageNotification} from "../mypusher.js" 
 let user_section = document.querySelector(".user_section");
 let chat_section = document.querySelector(".chat_section");
 let floadting_btn = document.querySelector(".floadting_btn");
@@ -121,6 +121,7 @@ function showPrivateChatArea() {
     document.body.addEventListener("click", e => {
 
         if (e.target.classList.contains("chat_user_box")) {
+            showIsUserInChat(loggedUser.id)
             let id = e.target.getAttribute("data-userId");
             toUser = allChatusers["user_" + id];
             inner_chat.innerHTML = "";
@@ -131,12 +132,6 @@ function showPrivateChatArea() {
             let send_msg = document.querySelector(".send_msg");
             send_msg.setAttribute("data-touserId", id);
             send_msg.setAttribute("data-ChatId", chatid);
-            // let btn_close = document.querySelector(".btn-close");
-            // btn_close.setAttribute("data-touserId", id);
-            // btn_close.setAttribute("data-ChatId", chatid);
-            // let go_back_chat = document.querySelector(".go_back_chat");
-            // go_back_chat.setAttribute("data-touserId", id);
-            // go_back_chat.setAttribute("data-ChatId", chatid);
             showChat();
             showCustomeSpinner(inner_chat_box);
             let name = e.target.querySelector(".chat_user_name_span").innerHTML;
@@ -163,6 +158,7 @@ function fetchPrivateChatArea(ChatId, private_chat_box) {
         .then(resp => resp.json())
         .then(data => {
             if (data) {
+             //   console.log(data)
                 preparePrivateChat(data, private_chat_box)
             }
         })
@@ -261,7 +257,7 @@ send_msg_btns.forEach(send_msg_bt => {
                 .then(resp => resp.json())
                 .then(data => {
                     if (data) {
-                        sendChatCallable(data, private_chat_box)
+                        sendChatCallable(data, private_chat_box , touserId)
                     }
                 })
         }
@@ -296,7 +292,7 @@ function insertMsgWithoutFetch(msg) {
     return f_time;
 }
 
-function sendChatCallable(data, private_chat_box) {
+function sendChatCallable(data, private_chat_box , touserId) {
     if (data.succ == "done") {
 
         toUser.ChatId = data.ChatId;
@@ -307,6 +303,9 @@ function sendChatCallable(data, private_chat_box) {
         <i class="fa-solid fa-check done"></i>
         <i class="fa-solid fa-check done"></i>
         `;
+        let who_sending_msg_to_user = allChatusers["user_"+touserId];
+        
+        sendMessageNotification(who_sending_msg_to_user ,  true)
     }
     // chat_textarea.focus();
 

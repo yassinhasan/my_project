@@ -17,14 +17,15 @@ presenceChannel = pusher.subscribe("presence-chat");
 presenceChannel.bind('pusher:subscription_succeeded', function(member) {
             updateLastActivityById(member.me.id , "online");
             fetchChatusers(true)
-            updateUserStatsInRealtime( loggedUser, loggedUser.userStatus);
+            updateUserStatsInRealtime( loggedUser, "online");
 
     })
 presenceChannel.bind('pusher:member_removed', function(member) {
        
         updateLastActivityById(member.id , "offline");
         fetchChatusers();
-        updateUserStatsInRealtime(allChatusers["user_"+member.id] , "offline")
+        updateUserStatsInRealtime(allChatusers["user_"+member.id] , "offline");
+        showIsUserInChat(loggedUser.id)
    //    console.log(allChatusers["user_"+member.id])
  
 })
@@ -248,70 +249,83 @@ function registerNewUser()
 registerNewUser();
 
 // add notification when someone sent message to me
-function sendMessageNotification()
+function sendMessageNotification(userWhoOpenChat , send = false)
 {
-      channel.bind('isHereInChat', function(returnData) {
-      let data = returnData.data ;
-      let whoSendMsg  = data.userId;
-      let userName = data.firstName;
-      let ChatId = data.ChatId;
-      let to     = data.toId;
-      let notificationId = data.notificationId;
-      let msg = data.msg;
-      let noti_count = document.querySelector(".noti_count");
-      let noti_count_number ;
-      if(noti_count.innerHTML == "")
-      {
-          noti_count_number = 0 ;
-      }else
-      {
-          noti_count_number = parseInt(noti_count.innerHTML);
-      }
+    
+    if(send == true)
+    {
+       console.log(userWhoOpenChat)  
+    }
+
+    
+    //   let data = returnData.data ;
+    //   let whoSendMsg  = data.userId;
+    //   let userName = data.firstName;
+    //   let ChatId = data.ChatId;
+    //   let to     = data.toId;
+    //   let notificationId = data.notificationId;
+    //   let msg = data.msg;
+    //   let noti_count = document.querySelector(".noti_count");
+    //   let noti_count_number ;
+    //   if(noti_count.innerHTML == "")
+    //   {
+    //       noti_count_number = 0 ;
+    //   }else
+    //   {
+    //       noti_count_number = parseInt(noti_count.innerHTML);
+    //   }
      
         
-      // if someone add comment on my post and not me (loggedUser.id != whoAddComment && loggedUser.id == postUserId) 
-      //  
-      // if iam owner of post put iam not who write comment
-      // i need if iam owner and 
-      if(true)
-      {
-            noti_count_number ++;
-            noti_count.innerHTML = noti_count_number;
-            noti_count.style.display = "block" ;
-           let notfication_box = document.querySelector(".notfication_box");
-           notfication_box.classList.remove(".no_notification");
-           let no_notification_span = notfication_box.querySelector(".no_notification_span");
-           if(no_notification_span)
-          { no_notification_span.innerHTML = "";}
+    //   // if someone add comment on my post and not me (loggedUser.id != whoAddComment && loggedUser.id == postUserId) 
+    //   //  
+    //   // if iam owner of post put iam not who write comment
+    //   // i need if iam owner and 
+    //   if(true)
+    //   {
+    //         noti_count_number ++;
+    //         noti_count.innerHTML = noti_count_number;
+    //         noti_count.style.display = "block" ;
+    //       let notfication_box = document.querySelector(".notfication_box");
+    //       notfication_box.classList.remove(".no_notification");
+    //       let no_notification_span = notfication_box.querySelector(".no_notification_span");
+    //       if(no_notification_span)
+    //       { no_notification_span.innerHTML = "";}
             
-           let notication_string = `
-           <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> sent youm message ( ${msg}  )
-           </div>`;
-           notfication_box.insertAdjacentHTML("afterbegin", notication_string);
+    //       let notication_string = `
+    //       <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> sent youm message ( ${msg}  )
+    //       </div>`;
+    //       notfication_box.insertAdjacentHTML("afterbegin", notication_string);
            
-      } 
-
-    });
+    //   } 
 }
-function showIsUserInChat()
+function showIsUserInChat(loggeduserId)
 {
+      let whoChatWithMe = {
+         id  : null,
+         ChatId : null,
+         openChat : false
+        };
       channel.bind('isHereInChat', function(returnData) {
       let data = returnData.data ;
       let whoOpenChat  = data.userId;
-      let chatWith = data.toId;
-      let ChatId = data.ChatId;
-      let blur = data.blur;
-      console.log(data)
-      if(blur == true)
-      {
-          console.log(whoOpenChat + " close private chat with " + chatWith);
-      }else
-      {
-            console.log(whoOpenChat + " open private chat with " + chatWith);
-      }
-    
-      
+      let ChatId = data.chatId;
+      let openChat = data.openChat;
+      whoChatWithMe.id = whoOpenChat;
+      whoChatWithMe.ChatId = ChatId
+       whoChatWithMe.openChat = openChat ;
+       
+       // another person now is on chat with me 
+       if(loggeduserId != whoOpenChat)
+       {
+           // here send notifications after send msg
+        //   console.log(whoChatWithMe)
+           allChatusers["user_" + whoChatWithMe.id].openChat = openChat;
+         //  sendMessageNotification(allChatusers["user_" + whoChatWithMe.id])
+          
+       }
+
     });
 }
-showIsUserInChat()
+// showIsUserInChat()
 // sendMessageNotification();
+export {showIsUserInChat , sendMessageNotification}

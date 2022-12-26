@@ -32,7 +32,8 @@ class chatController extends abstractController
                 $this->jData['ChatId'] =  $ChatId;
                 $this->jData['msgId'] =  $msgId; 
                 $this->jData["f_time"] = $f_time;
-                $this->jData['succ'] =  "done";  
+                $this->jData['succ'] =  "done";   
+                 $this->jData['msgId'] = $msgId;
             // $notificationModel = new notificationModel();
             // $notificationId = $notificationModel->addNotification($userId ,$to , $ChatId  ,  $data["firstName"]);
             //  $pusherData["notificationId"] = $notificationId;
@@ -67,7 +68,7 @@ class chatController extends abstractController
                  "userId" => Application::$app->session->userId ,
                  "chatId" =>  $data["ChatId"] , 
                  "toId" => $data["toId"] ,
-                "blur" => false
+                "openChat" => true
                  ];
           
             $this->pusher->trigger( $_ENV['CHANNEL'], 'isHereInChat',  $Pusherdata);
@@ -85,7 +86,7 @@ class chatController extends abstractController
                  "userId" => Application::$app->session->userId ,
                  "chatId" =>  $data["ChatId"] , 
                  "toId" => $data["toId"] ,
-                 "blur" => true
+                 "openChat" => false
                  ];
           
             $this->pusher->trigger( $_ENV['CHANNEL'], 'isHereInChat',  $Pusherdata);

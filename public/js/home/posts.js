@@ -520,7 +520,7 @@ function showEditBox() {
 }
 
 
-function postDelete() {
+function postDelete(extraflags=false) {
     document.body.addEventListener("click", e => {
             if (e.target.classList.contains("edit_box_delete")) {
                 e.target.parentElement.classList.remove("show");
@@ -550,6 +550,11 @@ function postDelete() {
                                 removeCustomSpinner(post_box_details);
                                 post_box_details.remove();
                                 showAlert("success" ,"Success !" , " you have deleted your post");
+                                if(extraflags == true)
+                                {
+                                    window.location.href = "/home";
+                                 }
+                                
                             }
                         })                
                 }

@@ -18,8 +18,8 @@ class chatModel extends abstractModel
     public function insertMsg($ChatId)
     {
      
+      $msgId ;
      $insertNewUniqueId  = false;
-     $msgId;
      if($ChatId == "null" || $ChatId == 0 || $ChatId == 0)
      {
          
@@ -38,9 +38,8 @@ class chatModel extends abstractModel
             "toId"  =>$this->toId , 
             "ChatId" => $ChatId
              ])->insert(self::$tableName);
-           $msgId =  Application::$app->db::lastId();
         
-         
+          $msgId =  Application::$app->db::lastId();
      }else
      {
          $this->data([
@@ -48,10 +47,10 @@ class chatModel extends abstractModel
             "fromId"  => $this->fromId ,
             "toId"  =>$this->toId , 
             "ChatId" => $ChatId
-             ])->insert(self::$tableName); 
-          $msgId =  Application::$app->db::lastId();
+             ])->insert(self::$tableName);   
+         $msgId =  Application::$app->db::lastId();
      }
-      return  [$ChatId , $msgId];
+      return  [$ChatId , $msgId] ;
     }
     public function addAttachMsg($msgId , $attachment = null , $attachmentType =null)
     {
@@ -64,8 +63,8 @@ class chatModel extends abstractModel
     }
     public function fetchPrivateChat($data)
     {
-         $msgs = [];
-         $ChatId = $data["ChatId"] ;
+        $msgs;
+        $ChatId = $data["ChatId"] ;
         if($ChatId  == 0  || $ChatId == "0" || $ChatId == "null" || $ChatId == null)
         {
            $msgs =  [];

@@ -3,6 +3,7 @@ let allDataChatuser = {};
 let allChatusers  = {};
 let allUsers = {};
 
+
 //  load all users who iam follow them
 
 function  fetchChatusers(showButton = false)
@@ -38,6 +39,7 @@ function  fetchChatusers(showButton = false)
                         allChatusers["user_"+users[i].id].userStatus = 0;
                         updateUserStatsInRealtime(allChatusers["user_"+users[i].id] , "offline")
                     }
+                      allChatusers["user_"+users[i].id].openChat = false;
                 } 
 
             }

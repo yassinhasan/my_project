@@ -30,7 +30,7 @@ postEdit();
 // must be after uplaod 
 import {showEditBox , postDelete , updatePost} from "./home/posts.js"
 showEditBox();
-postDelete();
+postDelete(true);
 updatePost();
 
 // import notifications  getNotifications
