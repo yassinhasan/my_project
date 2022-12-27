@@ -9,10 +9,7 @@ use core\app\uploadImage;
 use core\app\uploadVideo;
 use core\app\uploadDocs;
 class homecontroller extends abstractController
-{
-
-    
-    
+{    
   public function __construct()
     {
         
@@ -23,7 +20,7 @@ class homecontroller extends abstractController
         $this->data['links'] = [
             "css" => [ "home/users","home/mediaquery" ,"home" ] ,
             
-            "js" => ["mypusher","home"] ,
+            "js" => ["home"] ,
         ];
 
     }

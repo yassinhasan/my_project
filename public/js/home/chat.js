@@ -1,4 +1,4 @@
-import {showIsUserInChat , sendMessageNotification} from "../mypusher.js" 
+import {showIsUserInChat } from "../mypusher.js" 
 let user_section = document.querySelector(".user_section");
 let chat_section = document.querySelector(".chat_section");
 let floadting_btn = document.querySelector(".floadting_btn");
@@ -242,6 +242,8 @@ send_msg_btns.forEach(send_msg_bt => {
 
             if (no_msgs) no_msgs.remove();
            let f_time =  insertMsgWithoutFetch(message);
+           let who_sending_msg_to_user = allChatusers["user_"+touserId];
+           console.log(who_sending_msg_to_user)
             let form = new FormData();
             form.append("ChatId", toUser.ChatId);
             form.append("msg", message);
@@ -249,6 +251,7 @@ send_msg_btns.forEach(send_msg_bt => {
             form.append("toId", toUser.id);
             form.append("firstName", loggedUser.firstName);
             form.append("f_time", f_time);
+            form.append("openChat" , who_sending_msg_to_user.openChat)
             let url = "/chat/addMsg";
             fetch(url, {
                     method: "POST",
@@ -303,9 +306,6 @@ function sendChatCallable(data, private_chat_box , touserId) {
         <i class="fa-solid fa-check done"></i>
         <i class="fa-solid fa-check done"></i>
         `;
-        let who_sending_msg_to_user = allChatusers["user_"+touserId];
-        
-        sendMessageNotification(who_sending_msg_to_user ,  true)
     }
     // chat_textarea.focus();
 

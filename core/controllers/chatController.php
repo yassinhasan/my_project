@@ -1,6 +1,7 @@
 <?php namespace core\controllers;
 use core\app\Application;
 use core\models\chatModel;
+use core\models\notificationModel;
 class chatController extends abstractController
 {
     public function __construct()
@@ -23,6 +24,7 @@ class chatController extends abstractController
             $rules = $this->model->rules();
             $ChatId = $data["ChatId"] ;
             $f_time  = $data["f_time"];
+            $openChat = $data["openChat"];
             if( $this->validate->isValid( $model ,$rules, $data))
             {
              
@@ -33,19 +35,28 @@ class chatController extends abstractController
                 $this->jData['msgId'] =  $msgId; 
                 $this->jData["f_time"] = $f_time;
                 $this->jData['succ'] =  "done";   
-                 $this->jData['msgId'] = $msgId;
-            // $notificationModel = new notificationModel();
-            // $notificationId = $notificationModel->addNotification($userId ,$to , $ChatId  ,  $data["firstName"]);
-            //  $pusherData["notificationId"] = $notificationId;
-               $Pusherdata["msgs"] = [
-                  "fromId" => $data["fromId"] , 
-                  "toId"   => $data["toId"] , 
-                  "msg"   => $data["msg"] , 
-                  "firstName" => $data["firstName"] , 
-                  "ChatId" => $ChatId ,
-                  "msgId"  =>$msgId , 
-                  "notificationId" => $notificationId
-                  ];
+                $this->jData['msgId'] = $msgId;
+
+                if($openChat == false || $openChat == "false")
+                {
+                    $notificationModel = new notificationModel();
+                    $notificationId = $notificationModel->addChatNotification($data["fromId"] ,$data["toId"] , $ChatId  ,  $data["firstName"]);
+                    $pusherData["notificationId"] = $notificationId;
+                }
+                $Pusherdata["msgs"] = [
+                    "fromId" => $data["fromId"] , 
+                    "toId"   => $data["toId"] , 
+                    "msg"   => $data["msg"] , 
+                    "firstName" => $data["firstName"] , 
+                    "ChatId" => $ChatId ,
+                    "msgId"  =>$msgId , 
+                    "notificationId" => $notificationId
+                ];
+                if($notificationId != null)
+                {
+                        // add pusher here tommorrow
+                        $this->pusher->trigger( $_ENV['CHANNEL'], 'sendMessageNotification',  $Pusherdata);
+                }
               $this->pusher->trigger( $_ENV['CHANNEL'], 'updateChate',  $Pusherdata);
             }else
             {

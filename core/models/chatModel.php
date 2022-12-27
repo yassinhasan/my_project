@@ -18,7 +18,7 @@ class chatModel extends abstractModel
     public function insertMsg($ChatId)
     {
      
-      $msgId ;
+      $msgId =null;
      $insertNewUniqueId  = false;
      if($ChatId == "null" || $ChatId == 0 || $ChatId == 0)
      {
@@ -63,7 +63,7 @@ class chatModel extends abstractModel
     }
     public function fetchPrivateChat($data)
     {
-        $msgs;
+        $msgs = null;
         $ChatId = $data["ChatId"] ;
         if($ChatId  == 0  || $ChatId == "0" || $ChatId == "null" || $ChatId == null)
         {

@@ -21,7 +21,7 @@
         if(!empty($links["js"])) :
             foreach ($links["js"] as $link) :
                 $file =  $this->request->jsUrl($link);
-               echo  "<script src='".$file."?05'  type='module' charset='utf-8'> </script>" ;
+               echo  "<script src='".$file."?0'  type='module' charset='utf-8'> </script>" ;
             endforeach;
         endif;
     ?>
