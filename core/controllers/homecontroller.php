@@ -228,12 +228,14 @@ class homecontroller extends abstractController
         $data = $this->request->getBody();
         $userId = Application::$app->session->userId;
         $notificationId = $data['notificationId'];
+        $type = $data["notificationType"];
         $notificationModel = new notificationModel();
         if($this->request->method() == "POST")
         {
-          if($notificationModel->updateNotification($notificationId , $userId))
+          if($notificationModel->updateNotification($notificationId , $userId , $type))
           {
               $this->jData["update"] = "success";
+              $this->jData["type"] = $type;
           }
           $this->json();
         }

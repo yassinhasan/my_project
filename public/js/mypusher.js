@@ -17,7 +17,7 @@ presenceChannel = pusher.subscribe("presence-chat");
 presenceChannel.bind('pusher:subscription_succeeded', function(member) {
             updateLastActivityById(member.me.id , "online");
             fetchChatusers(true)
-            updateUserStatsInRealtime( loggedUser, "online");
+          
 
     })
 presenceChannel.bind('pusher:member_removed', function(member) {
@@ -209,36 +209,8 @@ function updateAddComment()
 }
 updateAddComment();
 
-function onClickNotification()
-{
-    window.addEventListener("click",(e)=>
-    {
-       
-        if(e.target.classList.contains("notcation_details") )
-        {
-            let notificationId = e.target.getAttribute("data-notificationId");
-            let comment_link = e.target.querySelector(".comment_link");
-
-            let url = "/updateNotification";
-            let form = new FormData();
-            form.append("notificationId", notificationId);
-            fetch(url, {
-                  method: "POST" ,
-                   body: form
-                  })
-            .then(resp => resp.json())
-            .then(data => {
-            if(data.update == "success")
-              {
-                   window.location.href = comment_link.href;
-              }
-          })  
-        }
-    })
 
 
-}
-onClickNotification();
 function registerNewUser()
 {
     channel.bind('registerNewUser', function(data) {
@@ -278,7 +250,7 @@ function sendMessageNotification()
           { no_notification_span.innerHTML = "";}
               
             let notication_string = `
-            <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> sent youm message ( ${msg}  )
+            <div class="notcation_details" data-notificationId=${notificationId} data-notificationType="chat"> <span class="comment_username">${userName}</span> sent youm message ( ${msg}  )
             </div>`;
             notfication_box.insertAdjacentHTML("afterbegin", notication_string);
       }

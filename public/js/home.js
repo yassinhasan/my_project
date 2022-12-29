@@ -22,7 +22,7 @@ import { clickedOnAddLiketBtn } from "./home/likes.js"
 
 
 // import notifications  getNotifications
-import {getNotifications} from "./home/notifications.js"
+
 getNotifications();
  // realTimeNoti( 1 ,"hasn meady" , "is online now");
 

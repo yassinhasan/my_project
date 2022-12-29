@@ -219,9 +219,16 @@ class Database
       return $result;
 
     }
-    public function fetchAll()
+    public function fetchAll($stmt = null)
     {
-      $results = $this->stmt->fetchAll(PDO::FETCH_CLASS);
+        if($stmt == null)
+        {
+             $results = $this->stmt->fetchAll(PDO::FETCH_CLASS);
+        }else
+        {
+             $results = $stmt->fetchAll(PDO::FETCH_CLASS);
+        }
+     
       $this->reset();
       return $results;
     }

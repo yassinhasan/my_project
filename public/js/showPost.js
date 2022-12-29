@@ -34,5 +34,4 @@ postDelete(true);
 updatePost();
 
 // import notifications  getNotifications
-import {getNotifications} from "./home/notifications.js"
 getNotifications();
