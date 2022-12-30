@@ -38,7 +38,25 @@ reset_passwrod_btn.addEventListener("click",(e)=>
       
     }else if(data.update_error)
     {
-        showAlert('error' , 'Error' , "sorry there is somthing error please try in another time")
+      //  showAlert('error' , 'Error' , "sorry there is somthing error please try in another time");
+          //   swett alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            
+            Toast.fire({
+              icon: 'error',
+              title:"sorry there is somthing error please try in another time"
+            })
+            //  
     }
    })
 })

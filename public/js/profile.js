@@ -90,9 +90,25 @@ profile_image_input.addEventListener("change",e=>
             hide(update_profile_image);
             hide(cancel_profile_image);
             profile_iamge.src = oldsrc;
-            showAlert('danger', 'Error', "sorry this file not valid")
+           // showAlert('danger', 'Error', "sorry this file not valid")
+                             //     //   swett alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
             
-    
+            Toast.fire({
+              icon: 'error',
+              title: `sorry this file not valid`
+            })
+            //  
         }else
         {
             removeAnyValidation();
@@ -152,7 +168,25 @@ function fetchUpdateImage(form,url)
             hideAlert();
             let profile_iamge_box = getElm("profile_iamge_box");
             removeCustomSpinner(profile_iamge_box);
-            showAlert("success" ,"Success !" , " you have updated your profile");
+           // showAlert("success" ,"Success !" , " you have updated your profile");
+                             //     //   swett alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: `you have updated your profile`
+            })
+            //  
         }
     
     })

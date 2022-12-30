@@ -92,8 +92,25 @@ function sharePost(mainSharePox , update = false)
 
                 }
                 else if (data.attachment_error) {
-                    showAlert('danger', 'Error', data.attachment_error.attachment_error_msg);
-
+                  //  showAlert('danger', 'Error', data.attachment_error.attachment_error_msg);
+                  //   swett alert
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title:data.attachment_error.attachment_error_msg
+                    })
+            //  
                 }
                 else if (data.success) {
                     textarea_text.value = "";
@@ -106,7 +123,25 @@ function sharePost(mainSharePox , update = false)
                 }
                 else if (data.sql_error) {
 
-                    showAlert('error', 'Error', data.sql_error)
+                    showAlert('error', 'Error', data.sql_error);
+                  //   swett alert
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: data.sql_error
+                    })
+            //  
                 }
                 else if(data.updatePostOnly)
                 {

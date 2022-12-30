@@ -16,6 +16,7 @@
     <script src="<?= $this->request->jsUrl("alert")?>?50" charset="utf-8"></script>
     <script src="<?= $this->request->jsUrl("validate")?>?50" charset="utf-8" ></script>
     <script src="<?= $this->request->jsUrl("notification")?>?50" charset="utf-8" ></script>   
+
     <?php 
 
         if(!empty($links["js"])) :

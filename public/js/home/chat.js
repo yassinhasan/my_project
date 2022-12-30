@@ -243,7 +243,7 @@ send_msg_btns.forEach(send_msg_bt => {
             if (no_msgs) no_msgs.remove();
            let f_time =  insertMsgWithoutFetch(message);
            let who_sending_msg_to_user = allChatusers["user_"+touserId];
-           console.log(who_sending_msg_to_user)
+          // console.log(who_sending_msg_to_user)
             let form = new FormData();
             form.append("ChatId", toUser.ChatId);
             form.append("msg", message);

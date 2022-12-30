@@ -28,10 +28,25 @@ login_btn.addEventListener("click",(e)=>
         }
        
     }else if(data.success)
-    {
-       
+         {
+              const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: 'Signed in successfully'
+            })
         window.location.href = "/home"
-          removeCustomSpinner(body);
+        removeCustomSpinner(body);
     }else if(data.success_admin)
     {
        

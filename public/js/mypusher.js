@@ -36,7 +36,26 @@ presenceChannel.bind('pusher:member_added', function(member ) {
        updateLastActivityById(member.id , "online");
        fetchChatusers();
       // console.log(allChatusers["user_"+member.id])
+      let user = allChatusers["user_"+member.id];
        updateUserStatsInRealtime(allChatusers["user_"+member.id] , "online")
+                   //   swett alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: `${user.firstName} logged in`
+            })
+            //  
         
  
 })
@@ -156,7 +175,25 @@ function updatePost()
       let post = data.post.lastPost[0];
       if(loggedUser.id != id)
       {
-         realTimeNoti( post.userId , post.firstName+" "+post.lastName , " added new Post ");
+        //  realTimeNoti( post.userId , post.firstName+" "+post.lastName , " added new Post ");
+                 //     //   swett alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: `${post.firstName} ${post.lastName} added new Post`
+            })
+            //  
       }  
  });
 }
@@ -202,7 +239,24 @@ function updateAddComment()
            <div class="notcation_details" data-notificationId=${notificationId} > <span class="comment_username">${userName}</span> has added comment at you post <a href="/showPost?postId=${postId}" class="comment_link" data-postId=${postId}>click here</a> to show comment
            </div>`;
            notfication_box.insertAdjacentHTML("afterbegin", notication_string);
-           
+            //   swett alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: `${userName} add comment on your post`
+            })
+            //  
       } 
 
     });
@@ -253,7 +307,26 @@ function sendMessageNotification()
             <div class="notcation_details" data-notificationId=${notificationId} data-notificationType="chat"> <span class="comment_username">${userName}</span> sent youm message ( ${msg}  )
             </div>`;
             notfication_box.insertAdjacentHTML("afterbegin", notication_string);
+            //   swett alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+            
+            Toast.fire({
+              icon: 'success',
+              title: `${userName} sent you message`
+            })
+            //            
       }
+ 
     })
            
 }
@@ -278,9 +351,27 @@ function showIsUserInChat(loggeduserId)
        {
            // here send notifications after send msg
         //   console.log(whoChatWithMe)
+        let user = allChatusers["user_" + whoChatWithMe.id] ;
            allChatusers["user_" + whoChatWithMe.id].openChat = openChat;
-         //  sendMessageNotification(allChatusers["user_" + whoChatWithMe.id])
-          
+        //  //  sendMessageNotification(allChatusers["user_" + whoChatWithMe.id])
+        //     //   swett alert
+        //     const Toast = Swal.mixin({
+        //       toast: true,
+        //       position: 'top-end',
+        //       showConfirmButton: false,
+        //       timer: 3000,
+        //       timerProgressBar: true,
+        //       didOpen: (toast) => {
+        //         toast.addEventListener('mouseenter', Swal.stopTimer)
+        //         toast.addEventListener('mouseleave', Swal.resumeTimer)
+        //       }
+        //     })
+            
+        //     Toast.fire({
+        //       icon: 'success',
+        //       title: `${user.firstName} is now in chat with you`
+        //     })
+            //  
        }
 
     });
