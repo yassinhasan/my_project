@@ -55,10 +55,10 @@ public function password($field , $value , $message =null)
    {
         if($value != null or $value != "") 
         {
-            $uppercase  = preg_match("@[A-Z]@" , $value);
-            $lowercase = preg_match("@[a-z]@" , $value);
+            // $uppercase  = preg_match("@[A-Z]@" , $value);
+            // $lowercase = preg_match("@[a-z]@" , $value);
             $number = preg_match("@[0-9]@" , $value);
-            if(!$uppercase || !$lowercase || !$number ) 
+            if(  !$number ) 
             {
                  $this->error[$field][] =  "Sorry This ".ucfirst($field)." Not Matched";
             };
