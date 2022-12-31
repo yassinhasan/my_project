@@ -22,7 +22,7 @@ function getNotifications() {
              i < notification.length;
             i++) {
                 
-                console.log(notification[i])
+                // console.log(notification[i])
               let userName = notification[i].fromUsername;
               postId = notification[i].postId;
               chatId = notification[i].ChatId;

@@ -120,7 +120,7 @@ fetch(url, {
     .then(data => {
         if(data.succ)
         {
-            console.log("updateLastStatusById" + " id = " + id)
+           // console.log("updateLastStatusById" + " id = " + id)
         }
     })
 
