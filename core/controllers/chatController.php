@@ -18,6 +18,7 @@ class chatController extends abstractController
         // $id = (int)$this->session->userId;
         if($this->request->getMethod() == "POST")
         {
+            $loggedUser = Application::$app->session->userId ;
             $notificationId  = null;
             $data = $this->request->getBody();
             $model =  $this->model;
@@ -50,7 +51,8 @@ class chatController extends abstractController
                     "firstName" => $data["firstName"] , 
                     "ChatId" => $ChatId ,
                     "msgId"  =>$msgId , 
-                    "notificationId" => $notificationId
+                    "notificationId" => $notificationId ,
+                    
                 ];
                 if($notificationId != null)
                 {
@@ -105,20 +107,24 @@ class chatController extends abstractController
         }
 
     }
-    // public function fetchChatUsers()
-    // {
-    //    $userId = Application::$app->session->userId;
-    //     if($this->request->getMethod() == "POST")
-    //     {
-    //         $data = $this->request->getBody();
-    //         $this->jData['users'] = $this->model->fetchChatUsers($userId);
-    //         $this->jData["loggedUserId"] = $userId;
-    //         $this->json();
-            
-    //     }
 
+    //   public function fetchChatUsers()
+    // {
+    //     // here must return logged user full data
+    //     if($this->request->method() == "POST")
+    //     {
+    //       $id = Application::$app->session->userId;
+
+    //         $this->jData['loggedUserId'] = $id;
+    //         $users = $this->model->fetchChatUsers($id);
+    //           $this->jData['users'] = $users;
+    //       $this->json(); 
+
+    //     }else 
+    //     {
+    //     $this->response->renderView("/home" ,$this->data );
+    //     }
     // }
-   
     public function blur()
     {
          $id = (int)$this->session->userId;

@@ -191,7 +191,7 @@ function updatePost()
             
             Toast.fire({
               icon: 'success',
-              title: `${post.firstName} ${post.lastName} added new Post`
+              title: `${post.firstName} ${post.lastName} added new Post `
             })
             //  
       }  
@@ -264,7 +264,6 @@ function updateAddComment()
 updateAddComment();
 
 
-
 function registerNewUser()
 {
     channel.bind('registerNewUser', function(data) {
@@ -278,10 +277,12 @@ registerNewUser();
 function sendMessageNotification()
 {
       channel.bind('sendMessageNotification', function(returnData) {
+          
         let data = returnData.msgs ;
         // console.log(data)
-      if(data.fromId != loggedUser.id)
+      if(data.fromId != loggedUser.id  && data.toId == loggedUser.id)
       {
+
         let userName = data.firstName;
         let notificationId = data.notificationId;
         let msg = data.msg;
@@ -326,7 +327,6 @@ function sendMessageNotification()
             })
             //            
       }
- 
     })
            
 }
@@ -334,44 +334,15 @@ sendMessageNotification()
 
 function showIsUserInChat(loggeduserId)
 {
-      let whoChatWithMe = {
-         id  : null,
-         ChatId : null,
-         openChat : false
-        };
+
       channel.bind('isHereInChat', function(returnData) {
       let data = returnData.data ;
       let whoOpenChat  = data.userId;
       let openChat = data.openChat;
-      whoChatWithMe.id = whoOpenChat;
-       whoChatWithMe.openChat = openChat ;
-       
        // another person now is on chat with me 
-       if(loggeduserId != whoOpenChat)
+       if(loggeduserId != whoOpenChat && loggeduserId == data.userId)
        {
-           // here send notifications after send msg
-        //   console.log(whoChatWithMe)
-        let user = allChatusers["user_" + whoChatWithMe.id] ;
-           allChatusers["user_" + whoChatWithMe.id].openChat = openChat;
-        //  //  sendMessageNotification(allChatusers["user_" + whoChatWithMe.id])
-        //     //   swett alert
-        //     const Toast = Swal.mixin({
-        //       toast: true,
-        //       position: 'top-end',
-        //       showConfirmButton: false,
-        //       timer: 3000,
-        //       timerProgressBar: true,
-        //       didOpen: (toast) => {
-        //         toast.addEventListener('mouseenter', Swal.stopTimer)
-        //         toast.addEventListener('mouseleave', Swal.resumeTimer)
-        //       }
-        //     })
-            
-        //     Toast.fire({
-        //       icon: 'success',
-        //       title: `${user.firstName} is now in chat with you`
-        //     })
-            //  
+           allChatusers["user_" + whoOpenChat].openChat = openChat;
        }
 
     });

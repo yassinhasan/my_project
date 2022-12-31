@@ -81,7 +81,7 @@ class chatModel extends abstractModel
         $Users = $this->from(" app_users " )->join(" 
             INNER JOIN app_user_profile  ON 
             app_user_profile.userId = app_users.id
-            ")->where("app_users.id != ? " , $userId)->select("
+            ")->order( " ORDER BY  lastMmsgId DESC ")->select("
             app_users.id , app_users.firstName , app_users.lastName , app_users.userStatus , app_users.lastActivity , app_users.email , app_user_profile.profileImage  ,
             ( select followStatus from app_users_follow where sender = $userId and receiver = app_users.id ) as followStatus  ,
               ( select COUNT(app_users_follow.receiver) from app_users_follow where receiver = app_users.id AND followStatus = 'approve') as followers  ,

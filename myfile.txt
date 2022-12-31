@@ -1,5 +1,0 @@
-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
-ssh -p 65002 u928454328@82.180.152.18
-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
-mysql -h sql613.main-hosting.eu -P 3306 -u  u928454328_root -p
-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

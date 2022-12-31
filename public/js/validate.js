@@ -55,19 +55,9 @@ function isMatchedPassword(password, confirmPassword) {
 function isValidPassword(password) {
     let err = 0;
      password = document.querySelector(`input[name=${password}]`).value;
-     if (password.length < 8)
+     if (password.length < 6)
      {
-          makeInvalidInput("password", "Sorry  password is must not be less than 8 characters" ); 
-          err ++
-     }
-     if (!/[A-Z]+/g.test(password))
-     {
-          makeInvalidInput("password", "Sorry  password must has one Uppercase" ); 
-          err ++
-     }
-     if (!/[0-9]/.test(password))
-     {
-          makeInvalidInput("password", "Sorry  Password Is Must Contain  numbers" ); 
+          makeInvalidInput("password", "Sorry  password is must not be less than 6 characters" ); 
           err ++
      }
       return err == 0;

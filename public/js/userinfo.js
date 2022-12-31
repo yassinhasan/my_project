@@ -24,6 +24,7 @@ function  fetchChatusers(showButton = false)
                 if(users[i].id ==  loggedUserId)
                 {
                     loggedUser = users[i];
+                 
                     allUsers["user_"+users[i].id] = users[i];
                     updateUserStatsInRealtime(loggedUser , "online")
                 } else
@@ -60,7 +61,7 @@ function  fetchChatusers(showButton = false)
         }) 
         
 }
-
+ fetchChatusers()
 
 function updateLastActivity()
 {

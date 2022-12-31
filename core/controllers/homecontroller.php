@@ -3,6 +3,7 @@ namespace core\controllers;
 
 use core\app\Application;
 use core\models\postsModel;
+use core\models\chatModel;
 use core\models\notificationModel;
 use core\app\user;
 use core\app\uploadImage;
@@ -41,17 +42,18 @@ class homecontroller extends abstractController
         $this->response->renderView("/home" ,$this->data );
         }
     }
-    public function fetchChatusers()
+      public function fetchChatUsers()
     {
         // here must return logged user full data
         if($this->request->method() == "POST")
         {
-           $id = Application::$app->session->userId;
+          $id = Application::$app->session->userId;
 
             $this->jData['loggedUserId'] = $id;
-            $users = $this->model->fetchChatUsers($id);
+             $chatModel = new chatModel();
+            $users = $chatModel->fetchChatUsers($id);
               $this->jData['users'] = $users;
-           $this->json(); 
+          $this->json(); 
 
         }else 
         {
