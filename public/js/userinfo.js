@@ -61,7 +61,10 @@ function  fetchChatusers(showButton = false)
         }) 
         
 }
- fetchChatusers()
+if( window.location.href.split("/").pop() == "home")
+{
+  fetchChatusers()
+}
 
 function updateLastActivity()
 {
