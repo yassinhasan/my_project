@@ -1,4 +1,5 @@
     <!-- Bootstrap CSS -->
+     <link rel="icon" type="image/x-icon" href="../../public/uploades/images/icon.jpg">
     <?php 
        echo  "<link href='".$this->request->cssUrl("bootstrap.min")."?06' rel='stylesheet'> " ;
          echo  "<link href='".$this->request->cssUrl("vendor/all.min")."?06' rel='stylesheet'> " ;
